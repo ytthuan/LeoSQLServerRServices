@@ -49,9 +49,8 @@ formula <- as.formula(paste(paste("label2~"),
 ####################################################################################################
 ## Multinomial modeling
 ####################################################################################################
-train_df <- rxImport(inData = train_table)
 multinomial_model <- multinom(formula = formula,
-                              data = train_df)
+                              data = train_table)
 mn <- data.frame(payload = as.raw(serialize(multinomial_model, connection=NULL)))'
 ,@input_data_1 = @inquery
 ,@output_data_1_name = N'mn'

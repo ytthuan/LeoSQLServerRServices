@@ -51,11 +51,10 @@ formula <- as.formula(paste(paste("label1~"),
 ## Neural network regression modeling
 ####################################################################################################
 library(nnet)
-train_df <- rxImport(inData = train_table)
 nodes <- 10
 weights <- nodes * (35 + 1) + nodes + 1
 nnet_model <- nnet(formula = formula,
-                   data = train_df,
+                   data = train_table,
                    Wts = rep(0.1, weights),
                    size = nodes,
                    decay = 0.005,
