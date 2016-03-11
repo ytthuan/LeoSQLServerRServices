@@ -59,6 +59,17 @@ $sqlscript
 }
 
 ##########################################################################
+# Function wrapper to invoke SQL query
+##########################################################################
+function ExecuteSQLQuery
+{
+param(
+[String]
+$sqlquery
+)
+    Invoke-Sqlcmd -ServerInstance $ServerName  -Database $DBName -Username $username -Password $password -Query $sqlquery -QueryTimeout 200000
+}
+##########################################################################
 # Get the current SQL related parameters and set them to specified values
 ##########################################################################
 function SetParamValues
@@ -84,7 +95,7 @@ $targetPassword
     foreach ($file in $listfiles)
     {        
         (Get-Content $file) | Foreach-Object {
-            $_ -replace $rUse, "`$1 $targetDbname" `
+            $_ -replace $rUse, "`$1 [$targetDbname]" `
                -replace $rdb, "`$1$targetDbname`$3" `
                -replace $rUid, "`$1$targetUsername`$3" `
                -replace $rPwd, "`$1$targetPassword`$3"
@@ -152,34 +163,43 @@ if($score -eq $true)
         # execute the feature engineering for data to be scored
         Write-Host -ForeGroundColor 'magenta'("    Execute feature engineering for score dataset...")
 		Read-Host "Press any key to continue..."
-        $script = $filePath + "FeatureEngineering/execute_feature_engineering_scoring.sql"
-        ExecuteSQL $script
+        #$script = $filePath + "FeatureEngineering/execute_feature_engineering_scoring.sql"
+        $datasetType = 'score'
+        $query = "EXEC feature_engineering $datasetType"
+        ExecuteSQLQuery $query
 
         # score the regression model and collect results
         Write-Host -ForeGroundColor 'magenta'("    Create and execute scoring with selected regression model...")
 		Read-Host "Press any key to continue..."
         $script = $filePath + "Regression/score_regression_model.sql"
         ExecuteSQL $script
-        $script = $filePath + "Regression/execute_score_reg_model.sql"
-        ExecuteSQL $script
+        #$script = $filePath + "Regression/execute_score_reg_model.sql"
+        $model = 'regression_btree'
+        $query = "EXEC score_regression_model $model"
+        ExecuteSQLQuery $query
 
         # score the binary classification model and collect results
         Write-Host -ForeGroundColor 'magenta'("    Create and execute scoring with selected binary classification model...")
 		Read-Host "Press any key to continue..."
         $script = $filePath + "BinaryClassification/score_binaryclass_model.sql"
         ExecuteSQL $script
-        $script = $filePath + "BinaryClassification/execute_score_bclass_model.sql"
-        ExecuteSQL $script
+        #$script = $filePath + "BinaryClassification/execute_score_bclass_model.sql"
+        $model = 'binaryclass_btree'
+        $query = "EXEC score_binaryclass_model $model"
+        ExecuteSQLQuery $query
 
         # score the multi-class classification model and collect results
         Write-Host -ForeGroundColor 'magenta'("    Create and execute scoring with selected multi-class classification model...")
 		Read-Host "Press any key to continue..."
         $script = $filePath + "MultiClassification/score_multiclass_model.sql"
         ExecuteSQL $script
-        $script = $filePath + "MultiClassification/execute_score_mclass_model.sql"
-        ExecuteSQL $script
+        #$script = $filePath + "MultiClassification/execute_score_mclass_model.sql"
+        $model = 'multiclass_btree'
+        $query = "EXEC score_multiclass_model $model"
+        ExecuteSQLQuery $query
 
         Write-Host -ForeGroundColor 'green'("Scoring finished successfully!")
+        return
     }
     catch
     {
@@ -233,7 +253,6 @@ if ($ans -eq 'y' -or $ans -eq 'Y')
 # Create and execute the stored procedure for data labeling and 
 # feature engineering
 ##########################################################################
-
 Write-Host -ForeGroundColor 'green' ("Step 2: Data labeling and feature engineering")
 $ans = Read-Host 'Continue [y|Y], Exit [e|E], Skip [s|S]?'
 if ($ans -eq 'E' -or $ans -eq 'e')
@@ -252,28 +271,36 @@ if ($ans -eq 'y' -or $ans -eq 'Y')
 
         # execute the feature engineering for training data
         Write-Host -ForeGroundColor 'magenta'("    Data labeling for training dataset...")
-        $script = $filePath + "DataProcessing/execute_data_labeling_training.sql"
-        ExecuteSQL $script
+        #$script = $filePath + "DataProcessing/execute_data_labeling_training.sql"
+        $datasetType = 'train'
+        $query = "EXEC data_labeling $datasetType"
+        ExecuteSQLQuery $query
 
         # execute the feature engineering for testing data
         Write-Host -ForeGroundColor 'magenta'("    Data labeling for testing dataset...")
-        $script = $filePath + "DataProcessing/execute_data_labeling_testing.sql"
-        ExecuteSQL $script
+        #$script = $filePath + "DataProcessing/execute_data_labeling_testing.sql"
+        $datasetType = 'test'
+        $query = "EXEC data_labeling $datasetType"
+        ExecuteSQLQuery $query
 
         # creat the stored procedure for feature engineering
         Write-Host -ForeGroundColor 'magenta'("    Create SQL stored procedure for feature engineering...")
-        $script = $filePath + "FeatureEngineering/feature_engineering.sql"
+        $script = $filePath + "DataProcessing/feature_engineering.sql"
         ExecuteSQL $script
 
         # execute the feature engineering for training data
         Write-Host -ForeGroundColor 'magenta'("    Execute feature engineering for training dataset...")
-        $script = $filePath + "FeatureEngineering/execute_feature_engineering_training.sql"
-        ExecuteSQL $script
+        #$script = $filePath + "FeatureEngineering/execute_feature_engineering_training.sql"
+        $datasetType = 'train'
+        $query = "EXEC feature_engineering $datasetType"
+        ExecuteSQLQuery $query
 
         # execute the feature engineering for testing data
         Write-Host -ForeGroundColor 'magenta'("    Execute feature engineering for testing dataset...")
-        $script = $filePath + "FeatureEngineering/execute_feature_engineering_testing.sql"
-        ExecuteSQL $script
+        #$script = $filePath + "FeatureEngineering/execute_feature_engineering_testing.sql"
+        $datasetType = 'test'
+        $query = "EXEC feature_engineering $datasetType"
+        ExecuteSQLQuery $query
     }
     catch
     {
@@ -314,7 +341,9 @@ if ($ans -eq 'y' -or $ans -eq 'Y')
         # test the binaryclass models and collect results and metrics
         Write-Host -ForeGroundColor 'magenta'("    Testing Regression models...")
         $script = $filePath + "Regression/execute_test_reg_models.sql"
-        ExecuteSQL $script
+        $models = "'regression_rf', 'regression_btree', 'regression_glm', 'regression_nn'"
+        $query = "EXEC test_regression_models $models"
+        ExecuteSQLQuery $query
         Write-Host -ForeGroundColor 'magenta'("    Testing Regression models...Done!")
     }
     catch
@@ -355,8 +384,10 @@ if ($ans -eq 'y' -or $ans -eq 'Y')
 
         # test the binaryclass models and collect results and metrics
         Write-Host -ForeGroundColor 'magenta'("    Testing Binary classification models...")
-        $script = $filepPth + "BinaryClassification/execute_test_bclass_models.sql"
-        ExecuteSQL $script
+        #$script = $filepPth + "BinaryClassification/execute_test_bclass_models.sql"
+        $models = "'binaryclass_rf', 'binaryclass_btree', 'binaryclass_logit', 'binaryclass_nn'"
+        $query = "EXEC test_binaryclass_models $models"
+        ExecuteSQLQuery $query
         Write-Host -ForeGroundColor 'magenta'("    Testing Binary classification models...Done!")
     }
     catch
@@ -397,7 +428,9 @@ if ($ans -eq 'y' -or $ans -eq 'Y')
         # test the multiclass models and collect results and metrics
         Write-Host -ForeGroundColor 'magenta'("    Testing Multi-classificaiton models...")
         $script = $filePath + "MultiClassification/execute_test_mclass_models.sql"
-        ExecuteSQL $script
+        $models = "'multiclass_rf', 'multiclass_btree', 'multiclass_nn', 'multiclass_mn'"
+        $query = "EXEC test_multiclass_models $models"
+        ExecuteSQLQuery $query
         Write-Host -ForeGroundColor 'magenta'("    Testing Multi-classificaiton models...Done!")
         Write-Host -ForeGroundColor 'green'("Workflow finished successfully!")
     }

@@ -113,14 +113,6 @@ The files used in this step are:
     <td>DataProcessing\data_labeling.sql</td>
     <td>T-SQL script for data labeling</td>
   </tr>
-  <tr>
-    <td>DataProcessing\execute_data_labeling_training.sql</td>
-    <td>T-SQL script for train data labeling</td>
-  </tr>
-  <tr>
-    <td>DataProcessing\execute_data_labeling_testing.sql</td>
-    <td>T-SQL script for test data labeling</td>
-  </tr>
 </table>
 
 **Output of this step:** Six tables are created in the SQL Server database:
@@ -147,16 +139,8 @@ The files related to this step are:
     <th>Description</th>
   </tr>
   <tr>
-    <td>FeatureEngineering\feature_engineering.sql</td>
+    <td>DataProcessing\feature_engineering.sql</td>
     <td>Stored procedure for feature engineering</td>
-  </tr>
-  <tr>
-    <td>FeatureEngineering\execute_feature_engineering_training.sql</td>
-    <td>T-SQL script that does feature engineering based on training data</td>
-  </tr>
-  <tr>
-    <td>FeatureEngineering\execute_feature_engineering_testing.sql</td>
-    <td>T-SQL script that does feature engineering based on testing data</td>
   </tr>
 </table>
 
@@ -341,7 +325,7 @@ In this step, we show how we call the stored procedures to make predictions on n
 
 **Output:** SQL table PM\_score, the raw data for scoring
 
-**Step2. Call the feature engineering SQL script:** FeatureEngineering\execute\_feature\_engineering\_scoring.sql
+**Step2. Call the feature engineering SQL script:** DataProcessing\feature\_engineering\_scoring.sql
 	
 **Output:** SQL table score\_Features\_Normalized, the data with new features and normalized
 

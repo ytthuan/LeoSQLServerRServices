@@ -1,4 +1,4 @@
-USE [DefaultDBName];
+USE [DefaultDBName]
 GO
 
 DELETE  FROM [PM_Models]
