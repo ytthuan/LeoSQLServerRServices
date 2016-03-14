@@ -1,0 +1,35 @@
+/* The procedure to evaluate performance on transaction level: calculate AUC */
+
+use [OnlineFraudDetection]
+go
+
+set ansi_nulls on
+go
+
+set quoted_identifier on
+go
+
+DROP PROCEDURE IF EXISTS dbo.EvaluateR_auc
+GO
+
+create procedure dbo.EvaluateR_auc
+as
+begin
+
+create table OnlineFraudDetection.dbo.sql_performance_auc
+ ( 
+   AUC float
+ );
+
+insert into OnlineFraudDetection.dbo.sql_performance_auc
+exec sp_execute_external_script @language = N'R',
+                                  @script = N'
+ library(ROCR)
+ scored_data <- InputDataSet
+ pred <- prediction(scored_data$Score, scored_data$Label)
+ auc = as.numeric(performance(pred,"auc")@y.values)
+ OutputDataSet <- as.data.frame(auc)
+',
+  @input_data_1 = N' select * from OnlineFraudDetection.dbo.sql_predict_score'
+;
+end
