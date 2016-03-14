@@ -18,9 +18,10 @@ The available templates are listed below. Please check back often, as there will
 
 - Predictive Maintenance.  Predict machine failures.
 
-<!--
+
 - Customer Churn.   Predict when a customer churn happens.
 - Online Purchase Fraud Detection. Predict if an online purchase transactions is fraudulent. 
+<!--
 - Retail Forecasting. Forecast the product sales for a retail store.
 -->
 
