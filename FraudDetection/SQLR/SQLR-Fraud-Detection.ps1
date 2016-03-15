@@ -70,19 +70,20 @@ param(
 $targetDbname
 )
     # Get the current parameter values
-    $rUse = [regex]"\s*use\s+\[(.*)\]$"
+    $currentDbname = ""
+    $rUse = "^\s*use\s+\[(.*)\]$"
     $file = $filePath + "Step0_CreateTables.sql" 
     $content = Get-Content $file
-    $matches = $rUse.Matches($content[0])
-        
-    if ($matches.Count -eq 0)
+    $line = $content -match $rUse
+    $match = ([regex]$rUse).Match($line)     
+     
+    if (-not $match.Success)
     {
-        Write-Host -foregroundcolor 'red' ("Please check the file $file starts with use [DatabaseName]")
-        return  
+        Write-Host -foregroundcolor 'red' ("Please check the file $file contains line of: use [DatabaseName]")
+        exit  
     }
-  
-    $currentDbname = $matches.Groups[1].Value
 
+    $currentDbName = $match.Groups[1].Value 
     $files = $filePath + "*.sql"
     $listfiles = Get-ChildItem $files -Recurse
 
