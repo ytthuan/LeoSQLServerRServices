@@ -16,11 +16,11 @@ In these examples, we demonstrate how to develop and deploy end-to-end advanced 
 
 The available templates are listed below. Please check back often, as there will be new templates added periodically. 
 
-- Predictive Maintenance.  Predict machine failures.
+- **Predictive Maintenance**.  Predict machine failures.
+- **Customer Churn Prediction**.   Predict when a customer churn happens.
+- **Online Purchase Fraud Detection**. Predict if an online purchase transactions is fraudulent. 
 
 <!--
-- Customer Churn.   Predict when a customer churn happens.
-- Online Purchase Fraud Detection. Predict if an online purchase transactions is fraudulent. 
 - Retail Forecasting. Forecast the product sales for a retail store.
 -->
 
