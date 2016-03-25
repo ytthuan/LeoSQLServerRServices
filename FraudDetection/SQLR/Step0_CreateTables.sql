@@ -1,5 +1,3 @@
-/* create tables to store untagged and fraud data */
-
 use [OnlineFraudDetection]
 go
 
@@ -86,3 +84,49 @@ localHour varchar(255),
 transactionDeviceId varchar(255),
 transactionIPaddress varchar(255)
 );
+
+DROP TABLE IF EXISTS OnlineFraudDetection.dbo.sql_predict_score
+GO
+ 
+create table OnlineFraudDetection.dbo.sql_predict_score
+ ( 
+   accountID varchar(255),
+   transactionDate varchar(255),
+   transactionTime varchar(255),
+   transactionAmountUSD float,
+   Label int,
+   Score float
+ );
+ 
+DROP TABLE IF EXISTS OnlineFraudDetection.dbo.sql_performance
+GO
+
+create table OnlineFraudDetection.dbo.sql_performance
+( 
+  ADR varchar(255),
+  PCT_NF_Acct varchar(255),
+  Dol_Frd varchar(255),
+  Do_NF varchar(255),
+  VDR varchar(255),
+  Acct_FP varchar(255),
+  PCT_Frd varchar(255),
+  PCT_NF varchar(255),
+  AFPR varchar(255),
+  TFPR varchar(255)
+);
+ 
+DROP TABLE IF EXISTS OnlineFraudDetection.dbo.sql_performance_auc
+GO
+
+create table OnlineFraudDetection.dbo.sql_performance_auc
+( 
+  AUC float
+);
+
+DROP TABLE IF EXISTS dbo.sql_trained_model
+GO
+
+create table OnlineFraudDetection.dbo.sql_trained_model
+ ( 
+   model varbinary(max) not null
+ );

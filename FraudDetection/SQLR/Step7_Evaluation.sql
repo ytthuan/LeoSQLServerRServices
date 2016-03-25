@@ -1,5 +1,3 @@
-/* The procudre to evaluate performance on account level */
-
 use [OnlineFraudDetection]
 go
 
@@ -16,19 +14,7 @@ create procedure dbo.EvaluateR
 as
 begin
 
-create table OnlineFraudDetection.dbo.sql_performance
- ( 
-   ADR varchar(255),
-   PCT_NF_Acct varchar(255),
-   Dol_Frd varchar(255),
-   Do_NF varchar(255),
-   VDR varchar(255),
-   Acct_FP varchar(255),
-   PCT_Frd varchar(255),
-   PCT_NF varchar(255),
-   AFPR varchar(255),
-   TFPR varchar(255)
- );
+truncate table OnlineFraudDetection.dbo.sql_performance
 
 insert into OnlineFraudDetection.dbo.sql_performance
 exec sp_execute_external_script @language = N'R',

@@ -15,6 +15,15 @@ go
 DROP PROCEDURE IF EXISTS dbo.Preprocess
 GO
 
+DROP TABLE IF EXISTS OnlineFraudDetection.dbo.sql_tagged_training
+GO
+
+DROP TABLE IF EXISTS OnlineFraudDetection.dbo.sql_tagged_testing
+GO
+
+DROP TABLE IF EXISTS OnlineFraudDetection.dbo.sql_columns
+GO
+
 create procedure dbo.Preprocess
 as
 begin
@@ -59,7 +68,7 @@ FROM @getname INTO @name_1
 WHILE @@FETCH_STATUS = 0
 BEGIN
     print @name_1
-    EXEC FillMissing @name_1 
+    EXEC FillMissing @name_1,'sql_taggedData' 
 	FETCH NEXT
     FROM @getname INTO @name_1
 END

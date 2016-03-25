@@ -1,5 +1,6 @@
 /* The procedure to fill missing value for each input variable */
--- @name = the name of the variable whose NA value to be filled
+-- @name = the name of the variable to fill NA value
+-- @table = the name of table to be updated
 
 use [OnlineFraudDetection]
 go
@@ -14,18 +15,19 @@ DROP PROCEDURE IF EXISTS dbo.FillMissing
 GO
 
 create procedure dbo.FillMissing 
-@name varchar(max)
+@name varchar(max),
+@table varchar(max)
 as
 begin
 declare @sql nvarchar(max)
 set @sql = 
-'update sql_taggedData 
+'update ' + @table + '
    set ' + @name + ' = isnull(' + @name + ',0)
-from sql_taggedData
+from ' + @table + '
 
-update sql_taggedData
+update ' + @table + '
    set ' + @name + ' = case when ' + @name + '= ' + '''""''' + ' then ' + '''0''' + ' else ' + @name + ' end
-from sql_taggedData'
+from ' + @table
 
 exec sp_executesql @sql
 end

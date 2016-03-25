@@ -16,13 +16,7 @@ create procedure dbo.TrainModelR
 as
 begin
 
-IF OBJECT_ID('dbo.sql_trained_model', 'U') IS NOT NULL
-  DROP TABLE dbo.sql_trained_model;
-
-create table OnlineFraudDetection.dbo.sql_trained_model
- ( 
-   model varbinary(max) not null
- );
+truncate table OnlineFraudDetection.dbo.sql_trained_model
 
 insert into OnlineFraudDetection.dbo.sql_trained_model
 execute sp_execute_external_script

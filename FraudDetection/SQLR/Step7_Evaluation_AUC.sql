@@ -1,5 +1,3 @@
-/* The procedure to evaluate performance on transaction level: calculate AUC */
-
 use [OnlineFraudDetection]
 go
 
@@ -16,10 +14,7 @@ create procedure dbo.EvaluateR_auc
 as
 begin
 
-create table OnlineFraudDetection.dbo.sql_performance_auc
- ( 
-   AUC float
- );
+truncate table OnlineFraudDetection.dbo.sql_performance_auc
 
 insert into OnlineFraudDetection.dbo.sql_performance_auc
 exec sp_execute_external_script @language = N'R',

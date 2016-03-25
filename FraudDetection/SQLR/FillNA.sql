@@ -1,5 +1,4 @@
 /* The procedure to fill NA values using average risk in risk tables */
-/* The NA values occur due to new levels in testing set */
 -- @var_name = variable name
 -- @risk_table_name =  the risk table to be used
 -- @table the table you want to update: training or testing

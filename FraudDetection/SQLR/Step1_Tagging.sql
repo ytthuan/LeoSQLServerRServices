@@ -18,6 +18,12 @@ go
 DROP PROCEDURE IF EXISTS dbo.Tagging
 GO
 
+DROP TABLE IF EXISTS OnlineFraudDetection.dbo.sql_fraud_account
+GO
+
+DROP TABLE IF EXISTS OnlineFraudDetection.dbo.sql_taggedData
+GO
+
 create procedure dbo.Tagging
 as
 begin

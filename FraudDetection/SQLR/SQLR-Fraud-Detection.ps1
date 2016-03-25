@@ -26,6 +26,12 @@ $ServerName = "",
 $DBName = "",
 
 # Switch to preventive maintenance scoring 
+[parameter(Mandatory=$false,ParameterSetName = "Train_test")]
+[ValidateNotNullOrEmpty()]
+[Switch]
+$Score,
+
+# Switch to preventive maintenance scoring 
 [parameter(Mandatory=$true,ParameterSetName = "SetParam")]
 [ValidateNotNullOrEmpty()]
 [Switch]
@@ -125,6 +131,71 @@ if ($ans -eq 'y' -or $ans -eq 'Y')
     Write-Host -ForeGroundColor 'green' ("Update SQL related parameters in all SQL scripts...")
     SetParamValue $DBName
     Write-Host -ForeGroundColor 'green' ("Done...Update SQL related parameters in all SQL scripts")
+}
+
+##########################################################################
+# Online scoring 
+##########################################################################
+if($Score -eq $true)
+{
+    Write-Host -ForeGroundColor 'green'("Scoring transaction data...")
+    Read-Host "Press any key to continue..."
+    try
+    {
+        Write-Host -ForegroundColor 'Magenta'("Process the raw data...")
+        $script = $filepath + "CreateScoreTable.sql"
+        ExecuteSQL $script
+        $dataToScore = '6C0E80FA-6988-4823-B0F5-BA49EBCBD99E,A1688852564389340,120.10945,239,BRL,"",20130401,2932,21,A,P,"","","",
+                        201.8,minas gerais,30000-000,br,False,"",pt-BR,CREDITCARD,VISA,"","","",30170-000,MG,BR,"","","","","","",
+                        M,"",1,0,"","","",30170-000,"",MG,BR,"",1,False,0.000694444444444444,0,0,0,"",0'
+
+        [Collections.Generic.List[String]]$listStrs = $dataToScore.Split(",")
+        $listStrs.Add($listStrs[7].PadLeft(5, '0'))
+        #Dummy label value
+        $listStrs.Add(1)
+        $listStrs.RemoveAt(7)
+
+        # Insert the transaction data into table
+        $vals = "'" + $listStrs[0] + "'"
+        for ($i = 1; $i -lt $listStrs.Count; $i++)
+        {
+            $vals = $vals + "," + "'" + $listStrs[$i] + "'"
+        }
+        $table = "sql_scoring"
+        $colQuery = "SELECT * FROM $DBName.INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = '$table'"
+        $colLists = ExecuteSQLQuery $colQuery
+        $colNames = ($colLists[0..55] | Select -ExpandProperty COLUMN_NAME) -join ","
+        $query = "TRUNCATE TABLE $table;INSERT INTO $table ($colNames) VALUES ($vals);"
+        ExecuteSQLQuery $query
+
+        # Execute the Predicting on the raw data
+        Write-Host -ForegroundColor 'Magenta'("Predict the transaction data...")
+        $query = "EXEC PredictR '$table'"
+        ExecuteSQLQuery $query
+
+        # Get the score result
+        Write-Host -ForegroundColor 'Magenta'("Retrieve the score...")
+        $scoreTable = "sql_predict_score"
+        $query = "SELECT * FROM $scoreTable"
+        # Display the score to console
+        $result = ExecuteSQLQuery $query
+        $table = @()
+        $obj = New-Object System.Object
+        $obj | Add-Member -type NoteProperty -name AccountID -value $result.accountID
+        $obj | Add-Member -type NoteProperty -Name TransactionDate -Value $result.transactionDate
+        $obj | Add-Member -type NoteProperty -Name TransactionAmountUSD -Value $result.transactionAmountUSD
+        $obj | Add-Member -type NoteProperty -Name Score -Value $result.Score
+        $table += $obj
+        $table | Format-Table –AutoSize
+        Write-Host -ForegroundColor 'green'("Done...Online scoring!")
+        exit
+    }
+    catch
+    {
+        Write-Host -ForegroundColor DarkYellow "Exception in scoring raw data:"
+        Write-Host -ForegroundColor Red $Error[0].Exception 
+        exit
+    }
 }
 
 ##########################################################################
@@ -296,7 +367,7 @@ if ($ans -eq 'y' -or $ans -eq 'Y')
     ExecuteSQL $script
 
     # execute the Predicting
-    $param = "select * from " + $DBName + ".dbo.sql_tagged_testing"
+    $param = $DBName + ".dbo.sql_tagged_testing"
     $query = "EXEC PredictR '$param'"
     #Write-Host $query
     ExecuteSQLQuery $query

@@ -1,5 +1,4 @@
-/* The procedure to predict on testing data set */
-
+/* predict on testing data set */
 use [OnlineFraudDetection]
 go
 
@@ -12,35 +11,31 @@ go
 DROP PROCEDURE IF EXISTS dbo.PredictR
 GO
 
-create procedure dbo.PredictR @inquery nvarchar(max)
+create procedure dbo.PredictR @table nvarchar(max)
 as
 begin
 /* feature engineering for testing data */
-exec FeatureEngineer 'sql_tagged_testing'
+exec FeatureEngineer @table
 
 /* replace incorrect value as 0 in field isUserRegistered */
-update OnlineFraudDetection.dbo.sql_tagged_testing
-  set isUserRegistered = case when isUserRegistered like '%[0-9]%' then '0' else isUserRegistered end
-  from OnlineFraudDetection.dbo.sql_tagged_testing;
+declare @sql_1 nvarchar(max)
+set @sql_1 = 'update ' + @table + '
+                set isUserRegistered = case when isUserRegistered like ''%[0-9]%'' then ''0'' else isUserRegistered end
+			  from ' + @table
+exec sp_executesql @sql_1
 
 /* drop temporary columns */
 -- keep transactionDate and transactionTime_new for testing data set in order to calculate evaluation metrics in step 6
-alter table OnlineFraudDetection.dbo.sql_tagged_testing
-  drop column dateNtime, timeFlag, random_number, trainFlag, transactionID,transactionCurrencyCode,transactionCurrencyConversionRate,localHour,transactionScenario,transactionDeviceId,transactionIPaddress,ipState,ipPostcode,ipCountryCode,browserLanguage,paymentInstrumentID,paymentBillingAddress,paymentBillingPostalCode,paymentBillingState,paymentBillingCountryCode,paymentBillingName,shippingAddress,shippingPostalCode,shippingCity,shippingState,shippingCountry,accountOwnerName,accountAddress,accountPostalCode,accountCity,accountState,accountCountry,accountOpenDate;
-
-
+declare @sql_2 nvarchar(max)
+set @sql_2 = 'alter table ' + @table + '
+                drop column dateNtime, timeFlag, random_number, trainFlag, transactionID,transactionCurrencyCode,transactionCurrencyConversionRate,localHour,transactionScenario,transactionDeviceId,transactionIPaddress,ipState,ipPostcode,ipCountryCode,browserLanguage,paymentInstrumentID,paymentBillingAddress,paymentBillingPostalCode,paymentBillingState,paymentBillingCountryCode,paymentBillingName,shippingAddress,shippingPostalCode,shippingCity,shippingState,shippingCountry,accountOwnerName,accountAddress,accountPostalCode,accountCity,accountState,accountCountry,accountOpenDate;'			  
+exec sp_executesql @sql_2  
 
 declare @modelt varbinary(max) = (select top 1 model from OnlineFraudDetection.dbo.sql_trained_model);
+declare @inquery nvarchar(max) 
+set @inquery =  'select * from ' + @table;
 
-create table OnlineFraudDetection.dbo.sql_predict_score
- ( 
-   accountID varchar(255),
-   transactionDate varchar(255),
-   transactionTime varchar(255),
-   transactionAmountUSD float,
-   Label int,
-   Score float
- );
+truncate table OnlineFraudDetection.dbo.sql_predict_score
 
 insert into OnlineFraudDetection.dbo.sql_predict_score
 exec sp_execute_external_script @language = N'R',

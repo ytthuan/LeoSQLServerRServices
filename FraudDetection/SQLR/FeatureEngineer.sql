@@ -1,6 +1,5 @@
+/* assume risk tables and the table storing column names (named 'sql_risk_var') have been created in step3 */
 /* procedure to do feature engineering */
-/* assume risk tables and the table ('sql_risk_var') storing names have been created in step3 */
-
 use [OnlineFraudDetection]
 go
 

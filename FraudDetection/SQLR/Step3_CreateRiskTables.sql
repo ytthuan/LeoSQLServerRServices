@@ -19,6 +19,8 @@ create procedure dbo.CreateRiskTable_ForAll
 as
 begin
 
+DROP TABLE IF EXISTS dbo.sql_risk_var
+
 -- create a table to store names of variables and risk tables. will be used as referrence in the loop later
 create table dbo.sql_risk_var (ID int,var_names varchar(255), table_names varchar(255));
 insert into sql_risk_var values (1, 'transactionCurrencyCode', 'sql_risk_transactionCurrencyCode');

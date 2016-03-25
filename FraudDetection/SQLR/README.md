@@ -11,6 +11,7 @@
  * **Step 5: Model Training**
  * **Step 6: Prediction**
  * **Step 7: Evaluation**
+ * **Step 8: Production Scoring**
 
 ### Introduction:
 -------------------------
@@ -225,3 +226,21 @@ Related files:
 
 * Step7_Evaluation.sql: Create a SQL stored procedure to evaluate performance on account level. 
 * Step7_Evaluation_AUC.sql: Create a SQL stored procedure to evaluate performance on transaction level.
+
+### STEP 8: Production Scoring
+
+In this step, we show how we call the stored procedures to make predictions on new data. A single record is taken from the testing dataset for demo purpose. 
+
+To invoke the production scoring, you need turn on the "Score" switch in the provided powershell script:
+
+	.\SQLR-Fraud-Detection.ps1 -ServerName "Server Name" -DBName "Database Name" -Score
+ 
+
+Input:
+
+* "sql_trained_model" table
+* "sql_scoring" table
+
+Output:
+
+* The result will be displayed in the Powershell console.
