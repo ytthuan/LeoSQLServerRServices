@@ -1,7 +1,7 @@
 ####################################################################################################
 ##dataPrepration.R: this script fills missing values in the data
 ####################################################################################################
-dataPreparation <- function(sqlSettings,outputTable,region,startTime,endTime)
+dataPreparation = function(sqlSettings,outputTable,region,startTime,endTime)
 {
 	sqlConnString = sqlSettings$connString
 	
@@ -20,22 +20,22 @@ dataPreparation <- function(sqlSettings,outputTable,region,startTime,endTime)
 	
 }
 
-fillNA <- function (inData,outData)
+fillNA = function (inData,outData)
 	{	
 		
 		#Convert input data into data frame
 		data=rxImport(inData)
 		
 		#Create full time series by filling in missing timestamps
-		data$utcTimestamp <- as.POSIXlt(data$utcTimestamp,tz="GMT", format="%Y-%m-%d %H:%M:%S")
-		minTime<-min(data$utcTimestamp)
-		maxTime<-max(data$utcTimestamp)
+		data$utcTimestamp = as.POSIXlt(data$utcTimestamp,tz="GMT", format="%Y-%m-%d %H:%M:%S")
+		minTime=min(data$utcTimestamp)
+		maxTime=max(data$utcTimestamp)
 		resolution = difftime("2015-11-01 05:00:00 UTC", "2015-11-01 04:00:00 UTC")
-		fullTime <- seq(from=minTime, to=maxTime, by=resolution)
-		fullTimedf <- data.frame(utcTimestamp = fullTime)
+		fullTime = seq(from=minTime, to=maxTime, by=resolution)
+		fullTimedf = data.frame(utcTimestamp = fullTime)
 		fullTimedf$utcTimestamp=as.character(fullTimedf$utcTimestamp)
 		data$utcTimestamp=as.character(data$utcTimestamp)
-		newdata <- merge(fullTimedf, data, by.x = 'utcTimestamp',by.y = 'utcTimestamp', all=TRUE)
+		newdata = merge(fullTimedf, data, by.x = 'utcTimestamp',by.y = 'utcTimestamp', all=TRUE)
 
 		# fill in missing value based on previous day same hour's Load
 		for (i in 25:nrow(newdata)){
