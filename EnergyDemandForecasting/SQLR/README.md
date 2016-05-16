@@ -34,7 +34,9 @@ On the computer where you will run the deployment script, you need the following
 ###WORKFLOW AUTOMATION
 The PowerShell script *setup.ps1* is used to deploy the template. Follow the deployment instructions below or the file *TemplateDeploymentInstructions.pdf* to deploy the template. The deployment process takes about 30 minutes if you meet all the system requirements before deployment.
 
-Briefly, the PowerShell script will first ask for which server and database you want to deploy the template and what is the login credential to access the server and database. Then the script will call the SQL files in this template to bulk load data to the specified database, create tables, stored procedures, and SQL Server Agent jobs used in the template. The jobs are scheduled to run every hour/15 minutes to generate simulated data, retrain the model and generate new forecasting. The following jobs will be created on your server:
+Briefly, the PowerShell script will first ask for which server and database you want to deploy the template and what is the login credential to access the server and database. Then the script will call the SQL files in this template to bulk load data to the specified database, create tables, stored procedures, and SQL Server Agent jobs used in the template. The jobs are scheduled to run every hour/15 minutes to generate simulated data, retrain the model and generate new forecasting. The figure below shows the end-to-end workflow
+![fig_pbidashboard][10]
+The following jobs will be created on your server:
 
 Job name | Description | Frequency
 -------- | ----------- | ---------
@@ -183,6 +185,7 @@ You should see a PowerBI dashboard looks like the figure below. At first, you on
 [7]:fig_pbiencryption.png
 [8]:fig_pbiapplychanges.png
 [9]:fig_pbidashboard.png
+[10]:fig_workflow.png
 ##Cleanup
 If you are done with testing the template and want to delete the scheduled jobs, run the following PowerShell command.  
 **Sqlcmd -S [server name] -U [user name] -P [password] -Q "Use [database name]; EXEC usp_delete_job @dbname = '[database name]';"**  
