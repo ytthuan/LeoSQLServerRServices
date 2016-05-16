@@ -158,10 +158,10 @@ A PowerBI dashboard template is provided to visualize the simulated actual deman
  * Open the file “EnergyDemandForecast” in the “PowerBI” folder. The dashboard will be empty and contain some errors when you first open it. If it asked you to enter credentials to access the database used to create this template as shown below, click “cancel”.
 ![PowerBI dashboard open][1]
  * Click “Edit Queries” at the top of the user interface.
-<img src=https://github.com/Azure/Azure-MachineLearning-DataScience-Private/blob/master/Misc/SQL_RRE_Templates/EnergyDemandForecasting/SQLR/fig_pbieditqueries.png alt="fig_pbieditqueries" width=500 height=125>
+<img src=https://github.com/Microsoft/SQL-Server-R-Services-Samples/blob/master/EnergyDemandForecasting/SQLR/fig_pbieditqueries.png alt="fig_pbieditqueries" width=500 height=125>
  * Click “Source” on the right side of the user interface and enter your own server and database name in the prompt window.  
-<img src=https://github.com/Azure/Azure-MachineLearning-DataScience-Private/blob/master/Misc/SQL_RRE_Templates/EnergyDemandForecasting/SQLR/fig_pbieditsource.png alt="fig_pbieditsource" width=400 height=350>
-<img src=https://github.com/Azure/Azure-MachineLearning-DataScience-Private/blob/master/Misc/SQL_RRE_Templates/EnergyDemandForecasting/SQLR/fig_pbieditsource2.png alt="fig_pbieditsource2" width=400 height=325>
+<img src=https://github.com/Microsoft/SQL-Server-R-Services-Samples/blob/master/EnergyDemandForecasting/SQLR/fig_pbieditsource.png alt="fig_pbieditsource" width=400 height=350>
+<img src=https://github.com/Microsoft/SQL-Server-R-Services-Samples/blob/master/EnergyDemandForecasting/SQLR/fig_pbieditsource2.png alt="fig_pbieditsource2" width=400 height=325>
  * Enter user name and password for accessing the database  
 For Windows Authentication, select “Windows” on the left side of the prompt window as shown below.   
 ![fig_pbiwindowsauth][5]  
