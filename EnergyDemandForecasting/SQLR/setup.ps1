@@ -229,12 +229,12 @@ write-host "creating tables and other database objects ..." -ForegroundColor whi
 
 $sqlFile1 = $PSScriptRoot + "\src\sql\MRSSqlDB_creation.sql"
 $sqlFile2 = $PSScriptRoot + "\src\sql\usp_dataSimulators.sql"
-$sqlFile3 = $PSScriptRoot + "\src\sql\usp_energyDemandForecastMain.sql"
-$sqlFile4 = $PSScriptRoot + "\src\sql\usp_featureEngineering.sql"
+$sqlFile3 = $PSScriptRoot + "\src\sql\usp_featureEngineering.sql"
+$sqlFile4 = $PSScriptRoot + "\src\sql\usp_trainModel.sql"
 $sqlFile5 = $PSScriptRoot + "\src\sql\usp_GenerateHistorcialData.sql"
 $sqlFile6 = $PSScriptRoot + "\src\sql\usp_persistModel.sql"
 $sqlFile7 = $PSScriptRoot + "\src\sql\usp_predictDemand.sql"
-$sqlFile8 = $PSScriptRoot + "\src\sql\usp_trainModel.sql"
+$sqlFile8 = $PSScriptRoot + "\src\sql\usp_energyDemandForecastMain.sql"
 $sqlFile9 = $PSScriptRoot + "\src\sql\usp_create_and_delete_jobs.sql"	
 
 if ($WindowsORSQLAuthenticationFlag -eq "YES")
@@ -281,13 +281,13 @@ $temperatureSeedFile = $PSScriptRoot + "\..\data\TemperatureHistoryHourly.txt"
 write-host "Bulk loading seed data into tables..." -ForegroundColor white	
 if ($WindowsORSQLAuthenticationFlag -eq "YES")
 {
-	bcp $DBtableDemand IN $demandSeedFile -S $SqlServer -T -c -h TABLOCK -b 100000 2>&1 3>&1 4>&1 1>>$global:logfile
-	bcp $DBtableTemperature IN $temperatureSeedFile -S $SqlServer -T -c -h TABLOCK -b 100000 2>&1 3>&1 4>&1 1>>$global:logfile
+	bcp $DBtableDemand IN $demandSeedFile -S $SqlServer -F2 -T -c -h TABLOCK -b 100000 2>&1 3>&1 4>&1 1>>$global:logfile
+	bcp $DBtableTemperature IN $temperatureSeedFile -S $SqlServer -F2 -T -c -h TABLOCK -b 100000 2>&1 3>&1 4>&1 1>>$global:logfile
 }
 else
 {
-	bcp $DBtableDemand IN $demandSeedFile -S $SqlServer -U $userName -P $passWord -c -h TABLOCK -b 100000 2>&1 3>&1 4>&1 1>>$global:logfile
-	bcp $DBtableTemperature IN $temperatureSeedFile -S $SqlServer -U $userName -P $passWord -c -h TABLOCK -b 100000 2>&1 3>&1 4>&1 1>>$global:logfile
+	bcp $DBtableDemand IN $demandSeedFile -S $SqlServer -U $userName -P $passWord -F2 -c -h TABLOCK -b 100000 2>&1 3>&1 4>&1 1>>$global:logfile
+	bcp $DBtableTemperature IN $temperatureSeedFile -S $SqlServer -U $userName -P $passWord -F2 -c -h TABLOCK -b 100000 2>&1 3>&1 4>&1 1>>$global:logfile
 }
 
 write-host "Successfully loaded seed data into tables" -ForegroundColor Green	
