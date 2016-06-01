@@ -2,7 +2,7 @@
 
 The sample runtest.R script provided in this repository demonstrates the benefits of following various tips for improving performance of R script running in SQL compute context.
 
-The test script helps to evaluate the performance gains that can be reailized when following the various tips outlined in the SQL Server R Services Performance Tuning document (<a href="https://msdn.microsoft.com/library/mt723573.aspx">Click here</a>). 
+The test script helps to evaluate the performance gains that can be reailized when following the various tips outlined in the <a href="https://msdn.microsoft.com/library/mt723573.aspx">SQL Server R Services Performance Tuning document</a>. 
 
 To run these tests, the user needs access to SQL Server 2016 with R services enabled. The user is also assumed to be familiar with some basic concepts of using SQL Server R Services.
 
