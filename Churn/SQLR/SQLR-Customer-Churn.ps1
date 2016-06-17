@@ -32,13 +32,7 @@ $ChurnPeriodVal = 21,
 # Churn threshold
 [parameter(Mandatory=$false,ParameterSetName = "Train_test")]
 [Int]
-$ChurnThresholdVal = 0,
-
-# Switch to scoring 
-[parameter(Mandatory=$false,ParameterSetName = "ResetParams")]
-[ValidateNotNullOrEmpty()]
-[Switch]
-$ResetParamsOnly
+$ChurnThresholdVal = 0
 )
 ##########################################################################
 # Script level variables
@@ -81,41 +75,6 @@ $churnThresholdVal
 }
 
 ##########################################################################
-# Update the SQL database name which will be used for workflow
-##########################################################################
-function SetParamValue
-{
-param(
-[String]
-$targetDbname
-)
-    # Get the current parameter values
-    $rUse = "\s*use\s+\[(.*)\]$"   
-  
-    $files = $filePath + "*.sql"
-    $listfiles = Get-ChildItem $files -Recurse
-
-    # Udpate the SQL related parameters in each SQL script file
-    foreach ($file in $listfiles)
-    {        
-        (Get-Content $file) | Foreach-Object {
-            $_ -replace $rUse, "use [$targetDbname]"
-        } | Set-Content $file
-    }
-}
-
-##########################################################################
-# Reset the SQL related parameters
-##########################################################################
-if($ResetParamsOnly -eq $true)
-{
-    Write-Host -ForeGroundColor 'green'("Reset the SQL related parameters to default values...")
-    Read-Host "Press any key to continue..."
-    SetParamValue $defaultDBName
-    exit
-}
-
-##########################################################################
 # Get the credential of SQL user
 ##########################################################################
 Write-Host -foregroundcolor 'green' ("Please enter the credential for Database {0} of SQL server {1}" -f $DBName, $ServerName)
@@ -124,18 +83,22 @@ $pwd = Read-Host 'Password:' -AsSecureString
 $password = [Runtime.InteropServices.Marshal]::PtrToStringAuto([Runtime.InteropServices.Marshal]::SecureStringToBSTR($pwd))
 
 ##########################################################################
+# Check the SQL server or database exists
+##########################################################################
+Invoke-Sqlcmd -ServerInstance $ServerName -Username $username -Password $password -Query "use $DBName" -ErrorAction SilentlyContinue
+if ($? -eq $false)
+{
+    Write-Host -ForegroundColor Red "Failed the test to connect to SQL server: $ServerName database: $DBName !"
+    Write-Host -ForegroundColor Red "Plese make sure: `n`t 1. SQL Server: $ServerName exists;
+                                     `n`t 2. SQL database: $DBName exists;
+                                     `n`t 3. SQL user: $username has the right credential for SQL server access."
+    exit
+}
+
+##########################################################################
 # Update the SQL scripts
 ##########################################################################
-Write-Host -foregroundcolor 'green' ("Using SQL DB: {0} and User: {1}?" -f $DBName, $username)
-$ans = Read-Host 'Continue [y|Y], Exit [e|E], Skip [s|S]?'
-
-if ($ans -eq 'y' -or $ans -eq 'Y')
-{
-    Write-Host -ForeGroundColor 'green' ("Update SQL related parameters in all SQL scripts...")
-    SetParamValue $DBName
-    SetChurnParams $ChurnPeriodVal $ChurnThresholdVal
-    Write-Host -ForeGroundColor 'green' ("Done...Update SQL related parameters in all SQL scripts")
-}
+SetChurnParams $ChurnPeriodVal $ChurnThresholdVal
 
 ##########################################################################
 # Create tables for train data and populate the table with csv files.

@@ -1,6 +1,3 @@
-use [Churn]
-go
-
 set ansi_nulls on
 go
 
@@ -20,14 +17,14 @@ begin
   insert into ChurnPredictRx
   exec sp_execute_external_script @language = N'R',
                                   @script = N'
-#library(ROCR)
+library(ROCR)
 mod <- unserialize(as.raw(model));
 print(summary(mod))
 Scores<-rxPredict(modelObject = mod, data = InputDataSet, outData = NULL, 
           predVarNames = "Score", type = "response", writeModelVars = FALSE, overwrite = TRUE);
 OutputDataSet <- data.frame(InputDataSet$UserId,InputDataSet$Tag,Scores)
 Scores$Tag <- InputDataSet$Tag
-predictROC <- rxRoc(actualVarName = "Tag", predVarNames = "Score", data = Scores, numBreaks = 10) 
+predictROC <- rxRoc(actualVarName = "Tag", predVarNames = "TagPred1", data = Scores, numBreaks = 10) 
 auc = rxAuc(predictROC)
 OutputDataSet$Auc  =  rep(auc,nrow(InputDataSet))'
 ,@input_data_1 = @inquery

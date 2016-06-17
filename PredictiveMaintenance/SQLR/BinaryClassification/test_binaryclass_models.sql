@@ -1,6 +1,3 @@
-USE [DefaultDBName]
-GO
-
 SET ANSI_NULLS ON
 GO
 
@@ -17,10 +14,11 @@ go
 -- Description:	<Description,,>
 -- =============================================
 CREATE PROCEDURE [test_binaryclass_models] @modelrf varchar(20),
-                                                    @modelbtree varchar(20),
-                                                    @modellogit varchar(20),
-                                                    @modelnn varchar(20)
-AS
+                                           @modelbtree varchar(20),
+                                           @modellogit varchar(20),
+                                           @modelnn varchar(20),
+                                           @connectionString varchar(300)
+AS 
 BEGIN
   DECLARE @inquery NVARCHAR(max) = N'SELECT * FROM test_Features_Normalized';
   declare @model_rf varbinary(max) = (select model from [PM_Models] where model_name = @modelrf);
@@ -30,15 +28,6 @@ BEGIN
 
   EXEC sp_execute_external_script @language = N'R',
                                   @script = N'
-
-####################################################################################################
-## Connection string
-####################################################################################################
-connection_string <- "Driver=SQL Server;
-                      Server=localhost;
-                      Database=DefaultDBName;
-                      UID=DefaultUsername;
-                      PWD=DefaultPassword"
 ####################################################################################################
 ## Import test into data frame for faster prediction and model evaluation
 ####################################################################################################
@@ -160,11 +149,12 @@ rxDataStep(inData = metrics_df,
            outFile = metrics_table,
            overwrite = TRUE)'
 , @input_data_1 = @inquery
-, @params = N'@forest_model varbinary(max), @boosted_model varbinary(max), @logistic_model varbinary(max), @nnet_model varbinary(max)'
+, @params = N'@forest_model varbinary(max), @boosted_model varbinary(max), @logistic_model varbinary(max), @nnet_model varbinary(max), @connection_string varchar(300)'
 , @forest_model = @model_rf
 , @boosted_model = @model_btree
 , @logistic_model = @model_logit
 , @nnet_model = @model_nn
+, @connection_string = @connectionString
 
 END
 

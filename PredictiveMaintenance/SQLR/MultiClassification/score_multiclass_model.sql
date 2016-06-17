@@ -1,6 +1,3 @@
-USE [DefaultDBName]
-GO
-
 SET ANSI_NULLS ON
 GO
 
@@ -17,7 +14,8 @@ GO
 -- Create date: <Create Date,,>
 -- Description:	<Description,,>
 -- =============================================
-CREATE PROCEDURE [score_multiclass_model] @modelname varchar(20)
+CREATE PROCEDURE [score_multiclass_model] @modelname varchar(20),
+                                          @connectionString varchar(300)
 
 AS
 BEGIN
@@ -26,16 +24,6 @@ BEGIN
  
   EXEC sp_execute_external_script @language = N'R',
                                   @script = N'
-
-####################################################################################################
-## Connection string
-####################################################################################################
-connection_string <- "Driver=SQL Server;
-                      Server=localhost;
-                      Database=DefaultDBName;
-                      UID=DefaultUsername;
-                      PWD=DefaultPassword"
-
 ####################################################################################################
 ## Get score table data for prediction
 ####################################################################################################
@@ -67,9 +55,10 @@ rxDataStep(inData = predictions,
            outFile = prediction_table,
            overwrite = TRUE)'
 , @input_data_1 = @inquery
-, @params = N'@model varbinary(max), @modelname varchar(20)'
+, @params = N'@model varbinary(max), @modelname varchar(20), @connection_string varchar(300)'
 , @model = @model
 , @modelname = @modelname
+, @connection_string = @connectionString
 
 END
 
