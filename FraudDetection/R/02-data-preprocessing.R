@@ -37,12 +37,12 @@ account_level_partition <- function(in_table, out_table, key, nfRate, frdRate) {
   }
   
   data <- splitDataByKey(data, key, nfRate, frdRate)
-  data_file_path <- file.path(tempdir(), "data.csv")
-  write.csv(x = data, 
-            file = data_file_path,
-            row.names = FALSE)
-  data_text <- RxTextData(file = data_file_path)
-  rxDataStep(inData = data_text,
+  #data_file_path <- file.path(tempdir(), "data.csv")
+  #write.csv(x = data, 
+  #         file = data_file_path,
+  #          row.names = FALSE)
+  #data_text <- RxTextData(file = data_file_path)
+  rxDataStep(inData = data,
              outFile = out_table,
              overwrite = TRUE)
 }
@@ -69,12 +69,12 @@ clean_table <- function(in_table, out_table) {
   date_time <- paste0(data$transactionDate, data$transactionTime)
   error_flag <- is.na(strptime(date_time, "%Y%m%d%H%M%S"))
   data <- data[!error_flag, ]
-  data_file_path <- file.path(tempdir(), "data.csv")
-  write.csv(x = data, 
-            file = data_file_path,
-            row.names = FALSE)
-  data_text <- RxTextData(file = data_file_path)
-  rxDataStep(inData = data_text,
+  #data_file_path <- file.path(tempdir(), "data.csv")
+  #write.csv(x = data, 
+  #          file = data_file_path,
+  #          row.names = FALSE)
+  #data_text <- RxTextData(file = data_file_path)
+  rxDataStep(inData = data,
              outFile = out_table,
              overwrite = TRUE)
 }

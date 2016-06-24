@@ -20,7 +20,6 @@ $ServerName = "",
 
 # SQL server database name
 [parameter(Mandatory=$true,ParameterSetName = "Train_test")]
-[parameter(Mandatory=$true,ParameterSetName = "SetParam")]
 [ValidateNotNullOrEmpty()]
 [String]
 $DBName = "",
@@ -29,13 +28,7 @@ $DBName = "",
 [parameter(Mandatory=$false,ParameterSetName = "Train_test")]
 [ValidateNotNullOrEmpty()]
 [Switch]
-$Score,
-
-# Switch to preventive maintenance scoring 
-[parameter(Mandatory=$true,ParameterSetName = "SetParam")]
-[ValidateNotNullOrEmpty()]
-[Switch]
-$SetParamOnly
+$Score
 )
 
 ##########################################################################
@@ -67,72 +60,12 @@ $sqlquery
     Invoke-Sqlcmd -ServerInstance $ServerName  -Database $DBName -Username $username -Password $password -Query $sqlquery -QueryTimeout 200000
 }
 ##########################################################################
-# Update the SQL database name which will be used for workflow
-##########################################################################
-function SetParamValue
-{
-param(
-[String]
-$targetDbname
-)
-    # Get the current parameter values
-    $currentDbname = ""
-    $rUse = "^\s*use\s+\[(.*)\]$"
-    $file = $filePath + "Step0_CreateTables.sql" 
-    $content = Get-Content $file
-    $line = $content -match $rUse
-    $match = ([regex]$rUse).Match($line)     
-     
-    if (-not $match.Success)
-    {
-        Write-Host -foregroundcolor 'red' ("Please check the file $file contains line of: use [DatabaseName]")
-        exit  
-    }
-
-    $currentDbName = $match.Groups[1].Value 
-    $files = $filePath + "*.sql"
-    $listfiles = Get-ChildItem $files -Recurse
-
-    # Udpate the SQL related parameters in each SQL script file
-    foreach ($file in $listfiles)
-    {        
-        (Get-Content $file) | Foreach-Object {
-            $_ -replace $currentDbname, $targetDbname
-        } | Set-Content $file
-    }
-}
-
-##########################################################################
-# Set the SQL Database name
-##########################################################################
-if($SetParamOnly -eq $true)
-{
-    Write-Host -ForeGroundColor 'green'("Set the SQL Database name...")
-    Read-Host "Press any key to continue..."
-    SetParamValue $DBName
-    exit
-}
-
-##########################################################################
 # Get the credential of SQL user
 ##########################################################################
 Write-Host -foregroundcolor 'green' ("Please enter the credential for Database {0} of SQL server {1}" -f $dbname, $server)
 $username = Read-Host 'Username:'
 $pwd = Read-Host 'Password:' -AsSecureString
 $password = [Runtime.InteropServices.Marshal]::PtrToStringAuto([Runtime.InteropServices.Marshal]::SecureStringToBSTR($pwd))
-##########################################################################
-# Update the SQL scripts
-##########################################################################
-Write-Host -foregroundcolor 'green' ("Using SQL DB: {0} and User: {1}?" -f $DBName, $username)
-$ans = Read-Host 'Continue [y|Y], Exit [e|E], Skip [s|S]?'
-
-if ($ans -eq 'y' -or $ans -eq 'Y')
-{
-    Write-Host -ForeGroundColor 'green' ("Update SQL related parameters in all SQL scripts...")
-    SetParamValue $DBName
-    Write-Host -ForeGroundColor 'green' ("Done...Update SQL related parameters in all SQL scripts")
-}
-
 ##########################################################################
 # Online scoring 
 ##########################################################################
@@ -202,7 +135,7 @@ if($Score -eq $true)
 # Create tables for train and test and populate with data from csv files.
 ##########################################################################
 Write-Host -foregroundcolor 'green' ("Step 0: Create and populate untagged and fraud tables in Database" -f $dbname)
-$ans = Read-Host 'Continue [y|Y], Exit [e|E], Skip [s|S]?'
+$ans = Read-Host 'Continue [y|Y], Exit [e|E]?'
 if ($ans -eq 'E' -or $ans -eq 'e')
 {
     return
@@ -234,7 +167,7 @@ if ($ans -eq 'y' -or $ans -eq 'Y')
 # Create and execute the stored procedure for tagging
 ##########################################################################
 Write-Host -foregroundcolor 'green' ("Step 1: Tagging on account level")
-$ans = Read-Host 'Continue [y|Y], Exit [e|E], Skip [s|S]?'
+$ans = Read-Host 'Continue [y|Y], Exit [e|E]?'
 if ($ans -eq 'E' -or $ans -eq 'e')
 {
     return
@@ -255,7 +188,7 @@ if ($ans -eq 'y' -or $ans -eq 'Y')
 ##########################################################################
 
 Write-Host -foregroundcolor 'green' ("Step 2: Preprocess the data")
-$ans = Read-Host 'Continue [y|Y], Exit [e|E], Skip [s|S]?'
+$ans = Read-Host 'Continue [y|Y], Exit [e|E]?'
 if ($ans -eq 'E' -or $ans -eq 'e')
 {
     return
@@ -280,7 +213,7 @@ if ($ans -eq 'y' -or $ans -eq 'Y')
 ##########################################################################
 
 Write-Host -foregroundcolor 'green' ("Step 3: Create risk tables")
-$ans = Read-Host 'Continue [y|Y], Exit [e|E], Skip [s|S]?'
+$ans = Read-Host 'Continue [y|Y], Exit [e|E]?'
 if ($ans -eq 'E' -or $ans -eq 'e')
 {
     return
@@ -305,7 +238,7 @@ if ($ans -eq 'y' -or $ans -eq 'Y')
 ##########################################################################
 
 Write-Host -foregroundcolor 'green' ("Step 4: Feature engineering for training")
-$ans = Read-Host 'Continue [y|Y], Exit [e|E], Skip [s|S]?'
+$ans = Read-Host 'Continue [y|Y], Exit [e|E]?'
 if ($ans -eq 'E' -or $ans -eq 'e')
 {
     return
@@ -334,7 +267,7 @@ if ($ans -eq 'y' -or $ans -eq 'Y')
 ##########################################################################
 
 Write-Host -foregroundcolor 'green' ("Step 5: Model training")
-$ans = Read-Host 'Continue [y|Y], Exit [e|E], Skip [s|S]?'
+$ans = Read-Host 'Continue [y|Y], Exit [e|E]?'
 if ($ans -eq 'E' -or $ans -eq 'e')
 {
     return
@@ -355,7 +288,7 @@ if ($ans -eq 'y' -or $ans -eq 'Y')
 ##########################################################################
 
 Write-Host -foregroundcolor 'green' ("Step 6: Scoring on test set")
-$ans = Read-Host 'Continue [y|Y], Exit [e|E], Skip [s|S]?'
+$ans = Read-Host 'Continue [y|Y], Exit [e|E]?'
 if ($ans -eq 'E' -or $ans -eq 'e')
 {
     return
@@ -378,7 +311,7 @@ if ($ans -eq 'y' -or $ans -eq 'Y')
 ##########################################################################
 
 Write-Host -foregroundcolor 'green' ("Step 7: Evaluation")
-$ans = Read-Host 'Continue [y|Y], Exit [e|E], Skip [s|S]?'
+$ans = Read-Host 'Continue [y|Y], Exit [e|E]?'
 if ($ans -eq 'E' -or $ans -eq 'e')
 {
     return

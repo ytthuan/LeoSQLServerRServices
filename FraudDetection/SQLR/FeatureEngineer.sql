@@ -1,18 +1,15 @@
 /* assume risk tables and the table storing column names (named 'sql_risk_var') have been created in step3 */
 /* procedure to do feature engineering */
-use [OnlineFraudDetection]
-go
-
 set ansi_nulls on
 go
 
 set quoted_identifier on
 go
 
-DROP PROCEDURE IF EXISTS dbo.FeatureEngineer
+DROP PROCEDURE IF EXISTS FeatureEngineer
 GO
 
-create procedure dbo.FeatureEngineer @table nvarchar(max)
+create procedure FeatureEngineer @table nvarchar(max)
 as
 begin
 

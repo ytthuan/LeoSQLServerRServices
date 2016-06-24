@@ -1,6 +1,3 @@
-use [OnlineFraudDetection]
-go
-
 set ansi_nulls on
 go
 
@@ -14,9 +11,9 @@ create procedure dbo.EvaluateR_auc
 as
 begin
 
-truncate table OnlineFraudDetection.dbo.sql_performance_auc
+truncate table sql_performance_auc
 
-insert into OnlineFraudDetection.dbo.sql_performance_auc
+insert into sql_performance_auc
 exec sp_execute_external_script @language = N'R',
                                   @script = N'
  library(ROCR)
@@ -25,6 +22,6 @@ exec sp_execute_external_script @language = N'R',
  auc = as.numeric(performance(pred,"auc")@y.values)
  OutputDataSet <- as.data.frame(auc)
 ',
-  @input_data_1 = N' select * from OnlineFraudDetection.dbo.sql_predict_score'
+  @input_data_1 = N' select * from sql_predict_score'
 ;
 end

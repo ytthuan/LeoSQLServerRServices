@@ -78,12 +78,12 @@ create_risk_table <- function(in_table, out_table){
   calculated_risks <- Calc_Risks(ycolname,xcolnames,subset_data)
   
   data <- calculated_risks
-  data_file_path <- file.path(tempdir(), "data.csv")
-  write.csv(x = data, 
-            file = data_file_path,
-            row.names = FALSE)
-  data_text <- RxTextData(file = data_file_path)
-  rxDataStep(inData = data_text,
+  #data_file_path <- file.path(tempdir(), "data.csv")
+  #write.csv(x = data, 
+  #         file = data_file_path,
+  #         row.names = FALSE)
+  #data_text <- RxTextData(file = data_file_path)
+  rxDataStep(inData = data,
              outFile = out_table,
              overwrite = TRUE)
 }

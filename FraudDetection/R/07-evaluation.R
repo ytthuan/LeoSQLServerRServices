@@ -293,27 +293,27 @@ metrics_df <- as.data.frame(metrics_df)
 rownames(metrics_df) <- NULL
 Algorithms <- c("Boosted Decision Tree")
 metrics_df <- cbind(Algorithms, metrics_df)
-metrics_file_path <- file.path(tempdir(), "binary_metrics.csv")
-write.csv(x = metrics_df, 
-          file = metrics_file_path,
-          row.names = FALSE)
-metrics_text <- RxTextData(file = metrics_file_path)
+#metrics_file_path <- file.path(tempdir(), "binary_metrics.csv")
+#write.csv(x = metrics_df, 
+#          file = metrics_file_path,
+#          row.names = FALSE)
+#metrics_text <- RxTextData(file = metrics_file_path)
 metrics_table <- RxSqlServerData(table = "binary_metrics",
                                  connectionString = connection_string)
-rxDataStep(inData = metrics_text,
+rxDataStep(inData = metrics_df,
            outFile = metrics_table,
            overwrite = TRUE)
 ####################################################################################################
 ## Write account metrics to SQL
 ####################################################################################################
-metrics_file_path <- file.path(tempdir(), "account_metrics.csv")
-write.csv(x = perf, 
-          file = metrics_file_path,
-          row.names = FALSE)
-metrics_text <- RxTextData(file = metrics_file_path)
+#metrics_file_path <- file.path(tempdir(), "account_metrics.csv")
+#write.csv(x = perf, 
+#          file = metrics_file_path,
+#          row.names = FALSE)
+#metrics_text <- RxTextData(file = metrics_file_path)
 metrics_table <- RxSqlServerData(table = "account_metrics",
                                  connectionString = connection_string)
-rxDataStep(inData = metrics_text,
+rxDataStep(inData = perf,
            outFile = metrics_table,
            overwrite = TRUE)
 ####################################################################################################

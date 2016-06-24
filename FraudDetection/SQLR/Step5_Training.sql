@@ -1,7 +1,5 @@
 /* create the procedure to train model by calling R */
 /* to execuate: exec dbo.TrainModelR; */
-use [OnlineFraudDetection]
-go
 
 set ansi_nulls on
 go
@@ -9,16 +7,16 @@ go
 set quoted_identifier on
 go
 
-DROP PROCEDURE IF EXISTS dbo.TrainModelR
+DROP PROCEDURE IF EXISTS TrainModelR
 GO
 
-create procedure dbo.TrainModelR
+create procedure TrainModelR
 as
 begin
 
-truncate table OnlineFraudDetection.dbo.sql_trained_model
+truncate table sql_trained_model
 
-insert into OnlineFraudDetection.dbo.sql_trained_model
+insert into sql_trained_model
 execute sp_execute_external_script
   @language = N'R',
   @script = N' 
@@ -66,7 +64,7 @@ execute sp_execute_external_script
   
   trained_model <- data.frame(model=as.raw(serialize(boosted_fit, NULL)))
   ',
-  @input_data_1 = N' select top 10000 * from OnlineFraudDetection.dbo.sql_tagged_training order by Label DESC', -- choose top 10000 to train, for the purpose of 1) speed up 2) down sample to improve performance
+  @input_data_1 = N' select top 10000 * from sql_tagged_training order by Label DESC', -- choose top 10000 to train, for the purpose of 1) speed up 2) down sample to improve performance
   @output_data_1_name = N'trained_model'
  ;
  end

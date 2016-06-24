@@ -45,7 +45,7 @@ rxDataStep(inData = untagged_data_table,
            outFile = untagged_clean_table,
            transforms = list(transactionTime = sprintf("%06d", as.numeric(transactionTime))),
            overwrite = TRUE,
-           rowsPerRead = 20000)
+           rowsPerRead = 10000)
 
 # uniform transactionTime of fraud data into 6 digits and write back to sql server
 fraud_columns <- c(transactionAmount = "numeric",
@@ -183,15 +183,10 @@ tag_fraud <- function(in_table1, in_table2, out_table, tag_mode) {
   }
   
   data <- tagTranDataWithFraud(df, frd_df, tag_mode)
-  data_file_path <- file.path(tempdir(), "data.csv")
-  write.csv(x = data, 
-            file = data_file_path,
-            row.names = FALSE)
-  data_text <- RxTextData(file = data_file_path)
-  rxDataStep(inData = data_text,
+  rxDataStep(inData = data,
              outFile = out_table,
              overwrite = TRUE,
-             rowsPerRead = 20000)
+             rowsPerRead = 10000)
 }
 rxSetComputeContext(sql)
 sql_query <- "select * from untagged_clean order by accountID, transactionDate, transactionTime"

@@ -2,19 +2,16 @@
 -- @name = the name of the variable to fill NA value
 -- @table = the name of table to be updated
 
-use [OnlineFraudDetection]
-go
-
 set ansi_nulls on
 go
 
 set quoted_identifier on
 go
 
-DROP PROCEDURE IF EXISTS dbo.FillMissing
+DROP PROCEDURE IF EXISTS FillMissing
 GO
 
-create procedure dbo.FillMissing 
+create procedure FillMissing 
 @name varchar(max),
 @table varchar(max)
 as

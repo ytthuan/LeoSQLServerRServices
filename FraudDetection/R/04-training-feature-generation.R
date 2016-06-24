@@ -89,12 +89,12 @@ create_new_features <- function(in_table_1, in_table_2, out_table, vars_to_keep)
   data <- subset(data, select = vars_to_keep)
   data <- cbind(assigned_risks, data)
   data <- subset(data, Label != 2)
-  data_file_path <- file.path(tempdir(), "data.csv")
-  write.csv(x = data, 
-            file = data_file_path,
-            row.names = FALSE)
-  data_text <- RxTextData(file = data_file_path)
-  rxDataStep(inData = data_text,
+  #data_file_path <- file.path(tempdir(), "data.csv")
+  #write.csv(x = data, 
+  #          file = data_file_path,
+  #          row.names = FALSE)
+  #data_text <- RxTextData(file = data_file_path)
+  rxDataStep(inData = data,
              outFile = out_table,
              overwrite = TRUE)
 }

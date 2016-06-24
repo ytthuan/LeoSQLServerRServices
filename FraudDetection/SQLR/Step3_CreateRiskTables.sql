@@ -2,24 +2,20 @@
 /*
 The procedure to create all risk tables
 */
-
-use [OnlineFraudDetection]
-go
-
 set ansi_nulls on
 go
 
 set quoted_identifier on
 go
 
-DROP PROCEDURE IF EXISTS dbo.CreateRiskTable_ForAll
+DROP PROCEDURE IF EXISTS CreateRiskTable_ForAll
 GO
 
-create procedure dbo.CreateRiskTable_ForAll
+create procedure CreateRiskTable_ForAll
 as
 begin
 
-DROP TABLE IF EXISTS dbo.sql_risk_var
+DROP TABLE IF EXISTS sql_risk_var
 
 -- create a table to store names of variables and risk tables. will be used as referrence in the loop later
 create table dbo.sql_risk_var (ID int,var_names varchar(255), table_names varchar(255));
