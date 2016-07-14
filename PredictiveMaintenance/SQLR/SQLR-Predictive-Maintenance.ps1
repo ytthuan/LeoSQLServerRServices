@@ -182,6 +182,11 @@ if ($ans -eq 'y' -or $ans -eq 'Y')
 {
     try
     {
+        # check if required R packages are installed
+        Write-Host -ForeGroundColor 'green' ("Check required R packages")
+        $script = $filePath + "DataProcessing\check_packages.sql"
+        ExecuteSQL $script
+
         # create training and test tables
         Write-Host -ForeGroundColor 'green' ("Create SQL tables: PM_train, PM_test, PM_truth and PM_models:")
         $script = $filePath + "DataProcessing\create_table.sql"
