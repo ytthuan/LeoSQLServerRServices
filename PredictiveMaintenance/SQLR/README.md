@@ -47,6 +47,10 @@ To run the scripts, you must prepare the following environment:
  
  * For more information about SQL Server 2016 and SQL Server R Services, please visit:
    https://msdn.microsoft.com/en-us/library/mt604847.aspx
+   
+The "plyr" and "zoo" R packages are needed. To install packages into the R Services environment please read here:
+
+  https://msdn.microsoft.com/en-us/library/mt591989.aspx
 
 ###WORKFLOW AUTOMATION
 -------------------
@@ -61,11 +65,11 @@ The end-to-end workflow is fully automated by using a PowerShell script. To lear
 
 To train and evaluate the models, you may run it as:
 
-	SQLR-Predictive-Maintenance.ps1 -server [SQL Server instance name] -dbname [database name] 
+	SQLR-Predictive-Maintenance.ps1 -ServerName [SQL Server instance name] -DBName [database name] 
 
 To score the production data, you  may specify the -Score option:
 
-	SQLR-Predictive-Maintenance.ps1 -server [SQL Server instance name] -dbname [database name] -Score
+	SQLR-Predictive-Maintenance.ps1 -ServerName [SQL Server instance name] -DBName [database name] -Score
 
 The following chart shows the workflow. In the chart, the blue parallelogram represents the action to take. Before each step, the user will have the choice to continue, skip or exit. 
 
