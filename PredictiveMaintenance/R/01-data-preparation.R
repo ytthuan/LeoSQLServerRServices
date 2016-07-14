@@ -67,6 +67,15 @@ rxDataStep(inData = train_data_text,
            overwrite = TRUE)
 
 ####################################################################################################
+### Data exploration examples
+####################################################################################################
+
+rxSummary( ~ ., train_data_table)
+rxHistogram(~s11,train_data_table)
+rxHistogram( ~ s11 | F(id), type = "p", data = train_data_table)
+rxLinePlot(s11~cycle|id,train_data_table)
+
+####################################################################################################
 ## Load test data into SQL table
 ####################################################################################################
 test_file <- "PM_Test.csv"
