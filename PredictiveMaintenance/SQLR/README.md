@@ -57,7 +57,7 @@ The following graph shows the overall work flow. The blue block represents each 
 
 The end-to-end workflow is fully automated by using a PowerShell script. To learn how to run the script, open a PowerShell command prompt, and type:
 
-	Get-Help SQLR-Predictive-Maintenance.ps1 
+	Get-Help .\SQLR-Predictive-Maintenance.ps1 
 
 To train and evaluate the models, you may run it as:
 
