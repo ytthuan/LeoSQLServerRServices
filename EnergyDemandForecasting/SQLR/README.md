@@ -34,7 +34,9 @@ On the computer where you will run the deployment script, you need the following
 ###WORKFLOW AUTOMATION
 The PowerShell script *setup.ps1* is used to deploy the template. Follow the deployment instructions below or the file *TemplateDeploymentInstructions.pdf* to deploy the template. The deployment process takes about 30 minutes if you meet all the system requirements before deployment.
 
-Briefly, the PowerShell script will first ask for which server and database you want to deploy the template and what is the login credential to access the server and database. Then the script will call the SQL files in this template to bulk load data to the specified database, create tables, stored procedures, and SQL Server Agent jobs used in the template. The jobs are scheduled to run every hour/15 minutes to generate simulated data, retrain the model and generate new forecasting. The following jobs will be created on your server:
+Briefly, the PowerShell script will first ask for which server and database you want to deploy the template and what is the login credential to access the server and database. Then the script will call the SQL files in this template to bulk load data to the specified database, create tables, stored procedures, and SQL Server Agent jobs used in the template. The jobs are scheduled to run every hour/15 minutes to generate simulated data, retrain the model and generate new forecasting. The figure below shows the end-to-end workflow
+![fig_pbidashboard][10]
+The following jobs will be created on your server:
 
 Job name | Description | Frequency
 -------- | ----------- | ---------
@@ -158,10 +160,10 @@ A PowerBI dashboard template is provided to visualize the simulated actual deman
  * Open the file “EnergyDemandForecast” in the “PowerBI” folder. The dashboard will be empty and contain some errors when you first open it. If it asked you to enter credentials to access the database used to create this template as shown below, click “cancel”.
 ![PowerBI dashboard open][1]
  * Click “Edit Queries” at the top of the user interface.
-<img src=https://github.com/Azure/Azure-MachineLearning-DataScience-Private/blob/master/Misc/SQL_RRE_Templates/EnergyDemandForecasting/SQLR/fig_pbieditqueries.png alt="fig_pbieditqueries" width=500 height=125>
+<img src=https://github.com/Microsoft/SQL-Server-R-Services-Samples/blob/master/EnergyDemandForecasting/SQLR/fig_pbieditqueries.png alt="fig_pbieditqueries" width=500 height=125>
  * Click “Source” on the right side of the user interface and enter your own server and database name in the prompt window.  
-<img src=https://github.com/Azure/Azure-MachineLearning-DataScience-Private/blob/master/Misc/SQL_RRE_Templates/EnergyDemandForecasting/SQLR/fig_pbieditsource.png alt="fig_pbieditsource" width=400 height=350>
-<img src=https://github.com/Azure/Azure-MachineLearning-DataScience-Private/blob/master/Misc/SQL_RRE_Templates/EnergyDemandForecasting/SQLR/fig_pbieditsource2.png alt="fig_pbieditsource2" width=400 height=325>
+<img src=https://github.com/Microsoft/SQL-Server-R-Services-Samples/blob/master/EnergyDemandForecasting/SQLR/fig_pbieditsource.png alt="fig_pbieditsource" width=400 height=350>
+<img src=https://github.com/Microsoft/SQL-Server-R-Services-Samples/blob/master/EnergyDemandForecasting/SQLR/fig_pbieditsource2.png alt="fig_pbieditsource2" width=400 height=325>
  * Enter user name and password for accessing the database  
 For Windows Authentication, select “Windows” on the left side of the prompt window as shown below.   
 ![fig_pbiwindowsauth][5]  
@@ -183,6 +185,7 @@ You should see a PowerBI dashboard looks like the figure below. At first, you on
 [7]:fig_pbiencryption.png
 [8]:fig_pbiapplychanges.png
 [9]:fig_pbidashboard.png
+[10]:fig_workflow.png
 ##Cleanup
 If you are done with testing the template and want to delete the scheduled jobs, run the following PowerShell command.  
 **Sqlcmd -S [server name] -U [user name] -P [password] -Q "Use [database name]; EXEC usp_delete_job @dbname = '[database name]';"**  

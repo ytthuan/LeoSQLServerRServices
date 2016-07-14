@@ -67,10 +67,6 @@ To score the production data, you  may specify the -Score option:
 
 	SQLR-Predictive-Maintenance.ps1 -server [SQL Server instance name] -dbname [database name] -Score
 
-To reset the SQL related parameters in the SQL scripts to the default values, you may run:
-	
-	SQLR-Predictive-Maintenance.ps1 -ResetParamsOnly
-
 The following chart shows the workflow. In the chart, the blue parallelogram represents the action to take. Before each step, the user will have the choice to continue, skip or exit. 
 
 ![Work flow][2]
@@ -168,24 +164,8 @@ The files related to this step are:
     <th>Description</th>
   </tr>
   <tr>
-    <td>Regression\train_regression_btree.sql</td>
-    <td>Train Boosted Decision Tree Regression model</td>
-  </tr>
-  <tr>
-    <td>Regression\train_regression_glm.sql</td>
-    <td>Train Poisson Regression model</td>
-  </tr>
-  <tr>
-    <td>Regression\train_regression_nn.sql</td>
-    <td>Train Neural Network Regression model</td>
-  </tr>
-  <tr>
-    <td>Regression\train_regression_rf.sql</td>
-    <td>Train Decision Forest Regression model</td>
-  </tr>
-  <tr>
-    <td>Regression\execute_train_reg_models.sql</td>
-    <td>Execute all four training models and save them into PM_Models</td>
+    <td>Regression\train_regression_model.sql</td>
+    <td>Train Regression models</td>
   </tr>
   <tr>
     <td>Regression\test_regression_models.sql</td>
@@ -221,25 +201,9 @@ The files related to this step are:
     <th>Description</th>
   </tr>
   <tr>
-    <td>BinaryClassification\train_binaryclass_btree.sql</td>
-    <td>Train Two-Class Boosted Decision Tree model</td>
-  </tr>
-  <tr>
-    <td>BinaryClassification\train_binaryclass_logit.sql</td>
-    <td>Train Two-Class Logistic model</td>
-  </tr>
-  <tr>
-    <td>BinaryClassification\train_binaryclass_nn.sql</td>
-    <td>Train Two-Class Neural Network model</td>
-  </tr>
-  <tr>
-    <td>BinaryClassification\train_binaryclass_rf.sql</td>
-    <td>Train Two-Class Decision Forest model</td>
-  </tr>
-  <tr>
-    <td>BinaryClassification\execute_train_bclass_models.sql</td>
-    <td>Execute all four training models and save them into PM_Models</td>
-  </tr>
+    <td>BinaryClassification\train_binaryclass_model.sql</td>
+    <td>Train Binary Classification model</td>
+  </tr>  
   <tr>
     <td>BinaryClassification\test_binaryclass_models.sql</td>
     <td>Test models and save the performance metrics into SQL tables</td>
@@ -278,25 +242,9 @@ The files related to this step are:
     <th>Description</th>
   </tr>
   <tr>
-    <td>MultiClassification\train_multiclass_btree.sql</td>
-    <td>Train Boosted Decision Tree model</td>
-  </tr>
-  <tr>
-    <td>MultiClassification\train_multiclass_mn.sql</td>
-    <td>Train Multinomial Logistic Regression model</td>
-  </tr>
-  <tr>
-    <td>MultiClassification\train_multiclass_nn.sql</td>
-    <td>Train Neural Network model</td>
-  </tr>
-  <tr>
-    <td>MultiClassification\train_multiclass_rf.sql</td>
-    <td>Train MultiClass Decision Forest model</td>
-  </tr>
-  <tr>
-    <td>MultiClassification\execute_train_mclass_models.sql</td>
-    <td>Execute all four training models and save them into PM_Models</td>
-  </tr>
+    <td>MultiClassification\train_multiclass_model.sql</td>
+    <td>Train Multi-class Classification models</td>
+  </tr>  
   <tr>
     <td>MultiClassification\test_multiclass_models.sql</td>
     <td>Evaluate models on test data and save the scores and performance metrics into SQL tables</td>

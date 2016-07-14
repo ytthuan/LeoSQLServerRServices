@@ -1,6 +1,3 @@
-use [DefaultDBName]
-go
-
 DROP TABLE IF EXISTS Users
 GO
 

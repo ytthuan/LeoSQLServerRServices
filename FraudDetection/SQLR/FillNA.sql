@@ -2,20 +2,16 @@
 -- @var_name = variable name
 -- @risk_table_name =  the risk table to be used
 -- @table the table you want to update: training or testing
-
-use [OnlineFraudDetection]
-go
-
 set ansi_nulls on
 go
 
 set quoted_identifier on
 go
 
-DROP PROCEDURE IF EXISTS dbo.FillNA
+DROP PROCEDURE IF EXISTS FillNA
 GO
 
-create procedure dbo.FillNA
+create procedure FillNA
 @var_name varchar(max),
 @risk_table_name varchar(max),
 @table varchar(max)

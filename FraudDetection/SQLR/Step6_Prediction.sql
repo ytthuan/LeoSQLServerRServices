@@ -1,6 +1,4 @@
 /* predict on testing data set */
-use [OnlineFraudDetection]
-go
 
 set ansi_nulls on
 go
@@ -8,10 +6,10 @@ go
 set quoted_identifier on
 go
 
-DROP PROCEDURE IF EXISTS dbo.PredictR
+DROP PROCEDURE IF EXISTS PredictR
 GO
 
-create procedure dbo.PredictR @table nvarchar(max)
+create procedure PredictR @table nvarchar(max)
 as
 begin
 /* feature engineering for testing data */
@@ -31,13 +29,13 @@ set @sql_2 = 'alter table ' + @table + '
                 drop column dateNtime, timeFlag, random_number, trainFlag, transactionID,transactionCurrencyCode,transactionCurrencyConversionRate,localHour,transactionScenario,transactionDeviceId,transactionIPaddress,ipState,ipPostcode,ipCountryCode,browserLanguage,paymentInstrumentID,paymentBillingAddress,paymentBillingPostalCode,paymentBillingState,paymentBillingCountryCode,paymentBillingName,shippingAddress,shippingPostalCode,shippingCity,shippingState,shippingCountry,accountOwnerName,accountAddress,accountPostalCode,accountCity,accountState,accountCountry,accountOpenDate;'			  
 exec sp_executesql @sql_2  
 
-declare @modelt varbinary(max) = (select top 1 model from OnlineFraudDetection.dbo.sql_trained_model);
+declare @modelt varbinary(max) = (select top 1 model from sql_trained_model);
 declare @inquery nvarchar(max) 
 set @inquery =  'select * from ' + @table;
 
-truncate table OnlineFraudDetection.dbo.sql_predict_score
+truncate table sql_predict_score
 
-insert into OnlineFraudDetection.dbo.sql_predict_score
+insert into sql_predict_score
 exec sp_execute_external_script @language = N'R',
                                   @script = N'
 # unserialize the model object. Ready to use

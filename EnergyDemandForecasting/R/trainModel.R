@@ -1,7 +1,7 @@
 ####################################################################################################
 ##trainModel.R: this function trains a random regression forest model
 ####################################################################################################
-trainModel <- function(sqlSettings,input)
+trainModel = function(sqlSettings,input)
 {
 	sqlConnString = sqlSettings$connString
 	

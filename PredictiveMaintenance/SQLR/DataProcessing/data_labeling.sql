@@ -1,6 +1,3 @@
-USE [DefaultDBName]
-GO
-
 SET ANSI_NULLS ON
 GO
 
@@ -17,7 +14,8 @@ GO
 -- Create date: <Create Date,,>
 -- Description:	<Description,,>
 -- =============================================
-CREATE PROCEDURE [data_labeling] @dataset_type varchar(20)
+CREATE PROCEDURE [data_labeling] @dataset_type varchar(20),
+                                 @connectionString varchar(300)
 AS
 BEGIN
 
@@ -36,14 +34,6 @@ source_table <- "PM_Train"
 if (identical(dataset_type, "test")) {
   source_table <- "PM_Test"
 }
-####################################################################################################
-## Connection string
-####################################################################################################
-connection_string <- "Driver=SQL Server;
-                      Server=localhost;
-                      Database=DefaultDBName;
-                      UID=DefaultUsername;
-                      PWD=DefaultPassword"
 ####################################################################################################
 ## Add labels to raw data
 ## Three set of labels will be generated based on the models we use:
@@ -105,8 +95,9 @@ if (identical(dataset_type, "test")) {
              rowsPerRead=-1, 
              reportProgress = 3)'
 , @input_data_1 = @inquery
-, @params = N'@dataset_type varchar(20)'
-, @dataset_type = @dataset_type                      
+, @params = N'@dataset_type varchar(20), @connection_string varchar(300)'
+, @dataset_type = @dataset_type 
+, @connection_string = @connectionString                     
 END
 ;
 GO

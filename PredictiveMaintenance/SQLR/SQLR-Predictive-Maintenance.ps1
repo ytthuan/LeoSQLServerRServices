@@ -29,13 +29,7 @@ $DBName = "",
 [parameter(Mandatory=$false,ParameterSetName = "Train_test")]
 [ValidateNotNullOrEmpty()]
 [Switch]
-$Score,
-
-# Switch to set parameters only
-[parameter(Mandatory=$true,ParameterSetName = "Reset_params")]
-[ValidateNotNullOrEmpty()]
-[Switch]
-$ResetParamsOnly
+$Score
 )
 ##########################################################################
 # Script level variables
@@ -43,9 +37,6 @@ $ResetParamsOnly
 $scriptPath = Get-Location
 $filePath = $scriptPath.Path+ "\"
 $parentPath = Split-Path -parent $scriptPath
-$defaultUsername = "DefaultUsername"
-$defaultPassword = "DefaultPassword"
-$defaultDBName = "DefaultDBName"
 ##########################################################################
 # Function wrapper to invoke SQL command
 ##########################################################################
@@ -69,49 +60,14 @@ $sqlquery
 )
     Invoke-Sqlcmd -ServerInstance $ServerName  -Database $DBName -Username $username -Password $password -Query $sqlquery -QueryTimeout 200000
 }
-##########################################################################
-# Get the current SQL related parameters and set them to specified values
-##########################################################################
-function SetParamValues
-{
-param(
-[String]
-$targetDbname,
-[String]
-$targetUsername,
-[String]
-$targetPassword
-)
-    # Get the current parameter values
-    $rUse = [regex]"^(USE)(.*)"
-    $rdb = [regex]"^(\s*Database=)(.*)(;$)"
-    $rUid = [regex]"^(\s*UID=)(.*)(;$)"
-    $rPwd = [regex]'^(\s*PWD=)(.*)("$)'   
-  
-    $files = $filePath + "*.sql"
-    $listfiles = Get-ChildItem $files -Recurse
-
-    # Udpate the SQL related parameters in each SQL script file
-    foreach ($file in $listfiles)
-    {        
-        (Get-Content $file) | Foreach-Object {
-            $_ -replace $rUse, "`$1 [$targetDbname]" `
-               -replace $rdb, "`$1$targetDbname`$3" `
-               -replace $rUid, "`$1$targetUsername`$3" `
-               -replace $rPwd, "`$1$targetPassword`$3"
-        } | Set-Content $file
-    }
-}
 
 ##########################################################################
-# Reset the SQL related parameters
+# Get connection string
 ##########################################################################
-if($ResetParamsOnly -eq $true)
+function GetConnectionString
 {
-    Write-Host -ForeGroundColor 'green'("Reset the SQL related parameters to default values...")
-    Read-Host "Press any key to continue..."
-    SetParamValues $defaultDBName $defaultUsername $defaultPassword
-    exit
+    $connectionString = "Driver=SQL Server;Server=$ServerName;Database=$DBName;UID=$username;PWD=$password"
+    $connectionString
 }
 
 ##########################################################################
@@ -123,16 +79,21 @@ $pwd = Read-Host 'Password:' -AsSecureString
 $password = [Runtime.InteropServices.Marshal]::PtrToStringAuto([Runtime.InteropServices.Marshal]::SecureStringToBSTR($pwd))
 
 ##########################################################################
-# Update the SQL connection strings
+# Construct the SQL connection strings
 ##########################################################################
-Write-Host -foregroundcolor 'green' ("Using SQL DB: {0} and User: {1}?" -f $DBName, $username)
-$ans = Read-Host 'Continue [y|Y], Exit [e|E], Skip [s|S]?'
+$connectionString = GetConnectionString
 
-if ($ans -eq 'y' -or $ans -eq 'Y')
+##########################################################################
+# Check the SQL server or database exists
+##########################################################################
+Invoke-Sqlcmd -ServerInstance $ServerName -Username $username -Password $password -Query "use $DBName" -ErrorAction SilentlyContinue
+if ($? -eq $false)
 {
-    Write-Host -ForeGroundColor 'green' ("Update SQL related parameters in all SQL scripts...")
-    SetParamValues $DBName $username $password
-    Write-Host -ForeGroundColor 'green' ("Done...Update SQL related parameters in all SQL scripts")
+    Write-Host -ForegroundColor Red "Failed the test to connect to SQL server: $ServerName database: $DBName !"
+    Write-Host -ForegroundColor Red "Plese make sure: `n`t 1. SQL Server: $ServerName exists;
+                                     `n`t 2. SQL database: $DBName exists;
+                                     `n`t 3. SQL user: $username has the right credential for SQL server access."
+    exit
 }
 
 ##########################################################################
@@ -165,7 +126,7 @@ if($score -eq $true)
 		Read-Host "Press any key to continue..."
         #$script = $filePath + "FeatureEngineering/execute_feature_engineering_scoring.sql"
         $datasetType = 'score'
-        $query = "EXEC feature_engineering $datasetType"
+        $query = "EXEC feature_engineering $datasetType, '$connectionString'"
         ExecuteSQLQuery $query
 
         # score the regression model and collect results
@@ -175,7 +136,7 @@ if($score -eq $true)
         ExecuteSQL $script
         #$script = $filePath + "Regression/execute_score_reg_model.sql"
         $model = 'regression_btree'
-        $query = "EXEC score_regression_model $model"
+        $query = "EXEC score_regression_model $model, '$connectionString'"
         ExecuteSQLQuery $query
 
         # score the binary classification model and collect results
@@ -185,7 +146,7 @@ if($score -eq $true)
         ExecuteSQL $script
         #$script = $filePath + "BinaryClassification/execute_score_bclass_model.sql"
         $model = 'binaryclass_btree'
-        $query = "EXEC score_binaryclass_model $model"
+        $query = "EXEC score_binaryclass_model $model, '$connectionString'"
         ExecuteSQLQuery $query
 
         # score the multi-class classification model and collect results
@@ -195,7 +156,7 @@ if($score -eq $true)
         ExecuteSQL $script
         #$script = $filePath + "MultiClassification/execute_score_mclass_model.sql"
         $model = 'multiclass_btree'
-        $query = "EXEC score_multiclass_model $model"
+        $query = "EXEC score_multiclass_model $model, '$connectionString'"
         ExecuteSQLQuery $query
 
         Write-Host -ForeGroundColor 'green'("Scoring finished successfully!")
@@ -271,16 +232,14 @@ if ($ans -eq 'y' -or $ans -eq 'Y')
 
         # execute the feature engineering for training data
         Write-Host -ForeGroundColor 'magenta'("    Data labeling for training dataset...")
-        #$script = $filePath + "DataProcessing/execute_data_labeling_training.sql"
         $datasetType = 'train'
-        $query = "EXEC data_labeling $datasetType"
+        $query = "EXEC data_labeling $datasetType, '$connectionString'"
         ExecuteSQLQuery $query
 
         # execute the feature engineering for testing data
         Write-Host -ForeGroundColor 'magenta'("    Data labeling for testing dataset...")
-        #$script = $filePath + "DataProcessing/execute_data_labeling_testing.sql"
         $datasetType = 'test'
-        $query = "EXEC data_labeling $datasetType"
+        $query = "EXEC data_labeling $datasetType, '$connectionString'"
         ExecuteSQLQuery $query
 
         # creat the stored procedure for feature engineering
@@ -290,16 +249,14 @@ if ($ans -eq 'y' -or $ans -eq 'Y')
 
         # execute the feature engineering for training data
         Write-Host -ForeGroundColor 'magenta'("    Execute feature engineering for training dataset...")
-        #$script = $filePath + "FeatureEngineering/execute_feature_engineering_training.sql"
         $datasetType = 'train'
-        $query = "EXEC feature_engineering $datasetType"
+        $query = "EXEC feature_engineering $datasetType, '$connectionString'"
         ExecuteSQLQuery $query
 
         # execute the feature engineering for testing data
         Write-Host -ForeGroundColor 'magenta'("    Execute feature engineering for testing dataset...")
-        #$script = $filePath + "FeatureEngineering/execute_feature_engineering_testing.sql"
         $datasetType = 'test'
-        $query = "EXEC feature_engineering $datasetType"
+        $query = "EXEC feature_engineering $datasetType, '$connectionString'"
         ExecuteSQLQuery $query
     }
     catch
@@ -328,21 +285,23 @@ if ($ans -eq 'y' -or $ans -eq 'Y')
         Write-Host -ForeGroundColor 'magenta'("    Create and upload the stored procedures for Regression models...")
         $regression = $filePath + "Regression/*_regression_*.sql"
         Get-ChildItem $regression | ForEach-Object -Process {Invoke-Sqlcmd -ServerInstance $ServerName  -Database $DBName -Username $username -Password $password -InputFile $_.FullName -QueryTimeout 200000}
-        Write-Host -ForeGroundColor 'magenta'("    Training Regression models...")
-        # train and save the regression models
-        $script = $filePath + "Regression/execute_train_reg_models.sql"
-        ExecuteSQL $script
-        Write-Host -ForeGroundColor 'magenta'("    Training Regression models...Done!")
-    
-        Read-Host "Press any key to continue..."
+
+        $modelNames = @("regression_btree","regression_rf","regression_glm","regression_nn")
+        foreach ($modelName in $modelNames) {
+            Write-Host -ForeGroundColor 'magenta'("    Training Regression model: $modelName...")
+            $query = "EXEC train_regression_model $modelName"
+            ExecuteSQLQuery $query
+            Write-Host -ForeGroundColor 'magenta'("    Training Regression model: $modelName...Done!")
+        }
+
+        Read-Host "Press any key to continue for model testing..."
 
         Write-Host -ForeGroundColor 'green' ("Step 3a Testing: Regression models")
 
         # test the binaryclass models and collect results and metrics
         Write-Host -ForeGroundColor 'magenta'("    Testing Regression models...")
-        $script = $filePath + "Regression/execute_test_reg_models.sql"
         $models = "'regression_rf', 'regression_btree', 'regression_glm', 'regression_nn'"
-        $query = "EXEC test_regression_models $models"
+        $query = "EXEC test_regression_models $models, '$connectionString'"
         ExecuteSQLQuery $query
         Write-Host -ForeGroundColor 'magenta'("    Testing Regression models...Done!")
     }
@@ -372,21 +331,20 @@ if ($ans -eq 'y' -or $ans -eq 'Y')
         $binaryclass = $filePath + "BinaryClassification/*_binaryclass_*.sql"
         Get-ChildItem $binaryclass | ForEach-Object -Process {Invoke-Sqlcmd -ServerInstance $ServerName  -Database $DBName -Username $username -Password $password -InputFile $_.FullName -QueryTimeout 200000}
 
-        # train and save the binaryclass models
-        Write-Host -ForeGroundColor 'magenta'("    Training Binary classification models...")
-        $script = $filePath + "BinaryClassification/execute_train_bclass_models.sql"    
-        ExecuteSQL $script
-        Write-Host -ForeGroundColor 'magenta'("    Training Binary classification models...Done!")
+        $modelNames = @("binaryclass_btree","binaryclass_rf","binaryclass_logit","binaryclass_nn")
+        foreach ($modelName in $modelNames) {
+            Write-Host -ForeGroundColor 'magenta'("    Training Binary classification model: $modelName...")
+            $query = "EXEC train_binaryclass_model '$modelName'"
+            ExecuteSQLQuery $query
+            Write-Host -ForeGroundColor 'magenta'("    Training Binary classification model: $modelName...Done!")
+        }
 
-        Write-Host -ForeGroundColor 'green' ("Step 3b Testing: Binary classification models")
-    
-        #Read-Host "Press any key to continue..."
+        Read-Host "Press any key to continue for model testing..."
 
         # test the binaryclass models and collect results and metrics
         Write-Host -ForeGroundColor 'magenta'("    Testing Binary classification models...")
-        #$script = $filepPth + "BinaryClassification/execute_test_bclass_models.sql"
         $models = "'binaryclass_rf', 'binaryclass_btree', 'binaryclass_logit', 'binaryclass_nn'"
-        $query = "EXEC test_binaryclass_models $models"
+        $query = "EXEC test_binaryclass_models $models, '$connectionString'"
         ExecuteSQLQuery $query
         Write-Host -ForeGroundColor 'magenta'("    Testing Binary classification models...Done!")
     }
@@ -416,20 +374,20 @@ if ($ans -eq 'y' -or $ans -eq 'Y')
         $multiclass = $filePath + "MultiClassification/*_multiclass_*.sql"
         Get-ChildItem $multiclass | ForEach-Object -Process {Invoke-Sqlcmd -ServerInstance $ServerName  -Database $DBName -Username $username -Password $password -InputFile $_.FullName -QueryTimeout 200000}
 
-        # train and save the multiclass models
-        $script = $filePath + "MultiClassification/execute_train_mclass_models.sql"
-        Write-Host -ForeGroundColor 'magenta'("    Training Multi-classificaiton models...")
-        ExecuteSQL $script
-        Write-Host -ForeGroundColor 'magenta'("    Training Multi-classificaiton models...Done!")
+        $modelNames = @("multiclass_btree","multiclass_rf","multiclass_mn","multiclass_nn")
+        foreach ($modelName in $modelNames) {
+            Write-Host -ForeGroundColor 'magenta'("    Training Multi classification model: $modelName...")
+            $query = "EXEC train_multiclass_model $modelName"
+            ExecuteSQLQuery $query
+            Write-Host -ForeGroundColor 'magenta'("    Training Multi classification model: $modelName...Done!")
+        }
 
-        Write-Host -ForeGroundColor 'green' ("Step 3c Testing: Multi-classificaiton models")
         Read-Host "Press any key to continue..."
 
         # test the multiclass models and collect results and metrics
         Write-Host -ForeGroundColor 'magenta'("    Testing Multi-classificaiton models...")
-        $script = $filePath + "MultiClassification/execute_test_mclass_models.sql"
         $models = "'multiclass_rf', 'multiclass_btree', 'multiclass_nn', 'multiclass_mn'"
-        $query = "EXEC test_multiclass_models $models"
+        $query = "EXEC test_multiclass_models $models, '$connectionString'"
         ExecuteSQLQuery $query
         Write-Host -ForeGroundColor 'magenta'("    Testing Multi-classificaiton models...Done!")
         Write-Host -ForeGroundColor 'green'("Workflow finished successfully!")

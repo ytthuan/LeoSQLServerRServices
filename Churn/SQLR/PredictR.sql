@@ -1,6 +1,3 @@
-use [DefaultDBName]
-go
-
 set ansi_nulls on
 go
 

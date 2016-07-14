@@ -113,12 +113,12 @@ pred <- function(in_table_1,in_table_2,out_table,model_table,vars_to_keep){
   predictions$Boosted_Prediction <- factor(predictions$Boosted_Prediction, levels = c(1, 0))
   prediction_df <- cbind(prediction_df, predictions)
   
-  data_file_path <- file.path(tempdir(), "data.csv")
-  write.csv(x = prediction_df, 
-            file = data_file_path,
-            row.names = FALSE)
-  data_text <- RxTextData(file = data_file_path)
-  rxDataStep(inData = data_text,
+  #data_file_path <- file.path(tempdir(), "data.csv")
+  #write.csv(x = prediction_df, 
+  #          file = data_file_path,
+  #          row.names = FALSE)
+  #data_text <- RxTextData(file = data_file_path)
+  rxDataStep(inData = prediction_df,
              outFile = out_table,
              overwrite = TRUE)
 }

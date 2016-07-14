@@ -3,19 +3,16 @@
 -- @table_name = the table to be updated
 -- @risk_table_name =  the risk table to be used
 
-use [OnlineFraudDetection]
-go
-
 set ansi_nulls on
 go
 
 set quoted_identifier on
 go
 
-DROP PROCEDURE IF EXISTS dbo.AssignRisk
+DROP PROCEDURE IF EXISTS AssignRisk
 GO
 
-create procedure dbo.AssignRisk
+create procedure AssignRisk
 @var_name varchar(max),
 @table_name varchar(max),
 @risk_table_name varchar(max)

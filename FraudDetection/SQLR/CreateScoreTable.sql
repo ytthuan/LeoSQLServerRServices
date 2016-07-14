@@ -1,17 +1,13 @@
 /* create tables to store raw data */
-
-use [OnlineFraudDetection]
-go
-
 set ansi_nulls on
 go
 
 set quoted_identifier on
 go
-DROP TABLE IF EXISTS OnlineFraudDetection.dbo.sql_scoring
+DROP TABLE IF EXISTS sql_scoring
 GO
 
-create table OnlineFraudDetection.dbo.sql_scoring
+create table sql_scoring
 (
 transactionID varchar(255),
 accountID varchar(255),

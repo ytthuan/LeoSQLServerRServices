@@ -1,6 +1,3 @@
-USE [DefaultDBName]
-GO
-
 SET ANSI_NULLS ON
 GO
 
@@ -18,9 +15,10 @@ GO
 -- Description:	<Description,,>
 -- =============================================
 CREATE PROCEDURE [test_regression_models] @modelrf varchar(20),
-                                                   @modelbtree varchar(20),
-                                                   @modelglm varchar(20),
-                                                   @modelnn varchar(20)
+                                          @modelbtree varchar(20),
+                                          @modelglm varchar(20),
+                                          @modelnn varchar(20),
+                                          @connectionString varchar(300)   
 
 AS
 BEGIN
@@ -34,15 +32,6 @@ BEGIN
 
   EXEC sp_execute_external_script @language = N'R',
                                   @script = N'
-
-####################################################################################################
-## Connection string
-####################################################################################################
-connection_string <- "Driver=SQL Server;
-                      Server=localhost;
-                      Database=DefaultDBName;
-                      UID=DefaultUsername;
-                      PWD=DefaultPassword"
 ####################################################################################################
 ## Get test dataset from the input
 ####################################################################################################
@@ -139,12 +128,13 @@ rxDataStep(inData = metrics_df,
            outFile = metrics_table,
            overwrite = TRUE)'
 , @input_data_1 = @inquery
-, @params = N'@forest_model varbinary(max), @boosted_model varbinary(max), @poisson_model varbinary(max),  @nnet_model varbinary(max), @max_train_rul float'
+, @params = N'@forest_model varbinary(max), @boosted_model varbinary(max), @poisson_model varbinary(max),  @nnet_model varbinary(max), @max_train_rul float, @connection_string varchar(300)'
 , @forest_model = @model_rf
 , @boosted_model = @model_btree
 , @poisson_model = @model_glm
 , @nnet_model = @model_nn
 , @max_train_rul = @maxrul
+, @connection_string = @connectionString
 
 END
 

@@ -1,16 +1,13 @@
-use [OnlineFraudDetection]
-go
-
 set ansi_nulls on
 go
 
 set quoted_identifier on
 go
 
-DROP TABLE IF EXISTS OnlineFraudDetection.dbo.untaggedData
+DROP TABLE IF EXISTS untaggedData
 GO
 
-create table OnlineFraudDetection.dbo.untaggedData
+create table untaggedData
 (
 transactionID varchar(255),
 accountID varchar(255),
@@ -69,10 +66,10 @@ sumPurchaseCount30dPerUser varchar(255),
 numPaymentRejects1dPerUser varchar(255)
 );
 
-DROP TABLE IF EXISTS OnlineFraudDetection.dbo.fraud
+DROP TABLE IF EXISTS fraud
 GO
 
-create table OnlineFraudDetection.dbo.fraud
+create table fraud
 (
 transactionID varchar(255),
 accountID varchar(255),
@@ -85,10 +82,10 @@ transactionDeviceId varchar(255),
 transactionIPaddress varchar(255)
 );
 
-DROP TABLE IF EXISTS OnlineFraudDetection.dbo.sql_predict_score
+DROP TABLE IF EXISTS sql_predict_score
 GO
  
-create table OnlineFraudDetection.dbo.sql_predict_score
+create table sql_predict_score
  ( 
    accountID varchar(255),
    transactionDate varchar(255),
@@ -98,10 +95,10 @@ create table OnlineFraudDetection.dbo.sql_predict_score
    Score float
  );
  
-DROP TABLE IF EXISTS OnlineFraudDetection.dbo.sql_performance
+DROP TABLE IF EXISTS sql_performance
 GO
 
-create table OnlineFraudDetection.dbo.sql_performance
+create table sql_performance
 ( 
   ADR varchar(255),
   PCT_NF_Acct varchar(255),
@@ -115,18 +112,18 @@ create table OnlineFraudDetection.dbo.sql_performance
   TFPR varchar(255)
 );
  
-DROP TABLE IF EXISTS OnlineFraudDetection.dbo.sql_performance_auc
+DROP TABLE IF EXISTS sql_performance_auc
 GO
 
-create table OnlineFraudDetection.dbo.sql_performance_auc
+create table sql_performance_auc
 ( 
   AUC float
 );
 
-DROP TABLE IF EXISTS dbo.sql_trained_model
+DROP TABLE IF EXISTS sql_trained_model
 GO
 
-create table OnlineFraudDetection.dbo.sql_trained_model
+create table sql_trained_model
  ( 
    model varbinary(max) not null
  );

@@ -45,9 +45,21 @@ column_info <- list(Label = list(type = "factor", levels = c("1", "0")),
                                                       "Y",
                                                       "S")),
                     responseCode = list(type = "factor", levels = c("0")),
-                    purchaseProductType = list(type = "factor", levels = c("0")))
+                    purchaseProductType = list(type = "factor", levels = c("0")),
+                    sumPurchaseAmount1dPerUser = list(type = "numeric"),
+                    sumPurchaseAmount30dPerUser = list(type = "numeric"),
+                    sumPurchaseCount1dPerUser = list(type = "integer"),
+                    numPaymentRejects1dPerUser = list(type = "integer"),
+                    transactionAmountUSD = list(type = "numeric"),
+                    transactionAmount = list(type = "numeric"),
+                    digitalItemCount = list(type = "integer"),
+                    physicalItemCount = list(type = "integer"),
+                    accountAge = list(type = "numeric"),
+                    paymentInstrumentAgeInAccount = list(type = "numeric"),
+                    isProxyIP = list(type = "factor", levels = c("FALSE", "0","TRUE")),
+                    isUserRegistered = list(type = "factor", levels = c("FALSE","TRUE")))
 
-training_table <- RxSqlServerData(sqlQuery = "select top 10000 * from OnlineFraudDetection.rgarner.training order by Label desc", #downsample. make sure the table schema. here, it's .rgarner instead of standard .dbo 
+training_table <- RxSqlServerData(sqlQuery = "select top 10000 * from training order by Label desc", #downsample. make sure the table schema. here, it's .rgarner instead of standard .dbo 
                                   connectionString = connection_string,
                                   colInfo = column_info)
 

@@ -1,5 +1,3 @@
-use [OnlineFraudDetection]
-go
 
 set ansi_nulls on
 go
@@ -14,9 +12,9 @@ create procedure dbo.EvaluateR
 as
 begin
 
-truncate table OnlineFraudDetection.dbo.sql_performance
+truncate table sql_performance
 
-insert into OnlineFraudDetection.dbo.sql_performance
+insert into sql_performance
 exec sp_execute_external_script @language = N'R',
                                   @script = N'
 ####################################################################################################
@@ -242,6 +240,6 @@ scr2stat <-function(dataset, contactPeriod, sampleRateNF,sampleRateFrd)
  perf <- scr2stat(scored_data,contactPeriod=30, sampleRateNF=1,sampleRateFrd=1)
  OutputDataSet <- as.data.frame(perf)
 ',
-  @input_data_1 = N' select * from OnlineFraudDetection.dbo.sql_predict_score'
+  @input_data_1 = N' select * from sql_predict_score'
 ;
 end

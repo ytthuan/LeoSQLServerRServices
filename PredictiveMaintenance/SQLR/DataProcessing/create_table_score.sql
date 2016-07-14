@@ -1,6 +1,3 @@
-USE [DefaultDBName]
-GO
-
 DROP TABLE IF EXISTS PM_Score
 GO
 

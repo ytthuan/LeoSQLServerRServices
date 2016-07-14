@@ -3,7 +3,7 @@
 #day, Fourier components, lags, etc.
 ####################################################################################################
 
-featureEngineering <- function(sqlSettings, filledNATable,basicFeaturesTable,allFeaturesTable)
+featureEngineering = function(sqlSettings, filledNATable,basicFeaturesTable,allFeaturesTable)
 {
 	
 	sqlConnString = sqlSettings$connString
@@ -27,7 +27,7 @@ featureEngineering <- function(sqlSettings, filledNATable,basicFeaturesTable,all
 ####################################################################################################
 #function computing non-lag features
 ####################################################################################################
-computeNonLagFeatures <- function(data) {	
+computeNonLagFeatures = function(data) {	
 	data$hourofday = (as.POSIXlt(data$utcTimestamp,tz="GMT", format="%Y-%m-%d %H:%M:%S"))$hour
     data$dayofweek = (as.POSIXlt(data$utcTimestamp,tz="GMT", format="%Y-%m-%d %H:%M:%S"))$wday
     data$monofyear = (as.POSIXlt(data$utcTimestamp,tz="GMT", format="%Y-%m-%d %H:%M:%S"))$mon+1
@@ -49,20 +49,20 @@ computeNonLagFeatures <- function(data) {
 ####################################################################################################
 #function computing lagging features
 ####################################################################################################
-computeLagFeatures <- function(inData,outData) {
-	shift<-function(lag, x){c(rep(NA, lag), head(x,-lag))}
-	shift<- Vectorize(shift, vectorize.args = "lag")
+computeLagFeatures = function(inData,outData) {
+	shift = function(lag, x){c(rep(NA, lag), head(x,-lag))}
+	shift = Vectorize(shift, vectorize.args = "lag")
 
-	addlags <- function(lags, df, var){
-	res <- shift(lags, x=df[,var])
-	colnames(res) <- paste("lag", lags, sep = "")
+	addlags = function(lags, df, var){
+	res = shift(lags, x=df[,var])
+	colnames(res) = paste("lag", lags, sep = "")
 	return(cbind(df,res))
 	}
 
-	data=rxImport(inData)
-	nlags<-c(24,25,26,27,28,31,36,40,48,72,96)
+	data = rxImport(inData)
+	nlags = c(24,25,26,27,28,31,36,40,48,72,96)
 	
-	data <- addlags(nlags, data, var = "Load")
+	data = addlags(nlags, data, var = "Load")
 	
 	#upload results to SQL table
 	rxDataStep(inData = data, outFile = outData, overwrite = TRUE) 
