@@ -21,6 +21,8 @@ BEGIN
   DECLARE @inquery NVARCHAR(max) = N'SELECT 1 as Col'
   EXEC sp_execute_external_script @language = N'R',
                                   @script = N'
+library("zoo")
+library("plyr")
 ####################################################################################################
 ## The data source for feature engineering: 
 ## 	Labeled_train_data: Train dataset with labels added

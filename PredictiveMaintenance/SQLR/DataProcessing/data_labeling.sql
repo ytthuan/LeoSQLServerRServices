@@ -24,6 +24,7 @@ BEGIN
   EXEC sp_execute_external_script @language = N'R',
                                   @script = N'								  
 
+library("plyr")
 ####################################################################################################
 ## The data source to add labels: 
 ## 	PM_Train: Raw train dataset
