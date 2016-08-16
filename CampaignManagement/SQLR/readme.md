@@ -63,7 +63,7 @@ The script to perform these operations can be found in the SQLR folder with the 
 
 ###Step 4: Analytical Dataset Creation
 
-In this step the Analytical dataset which will eventually be used for modelling is created. Further, the analytical dataset is split into a train and test dataset with a 90-10 split. The script for this step can be found in the SQLR folder with the file name **step4\_ad\_creation.sql**
+In this step the Analytical dataset which will eventually be used for modelling is created. Further, the analytical dataset is split into a train and test dataset with a 70-30 split. The script for this step can be found in the SQLR folder with the file name **step4\_ad\_creation.sql**
 
 - **Input database object: Market\_Touchdown\_Agg, Lead\_Demography, Campaign\_Detail, Product**
 - **Output database object: CM\_AD, CM\_AD\_train, CM\_AD\_test**
