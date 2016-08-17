@@ -40,7 +40,7 @@ Preprocessing is performed on two of the input files. To showcase preprocessing,
 
 ####step2(a)\_preprocessing\_market\_touchdown.sql
 
-This script treats the Comm\_Latency variable for outliers. Any value less than zero is replaced with difference between mean and standard deviation of the respective attribute. Similarly, any value greater than the sum of mean and two standard deviations is replaced with the sum of mean and two standard deviations of Comm\_Latency
+This script treats the Comm\_Latency variable for outliers. The lower extremes are replaced with the difference of Mean and Standard Deviation. The higher extremes are replaced with the sum of Mean and two Standard Deviations
 
 - **Input database object: Market\_Touchdown**
 - **Output database object: Market\_Touchdown**
@@ -54,7 +54,7 @@ This script treats the No\_Of\_Children, No\_Of\_Dependants, Highest\_Education 
 
 ###Step 3: Feature Engineering
 
-Feature Engineering is performed on market touchdown dataset. The script creates intermediate variables like Email\_Count, Call\_Count, SMS\_Count and Comm\_Frequency by aggregating the data on Lead\_Id, Age, Source, Campaign\_Id, Annual\_Income and Credit\_Score
+Feature Engineering is performed on market touchdown dataset. The table is aggregated at a lead level, so variables like channel which will have more than one value for each user are pivoted and aggregated to from variables like SMS count, Email count, Call Count, Last Communication Channel, Second Last Communication Channel etc. 
 
 The script to perform these operations can be found in the SQLR folder with the file name **step3\_feature\_engineering\_market\_touchdown.sql**
 
