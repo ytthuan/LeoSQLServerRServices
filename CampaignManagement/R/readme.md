@@ -2,7 +2,9 @@
 
 This is the R (Microsoft R Server) code for Campaign Management template using SQL Server R Services. This code runs on a local R IDE (such as RStudio, R Tools for Visual Studio), and the computation is done in SQL Server (by setting compute context).
 
-This is primarily for customers who prefer advanced analytical solutions on a local R IDE
+Below is a detailed description of the R code used to impement this solution.  Follow the [R Instructions](Resources/Instructions/R_Instructions.md) to execute these scripts.
+
+This is primarily for customers who prefer advanced analytical solutions on a local R IDE.
 
 It consists of the following files:
 

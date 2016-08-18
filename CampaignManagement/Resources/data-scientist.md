@@ -6,17 +6,16 @@ SQL Server R Services brings the compute to the data by allowing R to run on the
 This solution packet shows how to create and refine data, train R models, and perform scoring on the SQL Server machine. The final scored database table in SQL Server gives the recommendations for **how** and **when** to contact each lead. This data is then visualized in PowerBI.  Also in PowerBI is a summary of the success of the recommendations after your new campaign has completed (shown in this template with simulated data).
 
 
-Data scientists who are testing and developing solutions can work from the convenience of their R IDE on their client machine, while <a href="https://msdn.microsoft.com/en-us/library/mt604885.aspx" target=_blank">pushing the compute to the SQL Server machine</a>.  They can then deploy the completed solutions to SQL Server 2016 by embedding calls to R in stored procedures. These solutions can then be further automated by the use of SQL Server Integration Services and SQL Server agent.
+Data scientists who are testing and developing solutions can work from the convenience of their R IDE on their client machine, while <a href="https://msdn.microsoft.com/en-us/library/mt604885.aspx" target="_blank">pushing the compute to the SQL Server machine</a>.  They can then deploy the completed solutions to SQL Server 2016 by embedding calls to R in stored procedures. These solutions can then be further automated by the use of SQL Server Integration Services and SQL Server agent.
 
 This solution packet includes the R code a data scientist would develop in the **R** folder.  It shows the stored procedures (.sql files) that can be deployed in the **SQLR** folder.  Finally, there are four PowerShell scripts (.ps1 files) that automate the running of the SQL code.
  
 To try this out yourself: 
 * Download this template by navigating to the top folder in this repository and using the **Clone or Download** button.
-* In the downloaded folder, navigate to the **CampaignManagement/Resources/Instructions** directory
-* Follow the instructions in **START HERE.docx** to setup your SQL environment 
-* Follow the instructions for running the fully automated solution in **PowerShell Instructions.docx**
-* (OPTIONAL) You could also step through the parts of this solution with SQL files by using **SQLR Instructions.docx**
-* (OPTIONAL) You can step through the R code in your own R IDE by following the instructions in **R Instructions.docx**
+* Follow the instructions in **[START HERE](Instructions/START_HERE.md)** to setup your SQL environment 
+* Follow the instructions for running the fully automated solution in **[PowerShell Instructions](Instructions/Powershell_Instructions.md)**
+* (OPTIONAL) You could also step through the parts of this solution with SQL files by using **[SQLR Instructions](Instructions/SQLR_Instructions.md)**
+* (OPTIONAL) You can step through the R code in your own R IDE by following the instructions in **[R Instructions](Instructions/R_Instructions.md)**
 
 
 If you need a trial version of SQL Server 2016, see [What's New in SQL Server 2016](https://msdn.microsoft.com/en-us/library/bb500435.aspx) for download or VM options. 
@@ -54,7 +53,7 @@ This R code is incorporated into following .sql files, automated in the **Model 
 
 The models are compared and the champion model is used for scoring.  The prediction results from the scoring step are the recommendations for contact for the campaigns - when and how to contact each lead for the optimal predicted response rate.
 
-The R code for this step is also included in the **Step4_model_rf_gbm.R script**.
+The R code for this step is also included in the **step4_model_rf_gbm.R script**.
 
 The .sql files using this code are present in **step6_models_comparision.sql** which was included in the **Model Development.ps1** script, while the 
 scoring is accomplished in the <b>step7\*.sql</b> files, automated by **Scoring.ps1**.
@@ -67,13 +66,12 @@ The deployed data resides in a newly created database table, showing recommendat
 
 ![Visualize](Images/visualize.png?raw=true)
 
-You can find an example of this in the  [CampaignManagement Dashboard](Campaign%20Management%20Dashboard.pbix).  How to use this template for new data is included in the **Instructions** folder.
-
-##Template Contents 
+You can find an example of this in the  [CampaignManagement Dashboard](Campaign%20Management%20Dashboard.pbix).
+## Template Contents 
 
 [View the contents of this solution template](contents.md)
 
-##System Requirements
+## System Requirements
 
 To run the scripts requires the following:
 
@@ -83,14 +81,12 @@ To run the scripts requires the following:
 - For more information about SQL server 2016 and R service, please visit: [https://msdn.microsoft.com/en-us/library/mt604847.aspx](https://msdn.microsoft.com/en-us/library/mt604847.aspx)
 
 
-To try this template out yourself: 
+To try this out yourself: 
 * Download this template by navigating to the top folder in this repository and using the **Clone or Download** button.
-* In the downloaded folder, navigate to the **CampaignManagement/Resources/Instructions** directory
-* Follow the instructions in **START HERE.docx** to setup your SQL environment 
-* Follow the instructions for running the fully automated solution in **PowerShell Instructions.docx**
-* (OPTIONAL) You could also step through the parts of this solution with SQL files by using **SQLR Instructions.docx**
-* (OPTIONAL) You can step through the R code in your own R IDE by following the instructions in **R Instructions.docx**
-
+* Follow the instructions in **[START HERE](Instructions/START_HERE.md)** to setup your SQL environment 
+* Follow the instructions for running the fully automated solution in **[PowerShell Instructions](Instructions/Powershell_Instructions.md)**
+* (OPTIONAL) You could also step through the parts of this solution with SQL files by using **[SQLR Instructions](Instructions/SQLR_Instructions.md)**
+* (OPTIONAL) You can step through the R code in your own R IDE by following the instructions in **[R Instructions](Instructions/R_Instructions.md)**
 
 [&lt; Back to ReadMe](../readme.md)
 

@@ -33,6 +33,9 @@ In this template with SQL Server R Services, three versions of the implementatio
 | .\R\RF\_model\_train.r | Builds Random Forest Model |
 | .\R\GBM\_model\_train.r | Builds Gradient Boosting Model |
 
+Follow the [R Instructions](Instructions/R_Instructions.md) to execute these scripts.
+
+
 ## Model Development in SQL Server 2016 R Services
 
 | File | Description |
@@ -51,13 +54,18 @@ In this template with SQL Server R Services, three versions of the implementatio
 | .\SQLR\step6\_models\_comparision.sql | SQLR Script to compute the model statistics of both the models |
 | .\SQLR\step7\_scoring\_leads.sql | SQLR Script to select the champion model and score the Analytical dataset on the champion model |
 
-## Automation with PowerShell
+Follow the [SQLR Instructions](Instructions/SQLR_Instructions.md) to execute these scripts.
 
+
+## Automation with PowerShell
 | File | Description |
 | --- | --- |
 | .Analytical Dataset Creation.ps1 | Creates the Analytical/Scoring dataset |
 | .Model Development.ps1 | Trains the Random Forest and Gradient Boosting Models |
 | .Scoring.ps1 | Identifies the Champion Model and scores the Analytical/Scoring dataset |
+
+Follow the [PowerShell Instructions](Instructions/Powershell_Instructions.md) to execute these scripts.
+
 
 ## Resources for the Solution Packet
 | File | Description |
@@ -73,12 +81,11 @@ In this template with SQL Server R Services, three versions of the implementatio
 ###  Instructions for Running this Solution Packet
 | File | Description |
 | --- | --- |
-| .\Resources\Instructions\Data Setup.docx | Use this to setup data for a quick or more detailed execution |
-| .\Resources\Instructions\Introduction.docx | Introduction of the solution packet |
-| .\Resources\Instructions\Powershell Instructions.docx | Instructions for running the solution from PowerShell |
-| .\Resources\Instructions\R Instructions.docx | Instructions for running the solution in R on a local machine |
-| .\Resources\Instructions\START HERE.docx | **START HERE** to learn how to set up your computer for all solution paths |
-| .\Resources\Instructions\Visiualize Results.docx | Instructions for hooking up your results to the PowerBI template |
+| [.\Resources\Instructions\Data Setup.md](Instructions\Data Setup.md) | Use this to setup data for a quick or more detailed execution |
+| [.\Resources\Instructions\Powershell_Instructions.md](Instructions\Powershell_Instructions.md) | Instructions for running the solution from PowerShell |
+| [.\Resources\Instructions\R_Instructions.md](Instructions\R_Instructions.md)| Instructions for running the solution in R on a local machine |
+| [.\Resources\Instructions\START_HERE.md](Instructions\START_HERE.md) | **[START HERE](Instructions\START_HERE.md)** to learn how to set up your computer for all solution paths |
+| [.\Resources\Instructions\Visualize_Results.md](Instructions\Visualize_Results.md) | Instructions for hooking up your results to the PowerBI template |
 
 
 
