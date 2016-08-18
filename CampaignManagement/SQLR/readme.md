@@ -1,7 +1,7 @@
 <img src="../Resources/Images/management.png" align="right">
 # Campaign Management Template implemented on SQL Server R Service
 
-Below is a detailed description of the T-SQL code used to impement this solution.  Follow the [SQLR Instructions](Resources/Instructions/SQLR_Instructions.md) to execute these scripts.
+Below is a detailed description of the T-SQL code used to impement this solution.  Follow the [SQLR Instructions](../Resources/Instructions/SQLR_Instructions.md) to execute these scripts.
 
 There are 9 steps in total. The steps 0,1, 2, 3 and 4 are automated using the PowerShell script **Analytical Dataset Creation.ps1**.The steps5,6 and 7 are automated using the PowerShell script **Model Development.ps1**. The final step (step 8) which for scoring the production dataset is automated using the PowerShell script **Scoring.ps1**. All of these PowerShell scripts can be found in the main folder
 
@@ -170,4 +170,4 @@ In this step the final scored dataset is created. This is will be used as the in
 
 The PowerShell script will trigger the champion model to run on the production data. The script can be found in the main folder with the file name **Scoring.ps1**
 
-
+Follow the [SQLR Instructions](../Resources/Instructions/SQLR_Instructions.md) to execute these scripts.

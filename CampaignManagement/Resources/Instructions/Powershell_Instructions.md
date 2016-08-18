@@ -159,5 +159,5 @@ Hit `Refresh` if necessary.
 Right click on `dbo.lead_scored_dataset` and select `View Top 1000 Rows` to preview the scored data.
 
 <h2>Visualizing Results </h2>
-30.	Now proceed to <a href="Visualize_Results.md">Visualizing Results with PowerBI</a>.
+Now proceed to <a href="Visualize_Results.md">Visualizing Results with PowerBI</a>.
 

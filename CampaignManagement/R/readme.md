@@ -2,7 +2,7 @@
 
 This is the R (Microsoft R Server) code for Campaign Management template using SQL Server R Services. This code runs on a local R IDE (such as RStudio, R Tools for Visual Studio), and the computation is done in SQL Server (by setting compute context).
 
-Below is a detailed description of the R code used to impement this solution.  Follow the [R Instructions](Resources/Instructions/R_Instructions.md) to execute these scripts.
+Below is a detailed description of the R code used to impement this solution.  Follow the [R Instructions](../Resources/Instructions/R_Instructions.md) to execute these scripts.
 
 This is primarily for customers who prefer advanced analytical solutions on a local R IDE.
 
@@ -40,3 +40,5 @@ This scripts performs feature engineering on the Market Touchdown table and then
 ## Step4_model_rf_gbm.R
 
 In this step, two models are built using 2 statistical techniques on the training Dataset. Once the models are trained, AUC of both the models are calculated using the test dataset. The model with the best AUC is selected as the champion model
+
+Follow the [R Instructions](../Resources/Instructions/R_Instructions.md) to execute these scripts.
