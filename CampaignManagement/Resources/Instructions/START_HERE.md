@@ -42,10 +42,12 @@ To find your computer name - Click the <code>Start</code> button, right-click <c
 
 <li>	
 On the User Mapping tab, check  <code>master</code> in the top section, then check  <code>db_datareader</code>, 
- <code>db_datawriter </code>,  <code>db_owner</code>, and  <code>public</code> in the bottom table.
+ <code>db_datawriter </code>,  <code>db_owner</code>, and  <code>public</code> in the bottom table.  
 <br/>
 <img src="../Images/rdemoprop2.png" width="75%" >
+<li>Click <code>OK</code> to close the dialog.
 </li>
+
  
 <li>	Check to make sure you have set your Server Authentication mode to SQL Server and Windows Authentication mode.  
     <ul>
@@ -98,7 +100,7 @@ Right click on Database and select <code>New Database...</code>
 
 <h3>Set up Connection between SQL Server and PowerBI</h3>
 <ol>
-<li>	Push the Windows key on your keyboard</li>
+<li>	Push the <code>Windows</code> key on your keyboard</li>
 <li>	Type <code>ODBC</code> </li>
 <li>	Open the correct app depending on what type of computer you are using (64 bit or 32 bit). To find out if your computer is running 32-bit or 64-bit Windows, do the following:</li>
 <ol><li>	Open System by clicking the <code>Start</code> button, clicking <code>Control Panel</code>, clicking <code>System and Maintenance</code>, and then clicking <code>System</code>.
