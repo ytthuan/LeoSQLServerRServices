@@ -59,7 +59,7 @@ On the User Mapping tab, check  <code>master</code> in the top section, then che
 <li>	If you changed the mode, restart the server.  In the Object Explorer, right-click your server, and then click <code>Restart</code>. If SQL Server Agent is running, it must also be restarted.</li>
 </ul></li>
 
-<li>	Now, click on `File` on the top left corner of the SQL Server window and select <code>Connect Object Explorer…</code> verify that you can connect to the server with this username(<code>rdemo</code>) &amp; password(<<code>D@tascience</code>).</li>
+<li>	Now, click on <code>File</code> on the top left corner of the SQL Server window and select <code>Connect Object Explorer…</code> verify that you can connect to the server with this username(<code>rdemo</code>) &amp; password(<code>D@tascience</code>).</li>
 </ol>
 
  
