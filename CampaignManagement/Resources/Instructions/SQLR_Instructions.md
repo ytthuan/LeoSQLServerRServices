@@ -154,6 +154,7 @@ Now that the champion model has been scored, we need to create the final dataset
 <br/>
 <img src="../Images/alltables.png" width="30%">
 
+Right click on `dbo.lead_scored_dataset` and select `View Top 1000 Rows` to preview the scored data.
  
 <h2>Visualizing Results </h2>
 23.	Now proceed to <a href="Visualize_Results.md">Visualizing Results with PowerBI</a>.
