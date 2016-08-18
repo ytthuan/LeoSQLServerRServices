@@ -47,9 +47,9 @@ The PowerBI dashboard will show charts built from cached data. We need to set it
  <br/>
  <img src="../Images/vis9.png" width="75%" >
 
- <a id="step10"></a>
+ <a name="step10" id="step10"></a>
 
-10.	Press Refresh. This should refresh the back end data of the dashboard and refresh the visuals.  You are now viewing data from your SQL Database, rather than the imported data that was part of the initial solution package.  Updates from the SQL Database will be reflected each time you hit `Refresh`
+10.	Press `Refresh`. This should refresh the back end data of the dashboard and refresh the visuals.  You are now viewing data from your SQL Database, rather than the imported data that was part of the initial solution package.  Updates from the SQL Database will be reflected each time you hit `Refresh`
  <br/>
  <img src="../Images/vis10.png" width="75%" >
 
