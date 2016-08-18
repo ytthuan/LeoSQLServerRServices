@@ -6,7 +6,7 @@ For the purposes of a quick demo, we can use a small dataset. To create a smalle
 
 Make sure you have set up your SQL Server and ODBC connection between SQL and PowerBI by following the instructions in <a href="START_HERE.md">START HERE</a>.  Then proceed with the steps below to run the solution template using the automated PowerShell files. 
 
-Running these PowerShell scripts performs the automated version of the solution – dataset creation, modeling, and scoring as described  <a href="..data-scientist.md">here</a>.
+Running these PowerShell scripts performs the automated version of the solution – dataset creation, modeling, and scoring as described  <a href="../data-scientist.md">here</a>.
 
 <h2>Solution Path:  PowerShell Scripts</h2>
 1.	Click on the windows key on your keyboard. Type the words `PowerShell ISE` and open the Windows PowerShell ISE app.
