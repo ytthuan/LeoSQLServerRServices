@@ -57,7 +57,7 @@ Answer `y` to the prompt to allow the following scripts to execute.
 
 10.	Enter the full path of the folder you extracted the CampaignManagement.zip file (`C:\Demos\CampaignManagement`)
  <br/>
- <img src="../Images/sqlr10.png" width="75%"> 
+ <img src="../Images/sqlr10.png" > 
 	 
 
 11.	Logon to SSMS using the credentials you created earlier. 
