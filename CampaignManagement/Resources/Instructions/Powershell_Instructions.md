@@ -80,11 +80,11 @@ Next, two models are trained and tested.
  You will get a warning here saying that you should only run scripts you trust.
 14.	Hit `Run Once`.
 
-The command line window will prompt you to enter the Server Name.
+ The command line window will prompt you to enter the Server Name.
 
 15.	Enter your Machine Name. If you do not know your Machine Name follow instructions from [START HERE](START_HERE.md).
 
-The command line window will prompt you to enter the Database Name.
+ The command line window will prompt you to enter the Database Name.
 
 16.	Enter `CampaignManagement`.
 
@@ -150,6 +150,7 @@ The models are now compared and the champion model is used for scoring. The pred
 You can see that the scoring has begun.
 <br/>
 <img src="../Images/ps29.png" width="75%">
+
 Once the PowerShell scripts have run, log into the SQL Server to view all the datasets that have been created in the `CampaignManagement` database.  
 Hit `Refresh` if necessary.
 <br/>
