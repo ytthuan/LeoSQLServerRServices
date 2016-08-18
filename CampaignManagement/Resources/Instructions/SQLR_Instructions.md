@@ -33,7 +33,7 @@ Answer `y` to the prompt to allow the following scripts to execute.
 
 4.	Press `F5` to run the PowerShell script.
 
-You will get a warning here saying that you should only run scripts you trust.
+ You will get a warning here saying that you should only run scripts you trust.
 
 5.	Hit `Run Once`.
 
