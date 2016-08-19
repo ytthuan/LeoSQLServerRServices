@@ -60,12 +60,11 @@ The R code shown here was then incorporated into the [.sql files](../../SQLR/rea
 <br/>
 <img src="../Images/r4.png" width="70%">
  
-
-7.	After each step completes, feel free to go back to SSMS and look at the contents of the database.  You’ll need to right click on Database and `Refresh` to see the most recent set of results.
+	After each step completes, feel free to go back to SSMS and look at the contents of the database.  You’ll need to right click on Database and `Refresh` to see the most recent set of results.
  <br/>
  <img src="../Images/r5.png" width="30%">
 
-8.	When you have finished with all four scripts, log into the SQL Server to view all the datasets that have been created in the `CampaignManagement` database.  Hit `Refresh` if necessary.
+7.	When you have finished with all four scripts, log into the SQL Server to view all the datasets that have been created in the `CampaignManagement` database.  Hit `Refresh` if necessary.
  <br/>
  <img src="../Images/alltables.png" width="30%">
 
