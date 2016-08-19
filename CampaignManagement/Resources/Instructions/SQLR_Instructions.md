@@ -119,8 +119,7 @@ Answer `y` to the prompt to allow the following scripts to execute.
  <img src="../Images/sqlr17.png" width="75%"> 
 
 
-
- 18.	Open `step5(b)_model_train_gbm.sql` and click on `Execute`.
+18.	Open `step5(b)_model_train_gbm.sql` and click on `Execute`.
 
  In this step the gradient boosting model is trained on the training dataset.
  <br/>
