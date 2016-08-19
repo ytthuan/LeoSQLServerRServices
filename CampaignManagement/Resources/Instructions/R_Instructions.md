@@ -42,16 +42,17 @@ The R code shown here was then incorporated into the [.sql files](../../SQLR/rea
 
     c.	**step3_feature_engineering_AD_creation.R**:  Performs Feature Engineering and creates the Analytical Dataset.   Feature Engineering consists of creating new variables in the market touchdown dataset by aggregating the data in multiple levels.  The table is aggregated at a lead level, so variables like channel which will have more than one value for each user are pivoted and aggregated to variables like SMS count, Email count, Call Count, Last Communication Channel, Second Last Communication Channel etc.
 
-        After running this script, take a look at the features created by running the following query in SSMS:
-        ```
-        SELECT TOP 1000 [Lead_Id]
-            ,[Sms_Count]
-            ,[Email_Count]
-            ,[Call_Count]
-            ,[Last_Channel]
-            ,[Second_Last_Channel]
-        FROM [CampaignManagement].[dbo].[market_touchdown_agg]
-        ```
+    After running this script, take a look at the features created by running the following query in SSMS:
+    
+    ```
+    SELECT TOP 1000 [Lead_Id]
+        ,[Sms_Count]
+        ,[Email_Count]
+        ,[Call_Count]
+        ,[Last_Channel]
+        ,[Second_Last_Channel]
+    FROM [CampaignManagement].[dbo].[market_touchdown_agg]
+    ```
 
     d.	**step4_model_rf_gbm.R**:  Builds the Random Forest & Gradient Boosting models, identifies the champion model and scores the Analytical dataset
 
