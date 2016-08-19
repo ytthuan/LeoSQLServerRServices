@@ -56,7 +56,7 @@ This section simulates input data and performs preprocessing and feature enginee
  <br/>
  <img src="../Images/ps11.png" width="75%" >
  
- Once complete, you may also view the tables that were created in SQL Server. 
+ Once complete, you may also view the tables that were created in SQL Server.  
 
 Switch to SSMS and select the CampaignManagement database, right click and select `Refresh`.  Then open the Tables section to view the tables in the Analytical Dataset which were just created:
  <br/>
@@ -66,6 +66,7 @@ Switch to SSMS and select the CampaignManagement database, right click and selec
 You may also view contents of any of these tables.  Right click on a table and select `View Top 1000 Rows` to preview a table.
 <br/>
 <img src="../Images/viewtable.png" width="50%">
+
 
 Once the Analytical Dataset is created, move on to the next step.
 

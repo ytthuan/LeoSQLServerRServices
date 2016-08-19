@@ -64,7 +64,7 @@ Answer `y` to the prompt to allow the following scripts to execute.
 
  Follow the path shown in the image below and verify that the input datasets are created.
  <br/>
- <img src="../Images/sqlr11.png" width="30%"> 
+ <img src="../Images/sqlr11.png" width="40%"> 
 
  All the required input data sets have been created. Now we can move on to preprocessing the input datasets.
 
@@ -93,9 +93,20 @@ Answer `y` to the prompt to allow the following scripts to execute.
 
 15.	Open `step3_feature_engineering_market_touchdown.sql` and click on `Execute`.
 
- This step creates the new variables in the market touchdown dataset by aggregating the data in multiple levels.  The table is aggregated at a lead level, so variables like channel which will have more than one value for each user are pivoted and aggregated to from variables like SMS count, Email count, Call Count, Last Communication Channel, Second Last Communication Channel etc. 
+ This step creates the new variables in the market touchdown dataset by aggregating the data in multiple levels.  The table is aggregated at a lead level, so variables like channel which will have more than one value for each user are pivoted and aggregated to variables like SMS count, Email count, Call Count, Last Communication Channel, Second Last Communication Channel etc. 
 <br/>
 <img src="../Images/sqlr15.png" width="75%"> 
+
+ Take a look at the features created by running the following query in SSMS:
+ ```
+ SELECT TOP 1000 [Lead_Id]
+      ,[Sms_Count]
+      ,[Email_Count]
+      ,[Call_Count]
+      ,[Last_Channel]
+      ,[Second_Last_Channel]
+  FROM [CampaignManagement].[dbo].[market_touchdown_agg]
+  ```
 
  Now that the feature engineering step is complete, we can now join all the input datasets to create the analytical dataset.
 
