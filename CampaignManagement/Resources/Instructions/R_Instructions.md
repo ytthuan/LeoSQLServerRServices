@@ -11,7 +11,7 @@ These files represent the files created by the data scientist, who would  typica
 
 Running these scripts will walk through the initial R code used to create this solution – dataset creation, modeling, and scoring as described  <a href="data-scientist.md">here</a>.
 
-The R code shown here was then incorporated into the [.sql files](../../SQL/readme.md) to operationalize the solution.
+The R code shown here was then incorporated into the [.sql files](../../SQLR/readme.md) to operationalize the solution.
 
 
 <h2>Solution with R Server</h2>
