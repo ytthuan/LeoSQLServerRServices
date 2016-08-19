@@ -34,7 +34,7 @@ The R code to perform these steps can be run from an R client with the following
 
 * **step3_feature_engineering_AD_creation.R**:  Performs Feature Engineering and creates the Analytical Dataset.  Features are created by aggregating historical data to find number of contacts for each channel as well as last and next to last channel in which contact was made (Email\_Count, Call\_Count, Last\_Channel, Second\_Last\_Channel).
 
-*## **step4_model_rf_gbm.R**: Builds Random Forest &amp; Gradient Boosting models on the training Dataset. Once the models are trained, AUC of both the models are calculated using the test dataset. The model with the best AUC is selected as the champion model.
+* **step4_model_rf_gbm.R**: Builds Random Forest &amp; Gradient Boosting models on the training Dataset. Once the models are trained, AUC of both the models are calculated using the test dataset. The model with the best AUC is selected as the champion model.
 
 The R scripts were originally developed and executed in an R IDE. Once complete, the R code was operationalized in .sql files to be executed through T-SQL.   The diagram below shows the .sql files used to perform these actions, incorporating the code from the R scripts above. 
 
