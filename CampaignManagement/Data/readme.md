@@ -1,9 +1,9 @@
 <img src="../Resources/Images/management.png" align="right">
 # Campaign Management Template with SQL Server 2016 R Services – Input Data
 
-This folder shows the input data files for Campaign Management template using SQL Server R Services. This folder contains a copy of the simulated datasets that can be used instead of running the scripts
+This folder shows the input data files for Campaign Management template using SQL Server R Services. This folder contains a copy of the simulated datasets that can be used instead of running the scripts.  You can use the  Data Import PowerShell script to import this data by following [Steps 1-11 of the SQLR Instructions](../Resources/Instructions/SQLR_Instructions.md).
 
-The folder of the following files:
+The folder contains following files:
 
 | File | Description |
 | --- | --- |
