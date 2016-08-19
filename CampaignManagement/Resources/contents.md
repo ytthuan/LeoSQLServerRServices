@@ -81,11 +81,11 @@ Follow the [PowerShell Instructions](Instructions/Powershell_Instructions.md) to
 ###  Instructions for Running this Solution Packet
 | File | Description |
 | --- | --- |
-| [.\Resources\Instructions\Data Setup.md](Instructions\Data Setup.md) | Use this to setup data for a quick or more detailed execution |
-| [.\Resources\Instructions\Powershell_Instructions.md](Instructions\Powershell_Instructions.md) | Instructions for running the solution from PowerShell |
-| [.\Resources\Instructions\R_Instructions.md](Instructions\R_Instructions.md)| Instructions for running the solution in R on a local machine |
-| [.\Resources\Instructions\START_HERE.md](Instructions\START_HERE.md) | **[START HERE](Instructions\START_HERE.md)** to learn how to set up your computer for all solution paths |
-| [.\Resources\Instructions\Visualize_Results.md](Instructions\Visualize_Results.md) | Instructions for hooking up your results to the PowerBI template |
+| .\Resources\Instructions\Data Setup.md | [Use this to setup data](Instructions\Data_Setup.md) for a quick or more detailed execution |
+| .\Resources\Instructions\Powershell_Instructions.md | [Instructions for running the solution from PowerShell](Instructions\Powershell_Instructions.md) |
+| .\Resources\Instructions\R_Instructions.md | [Instructions for running the solution in R](Instructions\R_Instructions.md) on a local machine |
+| .\Resources\Instructions\START_HERE.md | **[START HERE](Instructions\START_HERE.md)** to learn how to set up your computer for all solution paths |
+| .\Resources\Instructions\Visualize_Results.md | [Instructions for visualizing your results](Instructions\Visualize_Results.md) in the PowerBI template |
 
 
 
