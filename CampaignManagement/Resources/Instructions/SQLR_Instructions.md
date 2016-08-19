@@ -8,7 +8,7 @@ For the purposes of a quick demo, we can use a small dataset. To create a smalle
 Make sure you have set up your SQL Server and ODBC connection between SQL and PowerBI by following the instructions in <a href="START_HERE.md">START HERE</a>.  Then proceed with the steps below to run the solution template using the automated PowerShell files. 
 
 
-Running these .sql scripts will walk through the operationalized steps of this solution  – dataset creation, modeling, and scoring as described  <a href="data-scientist.md">here</a>.
+Running these .sql scripts will walk through the operationalized steps of this solution  – dataset creation, modeling, and scoring as described  [here](../data-scientist.md).
 
 <h2>Solution Path:  SQLR Scripts</h2>
 The steps below walk you through the execution each of the SQLR scripts - see the [SQLR directory readme](../../SQLR/readme.md) for a detailed description of each of these scripts.
