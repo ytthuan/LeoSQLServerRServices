@@ -68,15 +68,15 @@ You may also view contents of any of these tables.  Right click on a table and s
 <img src="../Images/viewtable.png" width="50%">
 
 Take a look at the `dbo.market_touchdown_agg` to view the feature engineering table.  Or you can look at just the feature variables by executing the following query:
-    ```
-    SELECT TOP 1000 [Lead_Id]
-        ,[Sms_Count]
-        ,[Email_Count]
-        ,[Call_Count]
-        ,[Last_Channel]
-        ,[Second_Last_Channel]
-    FROM [CampaignManagement].[dbo].[market_touchdown_agg]
-    ```
+```
+SELECT TOP 1000 [Lead_Id]
+    ,[Sms_Count]
+    ,[Email_Count]
+    ,[Call_Count]
+    ,[Last_Channel]
+    ,[Second_Last_Channel]
+FROM [CampaignManagement].[dbo].[market_touchdown_agg]
+```
 
 Once the Analytical Dataset is created, move on to the next step.
 
