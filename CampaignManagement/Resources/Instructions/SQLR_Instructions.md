@@ -14,7 +14,7 @@ Running these .sql scripts will walk through the operationalized steps of this s
 The steps below walk you through the execution each of the SQLR scripts - see the [SQLR directory readme](../../SQLR/readme.md) for a detailed description of each of these scripts.
 
 Let’s start in SQL Server Management Studio where we have connected to the SQL 2016 server.  
-Login to SSMS using the credential created in the Set up Instructions document.
+Login to SSMS using the credential created in [START HERE](START_HERE.md).
 
 The first step we need to do is import the raw datasets into the SQL Server. In this solution we will use PowerShell to import the raw datasets into SQL Server.  
  
@@ -49,7 +49,7 @@ Answer `y` to the prompt to allow the following scripts to execute.
 
 8.	Enter `dbo`.
 
- The command line window will prompt you to enter your Username and Password. Refer the instructions [START HERE](START_HERE.md) Instructions.
+ The command line window will prompt you to enter your Username and Password. 
 
 9.	Enter Your UserName & Password that you created earlier using the Set up Instructions document.
 

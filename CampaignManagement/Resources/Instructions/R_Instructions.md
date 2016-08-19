@@ -6,7 +6,7 @@ For the purposes of a quick demo, we can use a small dataset. To create a smalle
 
 Make sure you have set up your SQL Server and ODBC connection between SQL and PowerBI by following the instructions in <a href="START_HERE.md">START HERE</a>.  Then proceed with the steps below to run the solution template using the R script files. 
 
-These files represent the files created by the data scientist, who would  typically work from their own machine and push the R compute to a SQL Server. The user of this solution package can choose to deploy Microsoft R Client on their machine and push the compute to the SQL Server, or deploy R Client on the same machine as SQL Server.  (Note the latter would not be typical in a real enterprise setting).
+The R files in this solution package represent the files created by the data scientist, who would  typically work from their own machine and push the R compute to a SQL Server. The user of this solution package can choose to deploy Microsoft R Client on their machine and push the compute to the SQL Server, or deploy R Client on the same machine as SQL Server.  (Note the latter would not be typical in a real enterprise setting).
 
 
 Running these scripts will walk through the initial R code used to create this solution – dataset creation, modeling, and scoring as described [here](../data-scientist.md).
@@ -22,8 +22,6 @@ The R code shown here was then incorporated into the [.sql files](../../SQLR/rea
  ```
  install.packages("data.table")
  install.packages("ROCR")
- q()
- n
  ```
 
 3.  Open the four files in the R directory into your IDE configured with R Client.

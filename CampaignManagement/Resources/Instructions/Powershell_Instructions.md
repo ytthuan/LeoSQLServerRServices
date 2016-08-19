@@ -40,7 +40,7 @@ This section simulates input data and performs preprocessing and feature enginee
 
 8.	Enter `dbo`.
 
- The command line window will prompt you to enter your Username and Password. Refer to the [START HERE](START_HERE.md) instructions.
+ The command line window will prompt you to enter your Username and Password.
 
 9.	Enter Your UserName & Password that you created earlier using the [START HERE](START_HERE.md) Instructions.
 
@@ -67,6 +67,16 @@ You may also view contents of any of these tables.  Right click on a table and s
 <br/>
 <img src="../Images/viewtable.png" width="50%">
 
+Take a look at the `dbo.market\_touchdown\_agg` to view the feature engineering table.  Or you can look at just the feature variables by executing the following query:
+```
+    SELECT TOP 1000 [Lead_Id]
+        ,[Sms_Count]
+        ,[Email_Count]
+        ,[Call_Count]
+        ,[Last_Channel]
+        ,[Second_Last_Channel]
+    FROM [CampaignManagement].[dbo].[market_touchdown_agg]
+    ```
 
 Once the Analytical Dataset is created, move on to the next step.
 
@@ -93,7 +103,7 @@ Next, two models are trained and tested.
 
 17.	Enter `dbo`.
 
- The command line window will prompt you to enter your Username and Password. Refer to the [START HERE](START_HERE.md) Instructions.
+ The command line window will prompt you to enter your Username and Password. 
 
 18.	Enter Your UserName & Password that you created earlier using the [START HERE](START_HERE.md) Instructions.
 
@@ -137,7 +147,7 @@ The models are now compared and the champion model is used for scoring. The pred
 
 26.	Enter `dbo`.
 
- The command line window will prompt you to enter your Username and Password. Refer the instructions from the [START HERE](START_HERE.md).
+ The command line window will prompt you to enter your Username and Password. 
 
 27.	Enter Your UserName & Password that you created earlier using the [START HERE](START_HERE.md) Instructions.
 
