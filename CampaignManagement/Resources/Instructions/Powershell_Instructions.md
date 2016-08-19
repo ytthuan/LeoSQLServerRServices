@@ -4,11 +4,11 @@ Execution with PowerShell</h1>
 
 For the purposes of a quick demo, we can use a small dataset. To create a smaller dataset follow the steps in <a href="Data_Setup.md">Data Setup</a>.
 
-Make sure you have set up your SQL Server and ODBC connection between SQL and PowerBI by following the instructions in <a href="START_HERE.md">START HERE</a>.  Then proceed with the steps below to run the solution template using the automated PowerShell files. 
+Make sure you have set up your SQL Server and ODBC connection between SQL and PowerBI by following the instructions in [START HERE](START_HERE.md).  Then proceed with the steps below to run the solution template using the automated PowerShell files. 
 
-Running these PowerShell scripts performs the automated version of the solution – dataset creation, modeling, and scoring as described  <a href="../data-scientist.md">here</a>.
+Running these PowerShell scripts performs the automated version of the solution – dataset creation, modeling, and scoring as described  [here](../data-scientist.md).
 
-<h2>Solution Path:  PowerShell Scripts</h2>
+## Solution Path:  PowerShell Scripts
 1.	Click on the windows key on your keyboard. Type the words `PowerShell ISE` and open the Windows PowerShell ISE app.
 <br/>
 <img src="../Images/ps1.png" width="30%" >
@@ -82,7 +82,7 @@ FROM [CampaignManagement].[dbo].[market_touchdown_agg]
 Once the Analytical Dataset is created, move on to the next step.
 
 
-<h2>Model Development</h2>
+## Model Development
 Next, two models are trained and tested.
 
 12.	Click on File on the top left corner of the screen. Then click on `Open` and navigate to the folder location where you unzipped the CampaignManagement.zip file and open `Model Development.ps1`.
@@ -126,7 +126,7 @@ You can see that the Model Training has begun. Once you see the Model AUC’s an
 
 
 
-<h2>Scoring</h2>
+## Scoring
 The models are now compared and the champion model is used for scoring. The prediction results from the scoring step are the recommendations for contact for new campaigns - when and how to contact each lead for the optimal predicted response rate.
 
 21.	Click on File on the top left corner of the screen. Then click on Open and navigate to the folder location where you unzipped the CampaignManagement.zip file and open `Scoring.ps1`.
@@ -170,6 +170,13 @@ Hit `Refresh` if necessary.
 
 Right click on `dbo.lead_scored_dataset` and select `View Top 1000 Rows` to preview the scored data.
 
-<h2>Visualizing Results </h2>
+## Visualizing Results 
 Now proceed to <a href="Visualize_Results.md">Visualizing Results with PowerBI</a>.
 
+## Other Solution Paths
+
+You've just completed the fully automated solution that simulates the data, trains and scores the models by executing PowerShell scripts. 
+
+If you wish to step-through the process from the perspective of a data scientist using your R IDE, see the [R Instructions](R_Instructions.md).
+
+Finally, we have also prepared a version that steps through the process using T-SQL commands. To do so, follow the [SQLR Instructions](SQLR_Instructions.md).

@@ -70,3 +70,11 @@ The R code shown here was then incorporated into the [.sql files](../../SQLR/rea
  
 <h2>Visualizing Results </h2>
 Now proceed to <a href="Visualize_Results.md">Visualizing Results with PowerBI</a>.
+
+## Other Solution Paths
+You have just completed a step-through of the  process from the perspective of a data scientist writing in R.
+
+You may also want to try out the fully automated solution that simulates the data, trains and scores the models by executing PowerShell scripts. This is the fastest way to deploy. See [PowerShell Instructions](Powershell_Instructions.md) for this deployment.
+
+Finally, we have also prepared a version that steps through the process using T-SQL commands. To do so, follow the [SQLR Instructions](SQLR_Instructions.md).
+	

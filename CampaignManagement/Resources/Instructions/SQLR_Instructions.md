@@ -169,3 +169,11 @@ Answer `y` to the prompt to allow the following scripts to execute.
  
 <h2>Visualizing Results </h2>
 Now proceed to <a href="Visualize_Results.md">Visualizing Results with PowerBI</a>.
+
+## Other Solution Paths
+You have just completed the steps of the process using T-SQL commands to simulate data, train and score models.
+
+If you wish to step-through the process from the perspective of a data scientist using your R IDE, see the [R Instructions](R_Instructions.md).
+
+You may also want to try out the fully automated solution that simulates the data, trains and scores the models by executing PowerShell scripts. This is the fastest way to deploy. See [PowerShell Instructions](Powershell_Instructions.md) for this deployment.
+
