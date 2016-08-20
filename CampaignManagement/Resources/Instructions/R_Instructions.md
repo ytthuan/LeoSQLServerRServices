@@ -78,3 +78,4 @@ You may also want to try out the fully automated solution that simulates the dat
 
 Finally, we have also prepared a version that steps through the process using T-SQL commands. To do so, follow the [SQLR Instructions](SQLR_Instructions.md).
 	
+While we show all three paths in this solution package as full alternatives, we expect that a more typical scenario would be for a data scientist to perform data exploration and predictive modeling in R followed by scoring in production using T-SQL. 
