@@ -12,10 +12,7 @@ This solution packet includes the R code a data scientist would develop in the *
  
 To try this out yourself: 
 * Download this template by navigating to the top folder in this repository and using the **Clone or Download** button.
-* Follow the instructions in **[START HERE](Instructions/START_HERE.md)** to setup your SQL environment 
-* Follow the instructions for running the fully automated solution in **[PowerShell Instructions](Instructions/Powershell_Instructions.md)**
-* (OPTIONAL) You could also step through the parts of this solution with SQL files by using **[SQLR Instructions](Instructions/SQLR_Instructions.md)**
-* (OPTIONAL) You can step through the R code in your own R IDE by following the instructions in **[R Instructions](Instructions/R_Instructions.md)**
+* Follow the instructions in **[START HERE](Instructions/START_HERE.md)** 
 
 
 If you need a trial version of SQL Server 2016, see [What's New in SQL Server 2016](https://msdn.microsoft.com/en-us/library/bb500435.aspx) for download or VM options. 
@@ -85,10 +82,7 @@ To run the scripts requires the following:
 
 To try this out yourself: 
 * Download this template by navigating to the top folder in this repository and using the **Clone or Download** button.
-* Follow the instructions in **[START HERE](Instructions/START_HERE.md)** to setup your SQL environment 
-* Follow the instructions for running the fully automated solution in **[PowerShell Instructions](Instructions/Powershell_Instructions.md)**
-* (OPTIONAL) You could also step through the parts of this solution with SQL files by using **[SQLR Instructions](Instructions/SQLR_Instructions.md)**
-* (OPTIONAL) You can step through the R code in your own R IDE by following the instructions in **[R Instructions](Instructions/R_Instructions.md)**
+* Follow the instructions in **[START HERE](Instructions/START_HERE.md)** 
 
 [&lt; Back to ReadMe](../readme.md)
 
