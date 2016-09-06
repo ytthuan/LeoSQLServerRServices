@@ -13,6 +13,8 @@ In this template, we demonstrate how to develop a Predictive Maintenance solutio
 
 * R IDE such as R Studio or R Tools for Visual Studio to access the data from the server: https://msdn.microsoft.com/en-us/microsoft-r/install-r-client-windows 
 
+* Git Large File Storage: this is needed to download the large CSV files from Github: https://github.com/github/git-lfs
+
 ###The directory structure for this template is as follows:
 * Data: Sample CSV files for telemetry, errors, maintanence, machines, failures are available in the Data folder
 * Codes: 
