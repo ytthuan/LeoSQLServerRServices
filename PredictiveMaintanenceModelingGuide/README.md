@@ -14,8 +14,7 @@ In this template, we demonstrate how to develop a Predictive Maintenance solutio
 * R IDE such as R Studio or R Tools for Visual Studio to access the data from the server: https://msdn.microsoft.com/en-us/microsoft-r/install-r-client-windows 
 
 ###The directory structure for this template is as follows:
-* Data: Sample CSV files for telemetry, errors, maintanence, machines, failures are available in Azure Blob (https://predictivemaintanence.blob.core.windows.net/predictivemaintanencemodelingguide)
-
+* Data: Sample CSV files for telemetry, errors, maintanence, machines, failures are available in the Data folder
 * Codes: 
 
 	- SQL code used for data ingestion and feature engineering: 	
