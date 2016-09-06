@@ -233,6 +233,8 @@ rxSetComputeContext(sql)
 train_table <- RxSqlServerData(table = "train_Features",
                                connectionString = connection_string,
                                colClasses = train_columns)
+                               
+rxSetComputeContext(local)
 
 rxDataStep(inData = tagged_table_train, 
            outFile = train_table,  
