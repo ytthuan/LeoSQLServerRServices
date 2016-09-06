@@ -175,10 +175,6 @@ Now proceed to <a href="Visualize_Results.md">Visualizing Results with PowerBI</
 
 ## Other Solution Paths
 
-You've just completed the fully automated solution that simulates the data, trains and scores the models by executing PowerShell scripts. 
+You've just completed the fully automated solution that simulates the data, trains and scores the models by executing PowerShell scripts.  
 
-If you wish to step-through the process from the perspective of a data scientist using your R IDE, see the [R Instructions](R_Instructions.md).
-
-Finally, we have also prepared a version that steps through the process using T-SQL commands. To do so, follow the [SQLR Instructions](SQLR_Instructions.md).
-
-While we show all three paths in this solution package as full alternatives, we expect that a more typical scenario would be for a data scientist to perform data exploration and predictive modeling in R followed by scoring in production using T-SQL. 
+See the [Typical Workflow Walkthrough](Typical_Workflow.md) for a description of how these files were created and 
