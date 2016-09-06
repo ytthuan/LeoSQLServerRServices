@@ -14,7 +14,7 @@ In this template, we demonstrate how to develop a Predictive Maintenance solutio
 * R IDE such as R Studio or R Tools for Visual Studio to access the data from the server: https://msdn.microsoft.com/en-us/microsoft-r/install-r-client-windows 
 
 ###The directory structure for this template is as follows:
-* Data: Sample CSV files for telemetry, errors, maintanence, machines, failures
+* Data: Sample CSV files for telemetry, errors, maintanence, machines, failures are available in Azure Blob (https://predictivemaintanence.blob.core.windows.net/predictivemaintanencemodelingguide)
 
 * Codes: 
 
@@ -28,7 +28,7 @@ In this template, we demonstrate how to develop a Predictive Maintenance solutio
 
 ##Implementation setup overview: 
 
-![Overview diagram][1]
+![1]
 
 ##Input data overview: 
 * Telemetry.csv: The telemetry time-series data consists of voltage, rotation, pressure and vibration measurements.
@@ -80,7 +80,7 @@ For predictive maintenance problems, a time-dependent splitting strategy is used
 The SQL/R codes can be converted to Stored SQL procedures which can run in the SQL environment. Then a PowerShell script can be used to invoke the modeling steps end-to-end.
 
 
-[1]: ./Pdm_Template_SQL_server/SQL-Server-R-Services-Samples/PredictiveMaintenanceModellingGuide/Images/Pdm_Readme_github_img1.PNG
+[1]: ./Images/Pdm_Readme_github_img1.PNG
 
 
 
