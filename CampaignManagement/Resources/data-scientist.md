@@ -60,7 +60,7 @@ scoring is accomplished in the <b>step7\*.sql</b> files, automated by **Scoring.
 ![Scoring](Images/model_score.png?raw=true)
 
   
-##  Deployment / Visualize Results
+##  Deploy / Visualize Results
 The deployed data resides in a newly created database table, showing recommendations for each lead.  The final step of this solution visualizes these recommendations, and once the new campaigns have been completed we can also visualize a summary of how well the model worked.  
 
 ![Visualize](Images/visualize.png?raw=true)
