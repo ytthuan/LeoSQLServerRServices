@@ -21,7 +21,7 @@ In this template, we demonstrate how to develop a Predictive Maintenance solutio
 	- errors: https://pdmmodelingguide.blob.core.windows.net/pdmdata/errors.csv
 	- maintenence:https://pdmmodelingguide.blob.core.windows.net/pdmdata/maint.csv 
 	- machines: https://pdmmodelingguide.blob.core.windows.net/pdmdata/machines.csv 
-	- failures: https://pdmmodelingguide.blob.core.windows.net/pdmdata/failures.csv) 
+	- failures: https://pdmmodelingguide.blob.core.windows.net/pdmdata/failures.csv
 * Codes: 
 
 	- SQL code used for data ingestion and feature engineering: 	
