@@ -2,7 +2,7 @@
 In this template, we demonstrate how to develop a Predictive Maintenance solution with SQL Server 2016 R Services where the process is aligned with the existing R Notebook published in the [Cortana Intelligence Gallery](https://gallery.cortanaintelligence.com/Notebook/Predictive-Maintenance-Modelling-Guide-R-Notebook-1) but works with a larger dataset. 
 
 ##In this template:
-* There are 5 data sources namely: telemetry, errors, maintanence, machines, failures
+* There are 5 data sources namely: telemetry, errors, maintenance, machines, failures
 
 * Data ingestion, feature engineering and data preparation is done using SQL code
 
@@ -16,11 +16,11 @@ In this template, we demonstrate how to develop a Predictive Maintenance solutio
 * Git Large File Storage: this is needed to download the large CSV files from Github: https://github.com/github/git-lfs, https://github.com/github/git-lfs/wiki/Installation
 
 ###The directory structure for this template is as follows:
-* Data: Sample CSV files for telemetry, errors, maintanence, machines, failures are available in the Data folder
+* Data: Sample CSV files for telemetry, errors, maintenence, machines, failures can be accessed via the Data folder or through Azure Blob (telemetry: https://pdmmodelingguide.blob.core.windows.net/pdmdata/telemetry.csv, errors: https://pdmmodelingguide.blob.core.windows.net/pdmdata/errors.csv, maintenence:https://pdmmodelingguide.blob.core.windows.net/pdmdata/maint.csv, machines: https://pdmmodelingguide.blob.core.windows.net/pdmdata/machines.csv, failures: https://pdmmodelingguide.blob.core.windows.net/pdmdata/failures.csv). 
 * Codes: 
 
 	- SQL code used for data ingestion and feature engineering: 	
-		- pdm_data_ingestion.sql,
+		- pdm_data_ingestion.sql
 		- pdm_feature_engineering.sql
 	- R code for data visualization: 
 		- pdm_visualization.R
