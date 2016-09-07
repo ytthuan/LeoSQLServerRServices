@@ -9,7 +9,7 @@ This template uses simulated data from the insurance industry to model the campa
 
 For customers who prefer an on-premise solution, the implementation with SQL Server R Services is a great option, which takes advantage of the power of SQL Server and the innnovation of the R language. 
 
-We have modeled the steps in the template after a real-life data science process, where the data preparation, model training and evaluation can be done by a data scientist, from the convenience of their R IDE, and the deployment is done using SQL stored procedures with embedded R code. We also use PowerBI to visualize the deployed results.
+We have modeled the steps in the template after a real-life data science process, where the data preparation, model training and evaluation can be done by a data scientist, from the convenience of their R IDE, and the deployment is done using SQL stored procedures with embedded R code. We also use PowerBI to visualize the deployed results. View the details and follow the solution from start to finish with [this typical workflow](Resources/Instructions/Typical_Workflow.md) involving multiple personas.
 
 For convenience we also illustrate how all of these steps can be executed on a SQL Server client environment (such as SQL Server Management Studio), as well as from other applications. We provide a Windows PowerShell script that invokes the SQL scripts and demonstrate the end-to-end modeling process.
 
@@ -19,7 +19,7 @@ A high level description of this solution is [described here](Resources/business
 
 ## For the Data Scientist 
 
-This template showcases the use of Random Forest and Gradient Boosting to model for Campaign Responses. Data Scientists can follow the steps of data creation, model development, scoring and deployment.  The final deployed recommendations will then be visualized in PowerBI. [See more details and explanations of the entire process.](Resources/data-scientist.md).
+This template showcases the use of Random Forest and Gradient Boosting to model for Campaign Responses. Data Scientists can follow the steps of data creation, model development, scoring and deployment.  The final deployed recommendations will then be visualized in PowerBI. [See more details and explanations of all the files involved in this solution.](Resources/data-scientist.md).
 
 ##Template Contents 
 
