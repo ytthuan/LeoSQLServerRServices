@@ -17,8 +17,7 @@ The first tab of this dashboard shows the predicted recommendations.  At the top
 
 Also on the first tab are various summaries of recommendations and demographic information on the leads. 
 
-The second tab of the dashboard gives information on a deployed campaign after using the recommendations from the first tab.
-Note this Campaign Summary has been simulated but in a real setting you'd use the information on this page to assess how well the recommendations from the model had performed.
+The second tab of the dashboard shows summaries of the historical data used to create the predicted recommendations.  While this tab also shows values of Day of Week, Time of Day, and Channel, these values are actual past observations, not to be confused with the recommendations shown on the first tab.  
 
 To understand more about the entire process of modeling and deploying this example, see [For the Data Scientist](data-scientist.md).
  

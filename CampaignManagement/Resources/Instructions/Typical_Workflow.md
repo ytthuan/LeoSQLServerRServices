@@ -48,7 +48,7 @@ Now that Debra's environment is set up, she  opens her IDE and performs the foll
     sql <- RxInSqlServer(connectionString = connection_string)
     ...
     rxSetComputeContext(sql)
-    ```
+    
     
  4.  After running the first three scripts, Debra goes to SQL Server Management Studio to log in and view the results of feature engineering by running the following query in SSMS.
   ```
@@ -79,13 +79,13 @@ While this task is complete for the current set of leads, our company will want 
 
 Debra hands over her scripts to Danny who adds the code to the files you can see in the **CampaignManagement\\SQL** directory. He'll test out the start to finish set of TSQL code by running them - you can do this yourself by following the directions in the [SQLR Instructions](SQLR_Instructions.md).
 
-Finally, Danny may want to automate the process even more by developing the PowerShell scripts to invoke the TSQL files.  You can find these scripts in the **CampaignManagement** directory, and execute them yourself by following the See [PowerShell Instructions](Powershell_Instructions.md).  As noted earlier, this is the fastest way to execute all the code included in this solution.
+Finally, Danny may want to automate the process even more by developing the PowerShell scripts to invoke the TSQL files.  You can find these scripts in the **CampaignManagement** directory, and execute them yourself by following the [PowerShell Instructions](Powershell_Instructions.md).  As noted earlier, this is the fastest way to execute all the code included in this solution.
 
 A summary of this process and all the files involved is described in more detail [here](../data-scientist.md).
 
 
 ## Deploy and Visualize with Bernie the Business Analyst 
 
-Now that the predictions are created and the recommendations have been saved, we will meet our last persona - Bernie, the Business Analyst. Bernie will use the Power BI Dashboard to learn more about the recommendations (first tab).
+Now that the predictions are created and the recommendations have been saved, we will meet our last persona - Bernie, the Business Analyst. Bernie will use the Power BI Dashboard to learn more about the recommendations (first tab). He will also review summaries of the data used to create the model (second tab).  While both tabs contain information about Day of Week, Time of Day, and Channel, it is important to understand that on the Recommendations tab this refers to predicted recommendations to use in the future, while on the Summaries tab these values refer to historical data used to create those recommendations.  
 
 Bernie will then let the Campaign Team know that they are ready for their next campaign rollout - the data in the `Lead_Scored_Dataset` table contains the recommended time and channel for each lead in the campaign.  The team uses these recommendations to contact leads in the new campaign.
