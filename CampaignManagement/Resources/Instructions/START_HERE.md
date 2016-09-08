@@ -156,6 +156,4 @@ You are now ready to run the code for this solution.
 You can follow along with this by following the [Typical Workflow Walkthrough.](Typical_Workflow.md).
 
 + If you’re just interested in the outcomes of this process we have created a fully automated solution that simulates the data, trains and scores the models by executing PowerShell scripts. This is the fastest way to deploy. See [PowerShell Instructions](Powershell_Instructions.md) for this deployment.
-
-+ Finally, we have also prepared a version that steps through the process using T-SQL commands. To do so, follow the [SQLR Instructions](SQLR_Instructions.md).
 	
