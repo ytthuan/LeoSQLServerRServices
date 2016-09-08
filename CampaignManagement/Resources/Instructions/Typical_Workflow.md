@@ -21,10 +21,12 @@ Debra will work on her own machine, using  using  [R Client](https://msdn.micros
 Now that Debra's environment is set up, she  opens her IDE and performs the following:
 
 1.  First she installs the packages that she'll need.  She executes the following code in R:
+
     ```
     install.packages("data.table")
     install.packages("ROCR")
     ```
+
 2.  Now she'll develop R scripts to prepare the data.  To view the scripts she writes, open the following files from the CampaignManagement/R directory:
 
     a.	**step1_input_data.R**:  We'll sneak this script in first - in a real scenario the data would already be present on the SQL Server.  However, we're simulating data in this solution packet, and this script does the simulation. 
@@ -34,27 +36,35 @@ Now that Debra's environment is set up, she  opens her IDE and performs the foll
     c.	**step3_feature_engineering_AD_creation.R**:  Performs Feature Engineering and creates the Analytical Dataset.   Feature Engineering consists of creating new variables in the market touchdown dataset by aggregating the data in multiple levels.  The table is aggregated at a lead level, so variables like channel which will have more than one value for each user are pivoted and aggregated to variables like SMS count, Email count, Call Count, Last Communication Channel, Second Last Communication Channel etc.
 
 3.  If you are following along, you will need to replace the connection string at the top of each file with details of your login and database name in each file.  For example:
+   
     ```
     connection_string <- "Driver=SQL Server;Server=myServerName;Database=CampaignManagement;UID=rdemo;PWD=D@tascience"
     ```
-    This connection string contains all the information necessary to connect to the SQL Server from inside the R session. As you can see in the script, this information is then used in the `RxInSqlServer()` command to setup a `sql` string.  The `sql` string is in turn used in the `rxSetComputeContext()` to execute code directly on the SQL Server machine.      
+    
+    This connection string contains all the information necessary to connect to the SQL Server from inside the R session. As you can see in the script, this information is then used in the `RxInSqlServer()` command to setup a `sql` string.  The `sql` string is in turn used in the `rxSetComputeContext()` to execute code directly on the SQL Server machine.  You can see this in the .R files:
+
+    ```
+    connection_string <- "Driver=SQL Server;Server=[SQL Server Name];Database=[Database Name];UID=[User ID];PWD=[User Password]"
+    sql <- RxInSqlServer(connectionString = connection_string)
+    ...
+    rxSetComputeContext(sql)
+        ```
     
  4.  After running the first three scripts, Debra goes to SQL Server Management Studio to log in and view the results of feature engineering by running the following query in SSMS.
- ```
- SELECT TOP 1000 [Lead_Id]
+  ```
+  SELECT TOP 1000 [Lead_Id]
     ,[Sms_Count]
     ,[Email_Count]
     ,[Call_Count]
     ,[Last_Channel]
     ,[Second_Last_Channel]
- FROM [CampaignManagement].[dbo].[market_touchdown_agg]
- ```
-
+  FROM [CampaignManagement].[dbo].[market_touchdown_agg]
+  ```
 5.  Now she is ready for training the models.  She creates and executes the script you can find in **step4_model_rf_gbm.R**. Again, remember to replace the `connection_string` value with your information at the top of the file before you run this yourself.)  
 
 6.  The above script (**step4_model_rf_gbm.R**) also scores data for leads to be used in a new campaign. The code uses the champion model to score each lead multiple times - for each combination of day of week, time of day, and channel - and selects the combination with the highest probability to convert for each lead.  This becomes the recommendation for that lead.  The scored datatable shows the best way to contact each lead for the next campaign. The recommendations in this table (`Lead_Scored_Dataset`) are used for the next campaign the company wants to deploy.
 
-7.  Debra will now use PowerBI to visualize the recommendations created from her model.  She creates the PowerBI Dashboard which you can find in the **Resources** directory.  She uses an ODBC connection to connect to the data, so that it will always show the most recently modeled and scored data, using the instructions here. 
+7.  Debra will now use PowerBI to visualize the recommendations created from her model.  She creates the PowerBI Dashboard which you can find in the **Resources** directory.  She uses an ODBC connection to connect to the data, so that it will always show the most recently modeled and scored data, using the [instructions here](Visualize_Results.md).
 
 <img src="../Images/visualize.png">
 
