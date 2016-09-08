@@ -48,7 +48,7 @@ Now that Debra's environment is set up, she  opens her IDE and performs the foll
     sql <- RxInSqlServer(connectionString = connection_string)
     ...
     rxSetComputeContext(sql)
-        ```
+    ```
     
  4.  After running the first three scripts, Debra goes to SQL Server Management Studio to log in and view the results of feature engineering by running the following query in SSMS.
   ```
