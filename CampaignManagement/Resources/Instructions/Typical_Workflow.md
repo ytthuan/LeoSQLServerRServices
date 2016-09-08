@@ -46,11 +46,14 @@ Now that Debra's environment is set up, she  opens her IDE and performs the foll
     ```
     connection_string <- "Driver=SQL Server;Server=[SQL Server Name];Database=[Database Name];UID=[User ID];PWD=[User Password]"
     sql <- RxInSqlServer(connectionString = connection_string)
-    ...
+
+        ...
+
     rxSetComputeContext(sql)
-    
+    ```
     
  4.  After running the first three scripts, Debra goes to SQL Server Management Studio to log in and view the results of feature engineering by running the following query in SSMS.
+
   ```
   SELECT TOP 1000 [Lead_Id]
     ,[Sms_Count]
@@ -60,6 +63,7 @@ Now that Debra's environment is set up, she  opens her IDE and performs the foll
     ,[Second_Last_Channel]
   FROM [CampaignManagement].[dbo].[market_touchdown_agg]
   ```
+
 5.  Now she is ready for training the models.  She creates and executes the script you can find in **step4_model_rf_gbm.R**. Again, remember to replace the `connection_string` value with your information at the top of the file before you run this yourself.)  
 
 6.  The above script (**step4_model_rf_gbm.R**) also scores data for leads to be used in a new campaign. The code uses the champion model to score each lead multiple times - for each combination of day of week, time of day, and channel - and selects the combination with the highest probability to convert for each lead.  This becomes the recommendation for that lead.  The scored datatable shows the best way to contact each lead for the next campaign. The recommendations in this table (`Lead_Scored_Dataset`) are used for the next campaign the company wants to deploy.
