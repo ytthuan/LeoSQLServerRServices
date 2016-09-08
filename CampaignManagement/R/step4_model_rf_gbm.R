@@ -16,7 +16,9 @@ library("RevoScaleR")
 
 connection_string <- "Driver=SQL Server;Server=[SQL Server Name];Database=[Database Name];UID=[User ID];PWD=[User Password]"
 
-sql <- RxInSqlServer(connectionString = connection_string)
+sql_share_directory <- paste("c:\\AllShare\\", Sys.getenv("USERNAME"), sep = "")
+dir.create(sql_share_directory, recursive = TRUE, showWarnings = FALSE)
+sql <- RxInSqlServer(connectionString = connection_string, shareDir = sql_share_directory)
 local <- RxLocalSeq()
 
 
@@ -26,39 +28,37 @@ local <- RxLocalSeq()
 
 rxSetComputeContext(sql)
 
+CM_AD_100K <- RxSqlServerData(table = "CM_AD_Train",stringsAsFactors = T,connectionString = connection_string)
 
-############################################################################
-newclass <- c(
-    No_Of_Dependents="factor",
-    Term="factor",
-    No_Of_People_Covered="factor",
-    Premium="factor",
-    Call_For_Action="factor",
-    Tenure_Of_Campaign="factor",
-    Action_Day="factor",
-    Conversion_Flag="factor"
-)
-CM_AD_Train <- RxSqlServerData(table = "CM_AD_Train", stringsAsFactors = T, 
-    connectionString = connection_string, colClasses = newclass
-    )
+AD_train <- rxImport(inData = CM_AD_100K, stringsAsFactors = T,outFile = NULL)
+
+################################################# Checking class of the variables ###################################################
+sapply(AD_train,class)
+
+AD_train$No_Of_Dependents=factor(AD_train$No_Of_Dependents)
+AD_train$Term=factor(AD_train$Term)
+AD_train$No_Of_People_Covered=factor(AD_train$No_Of_People_Covered)
+AD_train$Premium=factor(AD_train$Premium)
+AD_train$Call_For_Action=factor(AD_train$Call_For_Action)
+AD_train$Tenure_Of_Campaign=factor(AD_train$Tenure_Of_Campaign)
+AD_train$Action_Day=factor(AD_train$Action_Day)
+AD_train$Conversion_Flag=factor(AD_train$Conversion_Flag)
 
 ############################################################# RF #####################################################################
 
 #########################################################   RF Training   #################################################################
 
-independent <- rxGetVarNames(CM_AD_Train)
-independent <- independent[!(independent %in% c("Conversion_Flag","Lead_Id"))]
+dependent="Conversion_Flag"
 
-formula <- as.formula(paste("Conversion_Flag~", paste(independent, collapse = "+")))
+independent=names(AD_train)[!(names(AD_train) %in% c(dependent,"Lead_Id"))]
 
+formula=reformulate(independent,dependent)
 
-rxSetComputeContext(sql)
+rxSetComputeContext(local)
+
 RF_AD_Full <- rxDForest(formula = formula,
-                        data = CM_AD_Train,
-                        blocksPerRead = 10000,
-                        nTree = 500, mTry = 5, cp = 0.00005, importance = TRUE)
-
-####Variable has been reduced using importance parameter in rxBTrees  
+                        data = AD_train[-match("Lead_Id",names(AD_train))],nTree = 500,mTry = 5,cp=0.00005,importance=TRUE)
+####Variable has been reduced using importance parameter in rxBTrees
 
 #########################################################   RF Prediction   #################################################################
 
