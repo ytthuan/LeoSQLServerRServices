@@ -59,32 +59,13 @@ On the User Mapping tab, check  <code>master</code> in the top section, then che
 <li>	If you changed the mode, restart the server.  In the Object Explorer, right-click your server, and then click <code>Restart</code>. If SQL Server Agent is running, it must also be restarted.</li>
 </ul></li>
 
-<li>	Now, click on <code>File</code> on the top left corner of the SQL Server window and select <code>Connect Object Explorer…</code> verify that you can connect to the server with this username(<code>rdemo</code>) &amp; password(<code>D@tascience</code>).</li>
+<li>	Now, click on <code>File</code> on the top left corner of the SQL Server window and select <code>Connect Object Explorer…</code> verify that you can connect to the server with this username(<code>rdemo</code>) &amp; password(<code>D@tascience</code>) using the SQL Server Authentication.</li>
 </ol>
 
  
 
-<h3>Install  Packages on SQL Server</h3>
-<p>	Install the <code>data.table</code> and <code>ROCR</code>  packages into SQL R: </p>
-<ol>
-<li>	On the machine with your server, open a command window  as “Administrator” and submit the following commands:
-<pre><code>
-cd "C:\Program Files\Microsoft SQL Server\MSSQL13.MSSQLSERVER\R_SERVICES\bin"
-R
-</code></pre>
-</li>
-<li>	Once you see the R prompt, execute the following commands:
-<pre><code>
-install.packages("data.table")
-install.packages("ROCR")
-q()
-n
-</code></pre>
-</li>
-</ol>
-
 <h3>Create Database</h3>
-In SSMS, create the “CampaignManagement” Database to be used for this solution. 
+In SSMS, create the “Campaign_Management” Database to be used for this solution. 
 <ol>
 <li>
 Right click on Database and select <code>New Database...</code> 
@@ -92,7 +73,7 @@ Right click on Database and select <code>New Database...</code>
 <img src="../Images/newdb.png" width="40%">
 </li>
 <li>Type 
-<code>CampaignManagement</code> for the name and hit <code>OK</code>.
+<code>Campaign_Management</code> for the name and hit <code>OK</code>.
 <br />
 <img src="../Images/newdb2.png" width="50%">
 </li>
@@ -113,7 +94,7 @@ Right click on Database and select <code>New Database...</code>
    <br/>
 <img src="../Images/odbc2.png" width="50%" >
  </li>
-<li>	Under Name, Enter <code>CampaignManagement</code>. Under Server enter the MachineName from the SQL Server logins set up section. Press <code>Next</code>.
+<li>	Under Name, Enter <code>Campaign_Management</code>. Under Server enter the MachineName from the SQL Server logins set up section. Press <code>Next</code>.
    <br/>
 <img src="../Images/odbc3.png" width="50%" >
 </li>
@@ -123,7 +104,7 @@ Right click on Database and select <code>New Database...</code>
 </li>
  
 
-<li>	Check the box for <code>Change the default database to</code> and enter <code>CampaignManagement</code>. Press 
+<li>	Check the box for <code>Change the default database to</code> and enter <code>Campaign_Management</code>. Press 
 <code>Next</code>.
    <br/>
 <img src="../Images/odbc5.png" width="50%" >

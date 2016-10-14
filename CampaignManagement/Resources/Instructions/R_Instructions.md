@@ -18,27 +18,22 @@ The R code shown here was then incorporated into the [.sql files](../../SQLR/rea
 
 1.  You will need  [R Client](https://msdn.microsoft.com/en-us/microsoft-r/install-r-client-windows) to execute these R scripts.  You will also want to [install and configure an R IDE](https://msdn.microsoft.com/en-us/microsoft-r/r-client-get-started#configure-ide) to use with R Client.  
 
-2.  Install packages needed for these scripts.  Execute the following code in R:
- ```
- install.packages("data.table")
- install.packages("ROCR")
- ```
 
-3.  Open the four files in the R directory into your IDE configured with R Client.
+3.  Open the five files in the R directory into your IDE configured with R Client.
 
 4.	Replace the connection string at the top of each file with details of your login and database name in each of the four files.  For example:
  <br/>
  <img src="../Images/r2.png">
  
- Note: You can use “.” for the server name as shown here if using a local SQL Server (on the same machine as your code). 
+ Note: You can use “.” for the server name as shown here if using a local SQL Server (on the same machine as your code). Also note that there can be NO SPACES between the "=" in the connection string.  That is  "Database=Campaign_Management" will work while " Database = Campaign_Management" will give an error!  
 
 5.	The scripts perform the following actions:
 
-    a.	**step1_input_data.R**:  Simulates the 4 input datasets
+    a.	**step0_data_generation.R**:  Simulates the 4 input datasets.  Use this to create different size datasets.
 
-    b.	**step2_data_preprocessing.R**: Performs preprocessing steps like outlier treatment and missing value treatment on the input datasets
+    b.	**step1_data_processing.R**: Uploads .csv files to the database and perfroms preprocessing steps such as outlier treatment and missing value treatment on the input datasets
 
-    c.	**step3_feature_engineering_AD_creation.R**:  Performs Feature Engineering and creates the Analytical Dataset.   Feature Engineering consists of creating new variables in the market touchdown dataset by aggregating the data in multiple levels.  The table is aggregated at a lead level, so variables like channel which will have more than one value for each user are pivoted and aggregated to variables like SMS count, Email count, Call Count, Last Communication Channel, Second Last Communication Channel etc.
+    c.	**step2_feature_engineering.R**:  Performs Feature Engineering and creates the Analytical Dataset.   Feature Engineering consists of creating new variables in the market touchdown dataset by aggregating the data in multiple levels.  The table is aggregated at a lead level, so variables like channel which will have more than one value for each user are pivoted and aggregated to variables like SMS count, Email count, Call Count, Last Communication Channel, Second Last Communication Channel etc.
 
     After running this script, take a look at the features created by running the following query in SSMS:
     
@@ -52,7 +47,9 @@ The R code shown here was then incorporated into the [.sql files](../../SQLR/rea
     FROM [CampaignManagement].[dbo].[market_touchdown_agg]
     ```
 
-    d.	**step4_model_rf_gbm.R**:  Builds the Random Forest & Gradient Boosting models, identifies the champion model and scores the Analytical dataset
+    d.	**step3_training_evaluation.R**:  Builds the Random Forest & Gradient Boosting models and identifies the champion model. Displays an ROC curve and confusion matrix for each model.  
+
+    e.   **step4_campaign_recommendations.R**: Creates 63 combinations for each lead: 7 Days x 3 Times x 3 Channels = 63.  Each combination is scored with the best model and the combo with the highest conversion probability is used as the recommendation for that lead.  Results from this step are stored in the **Recommendations** database table.  This script will take somewhere between 7-8 minutes with the default 100K leads.  
 
 6.	Run each script in order.  Note some may take some time to finish.  You’ll know they are done when you put cursor in the Console area (labeled “R Interactive” in RTVS)  and it is no longer spinning.  Also when done you’ll see the command prompt “>” ready for the next interactive command. 
 <br/>
@@ -62,11 +59,11 @@ The R code shown here was then incorporated into the [.sql files](../../SQLR/rea
  <br/>
  <img src="../Images/r5.png" width="30%">
 
-7.	When you have finished with all four scripts, log into the SQL Server to view all the datasets that have been created in the `CampaignManagement` database.  Hit `Refresh` if necessary.
+7.	When you have finished with all  scripts, log into the SQL Server to view all the datasets that have been created in the `CampaignManagement` database.  Hit `Refresh` if necessary.
  <br/>
  <img src="../Images/alltables.png" width="30%">
 
- Right click on `dbo.lead_scored_dataset` and select `View Top 1000 Rows` to preview the scored data.
+ Right click on `dbo.Recommendations` and select `View Top 1000 Rows` to preview the scored data.
  
 <h2>Visualizing Results </h2>
 Now proceed to <a href="Visualize_Results.md">Visualizing Results with PowerBI</a>.
