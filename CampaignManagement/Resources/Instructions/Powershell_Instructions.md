@@ -2,8 +2,6 @@
 <h1>Campaign Management:
 Execution with PowerShell</h1>
 
-For the purposes of a quick demo, we can use a small dataset. To create a smaller dataset follow the steps in <a href="Data_Setup.md">Data Setup</a>.
-
 Make sure you have set up your SQL Server and ODBC connection between SQL and PowerBI by following the instructions in [START HERE](START_HERE.md).  Then proceed with the steps below to run the solution template using the automated PowerShell files. 
 
 Running these PowerShell scripts performs the automated version of the solution – dataset creation, modeling, and scoring as described  [here](../data-scientist.md).
