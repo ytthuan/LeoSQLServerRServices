@@ -35,7 +35,7 @@ This script performs missing value and outlier treatment on the lead demography 
 
 This scripts performs feature engineering on the Market Touchdown table and then merges the 4 input tables to generate the Analytical Dataset. Finally, the analytical dataset along with training and test datasets are exported to SQL Server
 1.	Market Touchdown: The table is aggregated at a lead level, so variables like channel which will have more than one value for each user are pivoted and aggregated to from variables like SMS count, Email count, Call Count, Last Communication Channel, Second Last Communication Channel etc.
-2.	Analytical Dataset: The latest version of all the 4 input datasets are merged together to create the analytical dataset. The analytical dataset is further split into train and test datasets	 
+2.	Analytical Dataset: Analytical Dataset: The latest version of all the 4 input datasets are merged together to create the analytical dataset. The analytical dataset is further split into train and test datasets. Some temporary tables are created which will later be overwritten with model variables in step_4
 
 ## step4_model_rf_gbm.R
 
