@@ -41,7 +41,7 @@ The SQL procedures can be executed in SQL Server environment (such as **SQL Serv
 
 To run the scripts, you must prepare the following environment:
 
- * An instance of SQL Server 2016 CTP 3 or later, with SQL Server R Services installed and configured
+ * An instance of SQL Server 2016 (Enterprise or Developer edition) CTP 3 or later, with SQL Server R Services installed and configured
  * A SQL login and password. The SQL login must have permissions to execute R scripts
  * A database on the instance in which the login has been granted the permission to create and execute stored procedures
  
