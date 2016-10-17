@@ -5,8 +5,6 @@ GO
 SET QUOTED_IDENTIFIER ON
 GO
 
-USE Campaign_Management
-GO
 
 IF NOT EXISTS (SELECT * FROM sysobjects WHERE name='Campaign_Models' AND xtype='U')
     create table Campaign_Models
@@ -22,11 +20,11 @@ GO
 CREATE PROCEDURE [TrainModel] @modelName varchar(20)
 AS 
 BEGIN
-	DECLARE @inquery NVARCHAR(max) = N'SELECT * FROM [Campaign_Management].[dbo].[CM_AD1] WHERE Split_Vector = 1';
+	DECLARE @inquery NVARCHAR(max) = N'SELECT * FROM CM_AD1 WHERE Split_Vector = 1';
 	DELETE FROM Campaign_Models WHERE model_name = @modelName;
 	INSERT INTO Campaign_Models (model)
 	EXECUTE sp_execute_external_script @language = N'R',
-					                   @script = N' 
+					   @script = N' 
 ##########################################################################################################################################
 ##	Dataset for train
 ##########################################################################################################################################

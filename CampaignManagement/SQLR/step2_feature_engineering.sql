@@ -8,9 +8,6 @@ GO
 SET QUOTED_IDENTIFIER ON
 GO
 
-USE Campaign_Management
-GO
-
 DROP PROCEDURE IF EXISTS [dbo].[feature_engineering]
 GO
 

@@ -5,9 +5,6 @@ GO
 SET QUOTED_IDENTIFIER ON
 GO
 
-USE Campaign_Management
-GO
-
 DROP PROCEDURE IF EXISTS [dbo].[TestModel]
 GO
 
@@ -20,7 +17,7 @@ BEGIN
 	DECLARE @model_rf varbinary(max) = (select model from Campaign_Models where model_name = @modelrf);
 	DECLARE @model_btree varbinary(max) = (select model from Campaign_Models where model_name = @modelbtree);
 	EXECUTE sp_execute_external_script @language = N'R',
-     					               @script = N' 
+     					   @script = N' 
 ####################################################################################################
 ##	Dataset for test
 ####################################################################################################

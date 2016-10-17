@@ -4,8 +4,6 @@ GO
 SET quoted_identifier on
 GO
 
-USE Campaign_Management
-GO
 
 /*  Create the Campaign_Detail Table. */  
 
@@ -13,10 +11,10 @@ DROP TABLE IF EXISTS Campaign_Detail
 GO
 CREATE TABLE Campaign_Detail
 (
-Campaign_Name varchar(50),
 Campaign_Id int,
+Campaign_Name varchar(50),
 Category varchar(15),
-Launch_Date	date,
+Launch_Date varchar(12),
 Sub_Category varchar(15),
 Campaign_Drivers varchar(50),
 Product_Id int,
@@ -60,11 +58,11 @@ CREATE TABLE Market_Touchdown
 Lead_Id varchar(50),
 Channel varchar(15),
 Time_Of_Day varchar(15),
-Day_Of_Week varchar(1),
+Day_Of_Week int,
 Campaign_Id int,
 Conversion_Flag int,
-Time_Stamp date,
 Source	varchar(30),
+Time_Stamp varchar(12),
 Comm_Id int
 );
 
@@ -117,7 +115,7 @@ Lead_Id varchar(50) NOT NULL
 ,Campaign_Id int
 ,Day_Of_Week varchar(1)
 ,Comm_Id int NOT NULL
-,Time_Stamp date
+,Time_Stamp varchar(12)
 ,Product varchar(50)
 ,Category varchar(15)
 ,Term int
@@ -128,7 +126,7 @@ Lead_Id varchar(50) NOT NULL
 ,Sub_Category varchar(15)
 ,Campaign_Drivers varchar(50)
 ,Campaign_Name varchar(50)
-,Launch_Date date
+,Launch_Date varchar(12)
 ,Call_For_Action int
 ,Focused_Geography varchar(15)
 ,Tenure_Of_Campaign int
@@ -211,7 +209,7 @@ CREATE TABLE CM_AD
 ,Campaign_Id int
 ,Day_Of_Week varchar(1)
 ,Comm_Id int 
-,Time_Stamp date
+,Time_Stamp varchar(12)
 ,Product varchar(50)
 ,Category varchar(15)
 ,Term int
@@ -222,7 +220,7 @@ CREATE TABLE CM_AD
 ,Sub_Category varchar(15)
 ,Campaign_Drivers varchar(50)
 ,Campaign_Name varchar(50)
-,Launch_Date date
+,Launch_Date varchar(12)
 ,Call_For_Action int
 ,Focused_Geography varchar(15)
 ,Tenure_Of_Campaign int
@@ -262,7 +260,7 @@ CREATE TABLE CM_AD1
 ,Campaign_Id int
 ,Day_Of_Week varchar(1)
 ,Comm_Id int 
-,Time_Stamp date
+,Time_Stamp varchar(12)
 ,Product varchar(50)
 ,Category varchar(15)
 ,Term int
@@ -273,7 +271,7 @@ CREATE TABLE CM_AD1
 ,Sub_Category varchar(15)
 ,Campaign_Drivers varchar(50)
 ,Campaign_Name varchar(50)
-,Launch_Date date
+,Launch_Date varchar(12)
 ,Call_For_Action int
 ,Focused_Geography varchar(15)
 ,Tenure_Of_Campaign int
@@ -289,7 +287,7 @@ CREATE TABLE CM_AD1
 
 /* Create the AD_full_merged Table. It will be filled in Step 4, after scoring the full data table with the selected model. */  
 DROP TABLE IF EXISTS AD_full_merged
-Go
+GO
 CREATE TABLE AD_full_merged
 (
  Lead_Id varchar(50) NOT NULL 
@@ -334,7 +332,7 @@ ALTER TABLE AD_full_merged add constraint pk_cadfull primary key clustered (Lead
 /* Create the Prob_Id Table. It will be filled in Step 4, after scoring the full data table with the selected model. */  
 
 DROP TABLE IF EXISTS Prob_Id
-Go
+GO
 CREATE TABLE Prob_Id
 (
 X1_prob float, 

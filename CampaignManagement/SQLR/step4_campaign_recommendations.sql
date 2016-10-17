@@ -6,8 +6,6 @@ GO
 SET QUOTED_IDENTIFIER ON 
 GO 
 
-USE Campaign_Management
-GO
 
 DROP PROCEDURE IF EXISTS [dbo].[generate_full_table]
 GO
@@ -164,4 +162,4 @@ END
 GO
 
 
-		         
+		      

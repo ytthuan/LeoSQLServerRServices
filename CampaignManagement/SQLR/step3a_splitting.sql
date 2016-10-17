@@ -5,9 +5,6 @@ GO
 SET QUOTED_IDENTIFIER ON
 GO
 
-USE Campaign_Management
-GO
-
 DROP PROCEDURE IF EXISTS [dbo].[splitting]
 GO
 
@@ -15,7 +12,6 @@ CREATE PROCEDURE [splitting]  @splitRatio float,
 			      @connectionString varchar(300)
 AS
 BEGIN
-
   EXEC sp_execute_external_script @language = N'R',
                                   @script = N'								  
 # Point to the input table. 
@@ -25,7 +21,7 @@ CM_AD <- RxSqlServerData(table = "CM_AD", connectionString = connection_string)
 CM_AD1 <- RxSqlServerData(table = "CM_AD1", connectionString = connection_string)
 
 # Add a Split_Vector variable. For each unique Lead_Id, it is equal to 1 with proportion splitRatio, and 0 otherwise. 
-# When p = 1, the record goes to the training set. When p = 0, it goes to the testing set.
+# When splitRatio = 1, the record goes to the training set. When splitRatio = 0, it goes to the testing set.
 rxDataStep(inData = CM_AD, outFile = CM_AD1, overwrite = TRUE, transforms = list(
 					Split_Vector = rbinom(.rxNumRows, 1, splitRatio)),
 					transformObjects = list(splitRatio = splitRatio))

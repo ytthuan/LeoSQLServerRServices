@@ -1,4 +1,4 @@
-﻿<#
+<#
 .SYNOPSIS
 Script to provide recommendations in a marketing campaign, using SQL & MRS.
 
@@ -103,7 +103,7 @@ if ($ans -eq 'y' -or $ans -eq 'Y')
     {
         # create training and test tables
         Write-Host -ForeGroundColor 'green' ("Create SQL tables: Campaign_Detail, Lead_Demography,  Market_Touchdown and Product")
-        $script = $filePath + "create_tables.sql"
+        $script = $filePath + "step0_create_tables.sql"
         ExecuteSQL $script
     
         Write-Host -ForeGroundColor 'green' ("Populate SQL tables: Campaign_Detail, Lead_Demography,  Market_Touchdown and Product")
@@ -118,7 +118,7 @@ if ($ans -eq 'y' -or $ans -eq 'Y')
             $tableSchema = $parentPath + "/data/" + $dataFile + ".xml"
             bcp $tableName format nul -c -x -f $tableSchema  -U $username -S $ServerName -P $password  -t ','
             Write-Host -ForeGroundColor 'magenta'("    Loading {0} to SQL table..." -f $dataFile)
-            bcp $tableName in $destination -t ',' -S $ServerName -f $tableSchema -F 1 -C "RAW" -b 20000 -U $username -P $password
+            bcp $tableName in $destination -t ',' -S $ServerName -f $tableSchema -F 2 -C "RAW" -b 20000 -U $username -P $password
             Write-Host -ForeGroundColor 'magenta'("    Done...Loading {0} to SQL table..." -f $dataFile)
         }
     }
@@ -133,7 +133,7 @@ if ($ans -eq 'y' -or $ans -eq 'Y')
 ##########################################################################
 # Create and execute the stored procedure for data processing
 ##########################################################################
-Write-Host -foregroundcolor 'green' ("Step 1: Data processing")
+Write-Host -foregroundcolor 'green' ("Step 1: Data Processing")
 $ans = Read-Host 'Continue [y|Y], Exit [e|E]?'
 if ($ans -eq 'E' -or $ans -eq 'e')
 {
@@ -141,7 +141,7 @@ if ($ans -eq 'E' -or $ans -eq 'e')
 } 
 if ($ans -eq 'y' -or $ans -eq 'Y')
 {
-    # create the stored procedure for tagging
+    # create the stored procedures for preprocessing
     $script = $filepath + "step1_data_processing.sql"
     ExecuteSQL $script
 
@@ -149,7 +149,7 @@ if ($ans -eq 'y' -or $ans -eq 'Y')
     $query = "EXEC Merging_Raw_Tables"
     ExecuteSQLQuery $query
 
-    # execute the join
+    # execute the NA replacement
     $query = "EXEC fill_NA '$connectionString'"
     ExecuteSQLQuery $query
 }
@@ -165,11 +165,11 @@ if ($ans -eq 'E' -or $ans -eq 'e')
 } 
 if ($ans -eq 'y' -or $ans -eq 'Y')
 {
-    # create the ultility procedure
+    # create the ultility procedure for feature engineering
     $script = $filepath + "step2_feature_engineering.sql"
     ExecuteSQL $script
 
-    # execute the Preprocess
+    # execute the feature engineering
     $query = "EXEC feature_engineering"
     ExecuteSQLQuery $query
 }
@@ -186,11 +186,13 @@ if ($ans -eq 'E' -or $ans -eq 'e')
 } 
 if ($ans -eq 'y' -or $ans -eq 'Y')
 {
-    # create the stored procedure
+    # create the stored procedure for splitting into train and test data sets
     $script = $filepath + "step3a_splitting.sql"
     ExecuteSQL $script
 
     # execute the procedure
+    Write-Host -foregroundcolor 'Cyan' ("Split Ratio ?") 
+    $splitRatio = Read-Host 
     $query = "EXEC splitting $splitRatio, '$connectionString'"
     ExecuteSQLQuery $query
 }
@@ -207,11 +209,11 @@ if ($ans -eq 'E' -or $ans -eq 'e')
 } 
 if ($ans -eq 'y' -or $ans -eq 'Y')
 {
-    # create the stored procedure for Training
-    $script = $filepath + "step3b_training.sql"
+    # create the stored procedure for training
+    $script = $filepath + "step3b_train_model.sql"
     ExecuteSQL $script
 
-    # execute the Training
+    # execute the training
     $modelName = 'rf'
     $query = "EXEC TrainModel $modelName"
     ExecuteSQLQuery $query
@@ -233,10 +235,11 @@ if ($ans -eq 'E' -or $ans -eq 'e')
 } 
 if ($ans -eq 'y' -or $ans -eq 'Y')
 {
-    # create the stored procedure for Predicting
-    $script = $filepath + "step3c_evaluation.sql"
+    # create the stored procedure for predicting
+    $script = $filepath + "step3c_test_model.sql"
     ExecuteSQL $script
 
+    # execute the evaluation
     $models = "'rf', 'btree'"
     $query = "EXEC TestModel $models, '$connectionString'"
     ExecuteSQLQuery $query
@@ -254,7 +257,10 @@ if ($ans -eq 'E' -or $ans -eq 'e')
 } 
 if ($ans -eq 'y' -or $ans -eq 'Y')
 {
-    # create the stored procedure for Evaluation
+    Write-Host -foregroundcolor 'Cyan' ("Best Model ? Random Forest ['rf'], Gradient Boosted Trees ['btree']?")
+    $best_model = Read-Host 
+
+    # create the stored procedure for recommendations
     $script = $filepath + "step4_campaign_recommendations.sql"
     ExecuteSQL $script 
 

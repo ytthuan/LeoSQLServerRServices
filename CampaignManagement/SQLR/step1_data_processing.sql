@@ -4,8 +4,6 @@ GO
 SET QUOTED_IDENTIFIER ON
 GO
 
-USE Campaign_Management
-GO
 
 /****** Stored Procedure to join the 4 tables and create the raw data set  ******/
 
@@ -95,4 +93,3 @@ rxDataStep(inData = Merged, outFile = CM_AD0, overwrite = TRUE, transformFunc = 
 ;
 END
 GO
-
