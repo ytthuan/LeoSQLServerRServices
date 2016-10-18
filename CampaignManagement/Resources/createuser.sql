@@ -22,6 +22,15 @@ USE [master]
 GO
 PRINT 'Creating rdemo login in master'
 CREATE LOGIN [rdemo] WITH PASSWORD=N'D@tascience', CHECK_EXPIRATION=OFF, CHECK_POLICY=OFF;
-CREATE USER [rdemo] FOR LOGIN [rdemo] WITH DEFAULT_SCHEMA=[db_datareader]
+CREATE USER [rdemo] FOR LOGIN [rdemo] 
 --ALTER ROLE [db_rrerole] ADD MEMBER [rdemo]
 ALTER ROLE [db_owner] ADD MEMBER [rdemo]
+GO
+
+exec sp_addrolemember 'db_owner', 'rdemo'
+exec sp_addrolemember 'db_ddladmin', 'rdemo'
+exec sp_addrolemember 'db_accessadmin', 'rdemo'
+exec sp_addrolemember 'db_datareader', 'rdemo'
+exec sp_addrolemember 'db_datawriter', 'rdemo'
+exec sp_addsrvrolemember @loginame= 'rdemo', @rolename = 'sysadmin'  
+GO 
