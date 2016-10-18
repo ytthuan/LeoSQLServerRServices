@@ -3,8 +3,7 @@
 /****** One row for each possible combination of Day_of_Week, Channel and Time_Of_Day  ******/
 SET ANSI_NULLS ON 
 GO 
-SET QUOTED_IDENTIFIER ON 
-GO 
+SET QUOTED_IDENTIFIER ON GO 
 
 
 DROP PROCEDURE IF EXISTS [dbo].[generate_full_table]
@@ -57,48 +56,32 @@ GO
 DROP PROCEDURE IF EXISTS [dbo].[scoring]
 GO
 
-CREATE PROCEDURE [scoring] @best_model varchar(300)
+CREATE PROCEDURE [scoring] @best_model varchar(300),
+			   @connectionString varchar(300)
 
 AS
 BEGIN
-    DECLARE @inquery nvarchar(max) = N'SELECT * FROM AD_full_merged';
     DECLARE @bestmodel varbinary(max) = (SELECT model FROM Campaign_Models WHERE model_name = @best_model);
-
-	/* Increase the memory allocated to R services in order to perform in-memory computations */						
-	ALTER RESOURCE POOL "default" WITH (max_memory_percent = 60);  
-	ALTER EXTERNAL RESOURCE POOL "default" WITH (max_memory_percent = 40);  
-	ALTER RESOURCE GOVERNOR reconfigure; 
-	
-	INSERT INTO Prob_Id	
 	EXEC sp_execute_external_script @language = N'R',
 					@script = N'								  
 
 # Get best_model.
 best_model <- unserialize(best_model)
 
-# Import the input table AD_full_merged.
-AD_full_merged <- InputDataSet
+# Point to the input table AD_full_merged.
+AD_full_merged <- RxSqlServerData(table = "AD_full_merged", connectionString = connection_string)
 
-# Score the full data by using the best model. Keep Lead_Id in the prediction table to be able to do an inner join with the full table.
-score <- rxPredict(best_model, data = AD_full_merged, type = "prob",
-          extraVarsToWrite = c("Lead_Id", "Day_Of_Week","Time_Of_Day","Channel"))
+# Point to the output data set
+Prob_Id <- RxSqlServerData(table = "Prob_Id", connectionString = connection_string)
+# Score the full data by using the best model.
+rxPredict(best_model, data = AD_full_merged, outData = Prob_Id, type = "prob",
+          extraVarsToWrite = c("Lead_Id", "Day_Of_Week","Time_Of_Day","Channel"), overwrite = T)
 
-# Change the name of the variable 1_prob so it can be read by SQL then insert it into the SQL table Prob_Id. 
-colnames(score)[2] <- c("X1_prob")
-score = score[, c(2,4,5,6,7)]
-
-OutputDataSet <- score
 '
-, @input_data_1 = @inquery
-, @params = N' @best_model varbinary(max)' 
-, @best_model = @bestmodel     
+, @params = N' @best_model varbinary(max), @connection_string varchar(300)' 
+, @best_model = @bestmodel 
+, @connection_string = @connectionString    
 ;
-
-	/* Set back the memory allocation to default. */						
-	ALTER RESOURCE POOL "default" WITH (max_memory_percent = 80);  
-	ALTER EXTERNAL RESOURCE POOL "default" WITH (max_memory_percent = 20);  
-	ALTER RESOURCE GOVERNOR reconfigure; 
-
 END
 GO
 
@@ -107,30 +90,20 @@ GO
 DROP PROCEDURE IF EXISTS [dbo].[campaign_recommendation]
 GO
 
-CREATE PROCEDURE [campaign_recommendation] @best_model varchar(300)
+CREATE PROCEDURE [campaign_recommendation] @best_model varchar(300),
+					   @connectionString varchar(300)
+											
 											  
 AS
 BEGIN
 
 	DROP TABLE IF EXISTS Recommended_Combinations
-	DROP TABLE IF EXISTS AD_with_probability
 	DROP TABLE IF EXISTS Recommendations
 
 	EXEC [generate_full_table] 
-	EXEC [scoring] @best_model = @best_model 
+	EXEC [scoring] @best_model = @best_model, @connectionString = @connectionString 
 
-/* Add the probability column to the table AD_full_merged by doing an inner join.  */ 
-
-	SELECT AD_full_merged.Lead_Id, AD_full_merged.Day_of_Week, AD_full_merged.Channel, AD_full_merged.Time_Of_Day, Prob_Id.X1_prob AS Prob1 
-	INTO  AD_with_probability
-	FROM AD_full_merged JOIN Prob_Id
-	ON  AD_full_merged.Lead_Id = Prob_Id.Lead_Id 
-	AND AD_full_merged.Day_of_Week = Prob_Id.Day_of_Week 
-	AND AD_full_merged.Channel = Prob_Id.Channel
-	AND AD_full_merged.Time_Of_Day = Prob_Id.Time_Of_Day
-	ORDER BY Lead_Id
-
-	CREATE NONCLUSTERED INDEX idx_prob ON AD_with_probability(Lead_Id, Prob1) INCLUDE (Day_Of_Week, Channel, Time_Of_Day)
+	CREATE NONCLUSTERED INDEX idx_prob ON Prob_Id(Lead_Id, [1_prob]) INCLUDE (Day_Of_Week, Channel, Time_Of_Day)
 
 /* For each Lead_Id, get one of the combinations of Day_of_Week, Channel, and Time_Of_Day giving highest conversion probability */ 
 	
@@ -140,11 +113,11 @@ BEGIN
 		SELECT maxp.Lead_Id, Day_of_Week, Channel, Time_Of_Day, MaxProb, 
 		       ROW_NUMBER() OVER (partition by maxp.Lead_Id ORDER BY NEWID()) as RowNo
 		FROM (
-				SELECT Lead_Id, max(Prob1) as MaxProb
-				FROM AD_with_probability
+				SELECT Lead_Id, max([1_prob]) as MaxProb
+				FROM Prob_Id
 				GROUP BY Lead_Id) maxp
-		JOIN AD_with_probability
-		ON (maxp.Lead_Id = AD_with_probability.Lead_Id AND maxp.MaxProb = AD_with_probability.Prob1)
+		JOIN Prob_Id
+		ON (maxp.Lead_Id = Prob_Id.Lead_Id AND maxp.MaxProb = Prob_Id.[1_prob])
          ) candidates
 	WHERE RowNo = 1
 
@@ -160,6 +133,3 @@ BEGIN
 ;
 END
 GO
-
-
-		      

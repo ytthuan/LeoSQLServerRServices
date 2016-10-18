@@ -44,6 +44,7 @@ $sqlscript
 # Function wrapper to invoke SQL query
 ##########################################################################
 function ExecuteSQLQuery
+
 {
 param(
 [String]
@@ -87,6 +88,12 @@ if ($? -eq $false)
                                      `n`t 3. SQL user: $username has the right credential for SQL server access."
     exit
 }
+
+$query = "ALTER AUTHORIZATION ON DATABASE::$DBName TO $username;"
+Invoke-Sqlcmd -ServerInstance $ServerName -Username $username -Password $password -Query $query -ErrorAction SilentlyContinue
+
+$query = "USE $DBName;"
+Invoke-Sqlcmd -ServerInstance $ServerName -Username $username -Password $password -Query $query -ErrorAction SilentlyContinue
 
 ##########################################################################
 # Create input tables and populate with data from csv files.

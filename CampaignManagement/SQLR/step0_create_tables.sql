@@ -285,7 +285,7 @@ CREATE TABLE CM_AD1
 )
 ;
 
-/* Create the AD_full_merged Table. It will be filled in Step 4, after scoring the full data table with the selected model. */  
+/* Create the AD_full_merged Table. It will be filled in Step 4.*/  
 DROP TABLE IF EXISTS AD_full_merged
 GO
 CREATE TABLE AD_full_merged
@@ -327,15 +327,15 @@ CREATE TABLE AD_full_merged
 )
 ;
 
-ALTER TABLE AD_full_merged add constraint pk_cadfull primary key clustered (Lead_Id, Channel, Day_Of_Week, Time_Of_Day);
-
 /* Create the Prob_Id Table. It will be filled in Step 4, after scoring the full data table with the selected model. */  
 
 DROP TABLE IF EXISTS Prob_Id
 GO
 CREATE TABLE Prob_Id
 (
-X1_prob float, 
+[0_prob] float, 
+[1_prob] float,
+[Majority-Vote] int, 
 Lead_Id varchar(50) NOT NULL, 
 Day_Of_Week varchar(1) NOT NULL, 
 Time_Of_Day varchar(15) NOT NULL, 
@@ -343,4 +343,4 @@ Channel varchar(15) NOT NULL
 )
 ;
 
-ALTER TABLE Prob_Id add constraint pk_cprobid primary key clustered (Lead_Id, Channel, Day_Of_Week, Time_Of_Day);
+

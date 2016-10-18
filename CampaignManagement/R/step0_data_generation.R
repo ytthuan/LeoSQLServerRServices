@@ -22,7 +22,6 @@ connection_string <- "Driver=SQL Server; Server=[Server Name]; Database=Campaign
 sql <- RxInSqlServer(connectionString = connection_string)
 local <- RxLocalSeq()
 
-
 # Set the Compute Context to Local, to generate data sets in-memory.
 rxSetComputeContext(local)
 
@@ -43,23 +42,25 @@ no_of_unique_leads <- 100000
 ##########################################################################################################################################
 
 # Create various variables.
-Campaign_Id <- seq(1,6) 
+Campaign_Id <- seq(1,6)
 Campaign_Detail <- data.frame(Campaign_Id)
 
 Campaign_Detail$Campaign_Name <- c("Above all in service", "All your protection under one roof", "Be life full confident", 
                                    "Together we are stronger", "The power to help you succeed", "Know Money")
 Campaign_Detail$Category <- rep("Acquisition", 6)
-Campaign_Detail$Launch_Date <- format(c(ISOdate(2014,1,1), ISOdate(2014,3,21), ISOdate(2014,5,25), ISOdate(2014,7,1), ISOdate(2014,9,27), 
-                                        ISOdate(2014,12,5)), "%D")
+
+Campaign_Detail$Launch_Date <- format(c(ISOdate(2014,1,1), ISOdate(2014,3,21), ISOdate(2014,5,25), ISOdate(2014,7,1), ISOdate(2014,9,27),  
+                                        ISOdate(2014,12,5)), "%D") 
+
 Campaign_Detail$Sub_Category <- sample(c("Branding", "Penetration", "Seasonal"), 6, replace=T)
 Campaign_Detail$Campaign_Drivers <- sample(c("Discount offer", "Additional Coverage", "Extra benefits"), 6, replace=T)
 Campaign_Detail$Product_Id <- sample(seq(1,6), 6, replace = F)
 Campaign_Detail$Call_For_Action <- rbinom(6, 1, 0.7)
 Campaign_Detail$Focused_Geography <- rep("Nation Wide", 6)
-Campaign_Detail$Tenure_Of_Campaign <- c(rep(1, 4), rep(2, 2))
+Campaign_Detail$Tenure_Of_Campaign <-  c(rep(1, 4), rep(2, 2))
 
 # Write Campaign_Detail to a CSV file.
-write.csv(Campaign_Detail, file = "Campaign_Detail.csv", row.names = FALSE)
+write.csv(Campaign_Detail, file = "Campaign_Detail.csv", row.names = FALSE, quote = FALSE)
 
 
 ##########################################################################################################################################
@@ -68,27 +69,19 @@ write.csv(Campaign_Detail, file = "Campaign_Detail.csv", row.names = FALSE)
 
 ##########################################################################################################################################
 
-# Generate Lead_Id.
-sample_fn <- function(x){
-  p  <- paste(sample(c(letters[1:6],0:9),32,replace=TRUE),collapse="")
-  p <- paste(
-    substr(p, 1, 8),"-",
-    substr(p, 9, 12),"-",
-    substr(p, 13, 16),"-",
-    substr(p, 17, 20),"-",
-    substr(p, 21, 32),
-    sep = "", collapse = "")
-  q <- paste(9, paste(sample(0:9, 9, replace=TRUE), collapse=""), sep="")
-  as.matrix(data.frame(lead_id = p, phone_no = q))
+# Create a table with unique Lead_Ids and phone numbers. 
+lead_phone_generator <- function(n = 10000000, p = 10){
+  lead_chunks <- c()
+  phone_chunks <- c()
+  for(i in 1:p){
+    lead_chunks[[i]] <- paste ("ID",sprintf("%08d",((i-1)*(n/p)+1):(i*n/p), sep=''))
+    m <- seq((1e+09+((i-1)*n/p)),(1e+09+(i*n/p)-1))
+    phone_chunks[[i]] <- paste(substr(m,1,3),"-",substr(m,4,6),"-",substr(m,7,10), sep = '')
+  }
+  return(data.frame(Lead_Id = unlist(lead_chunks), Phone_No = unlist(phone_chunks)))
 }
 
-lead_id <- function(x){
-  sapply(1:x, function(x) sample_fn())
-}
-
-# Create a table with unique Lead_Ids and phone numbers.  
-table_target <- data.frame(Lead_Id=t(lead_id(no_of_unique_leads)))
-names(table_target) <- c("Lead_Id", "Phone_No")
+table_target <- lead_phone_generator(n = no_of_unique_leads, p = 10)
 
 # Create the binary target variable Conversion_Flag by random sampling.
 table_target$Conversion_Flag <- sample(c(0,1), no_of_unique_leads, replace = TRUE, prob = c(0.9, 0.1))
@@ -190,14 +183,6 @@ table_target0$Source <- sample(c("Inbound call", "SMS", "Previous Campaign"), n0
 table_target0$Campaign_Id <- sample(seq(2, 6), n0, replace = TRUE)
 
 ### Creating Time_Stamp, Day_Of_Week, Time_Of_Day and Channel by conditional random sampling.
-table_target0$Time_Stamp <- 
-ifelse(table_target0$Campaign_Id == 2, format(sample(seq(ISOdate(2014, 3, 21), ISOdate(2014, 5, 24), by ="day"), n0, replace = T),"%D"),
-ifelse(table_target0$Campaign_Id == 3, format(sample(seq(ISOdate(2014, 5, 25), ISOdate(2014, 6, 30), by ="day"), n0, replace = T),"%D"),
-ifelse(table_target0$Campaign_Id == 4, format(sample(seq(ISOdate(2014, 7, 1), ISOdate(2014, 9, 26), by ="day"), n0, replace = T),"%D"),
-ifelse(table_target0$Campaign_Id == 5, format(sample(seq(ISOdate(2014, 9, 27), ISOdate(2014, 12, 4), by ="day"), n0, replace = T),"%D"),
-                                       format(sample(seq(ISOdate(2014, 12, 5), ISOdate(2014, 12, 31), by ="day"), n0, replace = T),"%D"
-                                              )))))
-                   
 table_target0$Day_Of_Week <-  
 ifelse(table_target0$Age  == "Young", sample(seq(1, 7), n0, replace = T, prob = day_of_week_p0Young),
 ifelse(table_target0$Age  == "Middle Age", sample(seq(1, 7), n0, replace = T, prob = day_of_week_p0Middle),
@@ -241,14 +226,6 @@ table_target1$Campaign_Id <-  sample(seq(2, 6), n1, replace = TRUE)
 
 
 ### Creating Time_Stamp, Day_Of_Week, Time_Of_Day and Channel by conditional random sampling.
-table_target1$Time_Stamp <- 
-ifelse(table_target1$Campaign_Id == 2, format(sample(seq(ISOdate(2014, 3, 21), ISOdate(2014, 5, 24), by = "day"), n1, replace = T), "%D"),
-ifelse(table_target1$Campaign_Id == 3, format(sample(seq(ISOdate(2014, 5, 25), ISOdate(2014, 6, 30), by = "day"), n1, replace = T), "%D"),
-ifelse(table_target1$Campaign_Id == 4, format(sample(seq(ISOdate(2014, 7, 1), ISOdate(2014, 9, 26), by = "day"), n1, replace = T), "%D"),
-ifelse(table_target1$Campaign_Id == 5, format(sample(seq(ISOdate(2014, 9, 27), ISOdate(2014, 12, 4), by = "day"), n1, replace = T), "%D"),
-                                       format(sample(seq(ISOdate(2014, 12, 5), ISOdate(2014, 12, 31), by = "day"), n1, replace = T), "%D")
-                                                         ))))
-
 table_target1$Day_Of_Week <-  
 ifelse(table_target1$Age  == "Young", sample(seq(1, 7), n1, replace = TRUE, prob = day_of_week_p1Young),
 ifelse(table_target1$Age  == "Middle Age", sample(seq(1, 7), n1, replace = TRUE, prob = day_of_week_p1Middle),
@@ -271,26 +248,35 @@ Lead_Demography <- table_target[c("Lead_Id", "Age", "Phone_No", "Annual_Income_B
                                   "No_Of_Dependents", "Highest_Education", "Ethnicity", "No_Of_Children", "Household_Size",
                                   "Gender", "Marital_Status" )]
 campaign_table1 <- table_target[c("Lead_Id", "Channel", "Time_Of_Day", "Day_Of_Week", "Campaign_Id", "Conversion_Flag", 
-                                  "Time_Stamp", "Source", "Gender", "Age", "Credit_Score" )]
+                                  "Source", "Gender", "Age", "Credit_Score" )]
+
+### Creating Time_Stamp.
+campaign_table1$Time_Stamp <-  
+ifelse(campaign_table1$Campaign_Id == 2, format(sample(seq(ISOdate(2014, 3, 21), ISOdate(2014, 5, 24), by = "day"), (n0+n1), replace = T),"%D"), 
+ifelse(campaign_table1$Campaign_Id == 3, format(sample(seq(ISOdate(2014, 5, 25), ISOdate(2014, 6, 30), by = "day"), (n0+n1), replace = T),"%D"), 
+ifelse(campaign_table1$Campaign_Id == 4, format(sample(seq(ISOdate(2014, 7, 1), ISOdate(2014, 9, 26), by = "day"), (n0+n1), replace = T),"%D"), 
+ifelse(campaign_table1$Campaign_Id == 5, format(sample(seq(ISOdate(2014, 9, 27), ISOdate(2014, 12, 4), by = "day"), (n0+n1), replace = T),"%D"), 
+              format(sample(seq(ISOdate(2014, 12, 5), ISOdate(2014, 12, 31), by = "day"), (n0+n1), replace =T),"%D") 
+                              ))))
+
 
 # Insert NA values in No_Of_Children, Household_Size, No_Of_Dependents and Highest_Education.
 Lead_Demography$No_Of_Children <- ifelse(sample(c(1, 2), no_of_unique_leads,replace = TRUE, prob = c(0.99, 0.01)) == 1, 
-                                         Lead_Demography$No_Of_Children, NA)
+                                         Lead_Demography$No_Of_Children, "")
 Lead_Demography$Household_Size <- ifelse(sample(c(1, 2), no_of_unique_leads,replace = TRUE, prob = c(0.99, 0.01)) == 1, 
-                                         Lead_Demography$Household_Size, NA)
+                                         Lead_Demography$Household_Size,"")
 Lead_Demography$No_Of_Dependents <- ifelse(sample(c(1, 2), no_of_unique_leads,replace = TRUE, prob = c(0.99, 0.01)) == 1, 
-                                         Lead_Demography$No_Of_Dependents, NA)
+                                         Lead_Demography$No_Of_Dependents, "")
 Lead_Demography$Highest_Education <- ifelse(sample(c(1, 2), no_of_unique_leads,replace = TRUE, prob = c(0.99, 0.01)) == 1, 
-                                         Lead_Demography$Highest_Education, NA)
+                                         Lead_Demography$Highest_Education, "")
 
 # Write Lead_Demography to a CSV file. 
-write.csv(Lead_Demography, file = "Lead_Demography.csv", row.names = FALSE)
+write.csv(Lead_Demography, file = "Lead_Demography.csv", row.names = FALSE , quote = FALSE)
 
 # Drop intermediate data sets.
 rm(table_target)
 rm(table_target0)
 rm(table_target1)
-
 
 ##########################################################################################################################################
 
@@ -305,9 +291,6 @@ rm(table_target1)
 campaign_table2 <- campaign_table1
 campaign_table2$Conversion_Flag <- rep(0, no_of_unique_leads)
 campaign_table2$Campaign_Id <- rep(1, no_of_unique_leads)
-
-campaign_table2$Time_Stamp <- 
-format(sample(seq(ISOdate(2014, 1, 1), ISOdate(2014, 3, 20), by="day"), no_of_unique_leads, replace=T),"%D")
 
 campaign_table2$Channel <-  
 ifelse(campaign_table2$Gender  == "M", sample(c("Email", "Cold Calling", "SMS"), no_of_unique_leads, replace = T, prob = channel_p0M),
@@ -324,6 +307,9 @@ ifelse(campaign_table2$Credit_Score == "<350", sample(tod_list, no_of_unique_lea
 ifelse(campaign_table2$Credit_Score == "350-700", sample(tod_list, no_of_unique_leads, replace = T, prob = time_of_day_p0Middle),
                                                   sample(tod_list, no_of_unique_leads, replace = T, prob = time_of_day_p0High)))
 
+campaign_table2$Time_Stamp <-  
+format(sample(seq(ISOdate(2014, 1, 1), ISOdate(2014, 3, 20), by="day"), no_of_unique_leads, replace=T), "%D")
+
 # We form campaign_table3 obtained by creating a random number (1-3) of communications for each lead and resampling variables.
 # The goal is to create synthetic data corresponding to unfruitful attempts of conversion for every Lead_Id. 
 
@@ -337,14 +323,6 @@ campaign_table3$Conversion_Flag <- rep(0, n3)
 campaign_table3$Campaign_Id <- 
   ifelse(campaign_table3$Campaign_Id == 2, 1, floor(runif(n = n3, min = 2, max = campaign_table3$Campaign_Id)))
 
-campaign_table3$Time_Stamp <- 
-ifelse(campaign_table3$Campaign_Id == 1, format(sample(seq(ISOdate(2014, 1, 1), ISOdate(2014, 3, 20), by = "day"), n3, replace = T),"%D"),
-ifelse(campaign_table3$Campaign_Id == 2, format(sample(seq(ISOdate(2014, 3, 21), ISOdate(2014, 5, 24), by = "day"), n3, replace = T),"%D"),
-ifelse(campaign_table3$Campaign_Id == 3, format(sample(seq(ISOdate(2014, 5, 25), ISOdate(2014, 6, 30), by = "day"), n3, replace = T),"%D"),
-ifelse(campaign_table3$Campaign_Id == 4, format(sample(seq(ISOdate(2014, 7, 1), ISOdate(2014, 9, 26), by = "day"), n3, replace = T),"%D"),
-ifelse(campaign_table3$Campaign_Id == 5, format(sample(seq(ISOdate(2014, 9, 27), ISOdate(2014, 12, 4), by = "day"), n3, replace = T),"%D"),
-                                         format(sample(seq(ISOdate(2014, 12, 5), ISOdate(2014, 12, 31), by = "day"), n3, replace =T),"%D")
-                                                                             )))))
 
 campaign_table3$Channel <- 
 ifelse(campaign_table3$Gender  == "M", sample(c("Email", "Cold Calling", "SMS"), n3, replace = TRUE, prob = channel_p0M),
@@ -361,8 +339,26 @@ ifelse(campaign_table3$Credit_Score  ==  "350-700", sample(tod_list, n3, replace
                                                     sample(tod_list, n3, replace = TRUE, prob = time_of_day_p0High)))
 
 
+campaign_table3$Time_Stamp <-  
+ifelse(campaign_table3$Campaign_Id == 1, format(sample(seq(ISOdate(2014, 1, 1), ISOdate(2014, 3, 20), by = "day"), n3, replace = T),"%D"), 
+ifelse(campaign_table3$Campaign_Id == 2, format(sample(seq(ISOdate(2014, 3, 21), ISOdate(2014, 5, 24), by = "day"), n3, replace = T),"%D"), 
+ifelse(campaign_table3$Campaign_Id == 3, format(sample(seq(ISOdate(2014, 5, 25), ISOdate(2014, 6, 30), by = "day"), n3, replace = T),"%D"), 
+ifelse(campaign_table3$Campaign_Id == 4, format(sample(seq(ISOdate(2014, 7, 1), ISOdate(2014, 9, 26), by = "day"), n3, replace = T),"%D"), 
+ifelse(campaign_table3$Campaign_Id == 5, format(sample(seq(ISOdate(2014, 9, 27), ISOdate(2014, 12, 4), by = "day"), n3, replace = T),"%D"), 
+format(sample(seq(ISOdate(2014, 12, 5), ISOdate(2014, 12, 31), by = "day"), n3, replace =T),"%D") 
+                                                            ))))) 
+
 # Finally, form a data set by taking the union of the three data sets created. 
 Market_Touchdown <- rbind(campaign_table1, campaign_table2, campaign_table3)
+
+rm(campaign_table1)
+rm(campaign_table2)
+rm(campaign_table3)
+
+# Remove unnecessary variables.
+Market_Touchdown$Gender <- NULL
+Market_Touchdown$Age <- NULL
+Market_Touchdown$Credit_Score <- NULL
 
 # Add a counter, Comm_Id, that gives an ID to every communication made during the campaign for a given Lead_Id. 
 Market_Touchdown <- data.table(Market_Touchdown)
@@ -370,19 +366,8 @@ Market_Touchdown <- Market_Touchdown[order(Market_Touchdown$Lead_Id, Market_Touc
 Market_Touchdown$Comm_Id <- sequence(data.frame(Market_Touchdown[, length(Channel), by = c("Lead_Id")])[,2]) 
 Market_Touchdown <- data.frame(Market_Touchdown) 
 
-# Remove unnecessary variables.
-Market_Touchdown$Gender <- NULL
-Market_Touchdown$Age <- NULL
-Market_Touchdown$Credit_Score <- NULL
-
 # Write Market_Touchdown to a CSV file.
-write.csv(Market_Touchdown, file = "Market_Touchdown.csv", row.names = FALSE)
-
-# Drop intermediate data sets.
-rm(campaign_table1)
-rm(campaign_table2)
-rm(campaign_table3)
-
+write.csv(Market_Touchdown, file = "Market_Touchdown.csv", row.names = FALSE, quote = FALSE)
 
 ##########################################################################################################################################
 
@@ -421,6 +406,5 @@ ifelse((Product$Amt_on_Maturity >= 300000) & (Product$Amt_on_Maturity < 350000),
 ifelse((Product$Amt_on_Maturity >= 350000) & (Product$Amt_on_Maturity < 400000), "350000-400000",
                                                                                   "<400000")))))
 # Write Product to a CSV file.
-write.csv(Product, file = "Product.csv", row.names = FALSE)
-
+write.csv(Product, file = "Product.csv", row.names = FALSE, quote = FALSE)
 

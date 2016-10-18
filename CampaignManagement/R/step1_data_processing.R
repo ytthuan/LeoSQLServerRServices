@@ -1,3 +1,4 @@
+
 ##########################################################################################################################################
 ## This R script will do the following:
 ## 1. Read the 4 data sets Campaign_Detail, Lead_Demography, Market-Touchdown, and Product, and load them into SQL.
@@ -31,10 +32,12 @@ rxSetComputeContext(local)
 ##########################################################################################################################################
 
 # Read the 4 tables.
-table_Campaign_Detail <- read.csv("Campaign_Detail.csv")
-table_Lead_Demography <- read.csv("Lead_Demography.csv")
-table_Market_Touchdown <- read.csv("Market_Touchdown.csv")
-table_Product <- read.csv("Product.csv")
+file_path <- "../Data"
+
+table_Campaign_Detail <- read.csv(file.path(file_path, "Campaign_Detail.csv"))
+table_Lead_Demography <- read.csv(file.path(file_path, "Lead_Demography.csv"))
+table_Market_Touchdown <- read.csv(file.path(file_path, "Market_Touchdown.csv"))
+table_Product <- read.csv(file.path(file_path, "Product.csv"))
 
 # Specify the variable types.
 Campaign_Detail_col <- c(

@@ -93,43 +93,16 @@ AD_full_merged <- RxSqlServerData(table = "AD_full_merged", stringsAsFactors = T
                                   colInfo = column_info)
 rxDataStep(inData = AD_full_merged_sql, outFile = AD_full_merged, overwrite = TRUE)
 
-
 ##########################################################################################################################################
 
 ## Compute the predicted probabilities for each Lead_Id, for each combination of Day_of_Week, Channel, Time_Of_Day, using best_model
 
 ##########################################################################################################################################
 
-# Score the full data by using the best model. Keep Lead_Id in the prediction table to be able to do an inner join with the full table.
-score <- RxSqlServerData(table = "score", stringsAsFactors = T, connectionString = connection_string)
-rxPredict(best_model, data = AD_full_merged, outData = score, overwrite = T, type = "prob",
+# Score the full data by using the best model.
+Prob_Id <- RxSqlServerData(table = "Prob_Id ", stringsAsFactors = T, connectionString = connection_string)
+rxPredict(best_model, data = AD_full_merged, outData = Prob_Id, overwrite = T, type = "prob",
           extraVarsToWrite = c("Lead_Id", "Day_Of_Week","Time_Of_Day","Channel"))
-
-# Change the name of the variable 1_prob so it can be read by SQL.
-renaming <- function(data){
-
-  data <- as.data.frame(data)
-  colnames(data)[2] <- c("X1_prob")
-  return(data)
-}
-
-Prob_Id <- RxSqlServerData(table = "Prob_Id", stringsAsFactors = T, connectionString = connection_string)
-rxDataStep(inData = score , outFile = Prob_Id, overwrite = TRUE, transformFunc = renaming)
-
-# Add the probability column to the table AD_full_merged by doing an inner join.
-
-AD_with_probability_query <- RxSqlServerData(  
-  sqlQuery = "SELECT AD_full_merged.Lead_Id, AD_full_merged.Day_of_Week, AD_full_merged.Channel, AD_full_merged.Time_Of_Day,
-              Prob_Id.X1_prob AS Prob1 
-              FROM AD_full_merged JOIN Prob_Id
-              ON  AD_full_merged.Lead_Id = Prob_Id.Lead_Id 
-              AND AD_full_merged.Day_of_Week = Prob_Id.Day_of_Week 
-              AND AD_full_merged.Channel = Prob_Id.Channel
-              AND AD_full_merged.Time_Of_Day = Prob_Id.Time_Of_Day
-              ORDER BY Lead_Id",
-  connectionString = connection_string)
-AD_with_probability = RxSqlServerData(table = "AD_with_probability", connectionString = connection_string)
-rxDataStep(inData = AD_with_probability_query, outFile = AD_with_probability, overwrite = TRUE)
 
 
 ##########################################################################################################################################
@@ -143,11 +116,11 @@ Max_Probability <- RxSqlServerData(
               FROM (
                     SELECT maxp.Lead_Id, Day_of_Week, Channel, Time_Of_Day, MaxProb, 
                            ROW_NUMBER() OVER (partition by maxp.Lead_Id ORDER BY NEWID()) as RowNo
-                    FROM ( SELECT Lead_Id, max(Prob1) as MaxProb
-                           FROM AD_with_probability
+                    FROM ( SELECT Lead_Id, max([1_prob]) as MaxProb
+                           FROM Prob_Id
                            GROUP BY Lead_Id) maxp
-                    JOIN AD_with_probability 
-                    ON (maxp.Lead_Id = AD_with_probability.Lead_Id AND maxp.MaxProb = AD_with_probability.Prob1)
+                    JOIN Prob_Id 
+                    ON (maxp.Lead_Id = Prob_Id.Lead_Id AND maxp.MaxProb = Prob_Id.[1_prob])
               ) candidates
               WHERE RowNo = 1",
   connectionString = connection_string)
@@ -155,25 +128,18 @@ Max_Probability <- RxSqlServerData(
 Recommended_Combinations <- RxSqlServerData(table = "Recommended_Combinations", connectionString = connection_string)
 rxDataStep(inData = Max_Probability, outFile = Recommended_Combinations, overwrite = TRUE)
 
+
 ##########################################################################################################################################
 
 ## Add demographics information to the recommendation table  
 
 ##########################################################################################################################################
 
-Recommendations_sql <- RxSqlServerData(
-  sqlQuery = "SELECT Age, Annual_Income_Bucket, Credit_Score, Product, Campaign_Name as [Campaign Name], State,  
-    Conversion_Flag as Converts,
-	  CM_AD.Day_Of_Week as [Day of Week], CM_AD.Time_Of_Day as [Time of Day], CM_AD.Channel,
-    CM_AD.Lead_Id as [Lead ID],
-	  Recommended_Combinations.Day_Of_Week as [Recommended Day],
-	  Recommended_Combinations.Time_Of_Day as [Recommended Time],
-	  Recommended_Combinations.Channel as [Recommended Channel], Recommended_Combinations.MaxProb 
+Recommendations_sql <- RxSqlServerData(  
+  sqlQuery = "SELECT Age, Annual_Income_Bucket, Credit_Score, Product, Campaign_Name, State, Conversion_Flag,
+                     Recommended_Combinations.* 
               FROM CM_AD JOIN Recommended_Combinations
               ON CM_AD.Lead_Id = Recommended_Combinations.Lead_Id",
   connectionString = connection_string)
 Recommendations <- RxSqlServerData(table = "Recommendations", connectionString = connection_string)
-rxDataStep(inData = Recommendations_sql, outFile = Recommendations, overwrite = TRUE)
-
-
-
+rxDataStep(inData = Recommendations_sql , outFile = Recommendations, overwrite = TRUE )
