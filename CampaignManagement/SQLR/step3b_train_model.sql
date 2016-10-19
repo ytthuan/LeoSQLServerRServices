@@ -45,7 +45,7 @@ formula <- as.formula(paste("Conversion_Flag ~", paste(traning_variables, collap
 ##########################################################################################################################################
 ## Training model based on model selection
 ##########################################################################################################################################
-if (model_name == "rf") {
+if (model_name == "RF") {
 	# Train the Random Forest.
 	model <- rxDForest(formula = formula,
 	 			     data = trainDS,

@@ -32,6 +32,7 @@ rxSetComputeContext(sql)
 
 ##########################################################################################################################################
 
+
 CM_AD <- RxSqlServerData(table = "CM_AD", connectionString = connection_string, stringsAsFactors = T)
 
 
@@ -49,7 +50,8 @@ column_info <- list(
                                           "HI",	"ID",	"IL",	"IN",	"IA",	"KS",	"KY",	"LA",	"ME",	"MD",	"MA",	"MI",	
                                           "MN",	"MS",	"MO",	"MT",	"NE",	"NV",	"NH",	"NJ",	"NM",	"NY",	"NC",	"ND",	
                                           "OH",	"OK",	"OR",	"PA",	"RI",	"SC",	"SD",	"TN",	"TX",	"UT",	"VT",	"VA",	
-                                          "WA",	"WV",	"WI",	"WY",	"AS",	"GU",	"MP",	"PR",	"VI",	"UM",	"FM",	"MH",	"PW")),
+                                          "WA",	"WV",	"WI",	"WY",	"AS",	"GU",	"MP",	"PR",	"VI",	"UM",	"FM",	"MH",
+                                          "PW")),
   No_Of_Dependents = list(type = "numeric"),
   Highest_Education = list(type = "factor", levels = c("High School", "Attended Vocational", "Graduate School", "College")),  
   Ethnicity = list(type = "factor", levels = c("White Americans", "African American", "Hispanic", "Latino")),
@@ -199,9 +201,9 @@ evaluate_model <- function(observed, predicted_probability, threshold, model_nam
   data <- data.frame(observed, predicted_probability)
   data$observed <- as.numeric(as.character(data$observed))
   if(model_name =="RF"){
-  rxRocCurve(actualVarName = "observed", predVarNames = "predicted_probability", data = data, numBreaks = 1000, title ="RF" )
+  rxRocCurve(actualVarName = "observed", predVarNames = "predicted_probability", data = data, numBreaks = 1000, title = "RF" )
   }else{
-    rxRocCurve(actualVarName = "observed", predVarNames = "predicted_probability", data = data, numBreaks = 1000, title ="GBT" )
+    rxRocCurve(actualVarName = "observed", predVarNames = "predicted_probability", data = data, numBreaks = 1000, title = "GBT" )
     }
   ROC <- rxRoc(actualVarName = "observed", predVarNames = "predicted_probability", data = data, numBreaks = 1000)
   auc <- rxAuc(ROC)
@@ -251,7 +253,8 @@ threshold <- median(Prediction_RF$`1_prob`)
 
 # Compute the performance metrics of the model. The Compute Context should be set to local. 
 rxSetComputeContext(local)
-Metrics_RF <- evaluate_model(observed = observed, predicted_probability = Prediction_RF$`1_prob`,threshold = threshold, model_name = "RF")
+Metrics_RF <- evaluate_model(observed = observed, predicted_probability = Prediction_RF$`1_prob`,threshold = threshold,
+                             model_name = "RF")
 
 # Set back the compute context to SQL.
 rxSetComputeContext(sql)
@@ -275,7 +278,8 @@ threshold <- median(Prediction_GBT$`1_prob`)
 
 # Compute the performance metrics of the model. The Compute Context should be set to local.
 rxSetComputeContext(local)
-Metrics_GBT <- evaluate_model(observed = observed, predicted_probability = Prediction_GBT$`1_prob`,threshold = threshold, model_name = "GBT")
+Metrics_GBT <- evaluate_model(observed = observed, predicted_probability = Prediction_GBT$`1_prob`,threshold = threshold, 
+                              model_name = "GBT")
 
 # Set back the compute context to SQL.
 rxSetComputeContext(sql)
@@ -287,6 +291,6 @@ rxSetComputeContext(sql)
 
 ##########################################################################################################################################
 
-best_model <- ifelse(Metrics_RF$AUC >= Metrics_GBT$AUC, "RF", "GBT")
+best <- ifelse(Metrics_RF$AUC >= Metrics_GBT$AUC, "RF", "GBT")
 
 

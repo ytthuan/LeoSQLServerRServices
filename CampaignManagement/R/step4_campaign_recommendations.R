@@ -40,14 +40,15 @@ rxSetComputeContext(sql)
 CM_AD <- RxSqlServerData(table = "CM_AD", connectionString = connection_string, stringsAsFactors = T)
 
 # Import the fitted best model
-if(best_model == "RF"){
+if(best == "RF"){
   forest_model_char <- rxImport(forest_model_sql)
   forest_model_raw <- as.raw(strtoi(forest_model_char$x, 16))
   writeBin(forest_model_raw,con="forest_model.rds")
+
   best_model <- readRDS(file="forest_model.rds")
 }
 
-if(best_model == "GBT"){
+if(best == "GBT"){
   btree_model_char <- rxImport(btree_model_sql)
   btree_model_raw <- as.raw(strtoi(btree_model_char$x, 16))
   writeBin(btree_model_raw,con="btree_model.rds")
@@ -87,7 +88,8 @@ AD_full_merged_sql <- RxSqlServerData(
                     Campaign_Name, Call_For_Action, Tenure_Of_Campaign,Net_Amt_Insured, SMS_Count, Email_Count,  Call_Count, 
                     Previous_Channel, Conversion_Flag
                     FROM CM_AD) a,
-                    (SELECT * FROM Unique_Combos_sql) b",  stringsAsFactors = T, connectionString = connection_string, colInfo = column_info)
+                    (SELECT * FROM Unique_Combos_sql) b", 
+  stringsAsFactors = T, connectionString = connection_string, colInfo = column_info)
 
 AD_full_merged <- RxSqlServerData(table = "AD_full_merged", stringsAsFactors = T, connectionString = connection_string, 
                                   colInfo = column_info)
@@ -135,11 +137,17 @@ rxDataStep(inData = Max_Probability, outFile = Recommended_Combinations, overwri
 
 ##########################################################################################################################################
 
-Recommendations_sql <- RxSqlServerData(  
-  sqlQuery = "SELECT Age, Annual_Income_Bucket, Credit_Score, Product, Campaign_Name, State, Conversion_Flag,
-                     Recommended_Combinations.* 
+Recommendations_sql <- RxSqlServerData(
+  sqlQuery = "SELECT Age, Annual_Income_Bucket, Credit_Score, Product, Campaign_Name as [Campaign Name], State,  
+    Conversion_Flag as Converts,
+      CM_AD.Day_Of_Week as [Day of Week], CM_AD.Time_Of_Day as [Time of Day], CM_AD.Channel,
+    CM_AD.Lead_Id as [Lead ID],
+      Recommended_Combinations.Day_Of_Week as [Recommended Day],
+      Recommended_Combinations.Time_Of_Day as [Recommended Time],
+      Recommended_Combinations.Channel as [Recommended Channel], Recommended_Combinations.MaxProb 
               FROM CM_AD JOIN Recommended_Combinations
               ON CM_AD.Lead_Id = Recommended_Combinations.Lead_Id",
   connectionString = connection_string)
 Recommendations <- RxSqlServerData(table = "Recommendations", connectionString = connection_string)
-rxDataStep(inData = Recommendations_sql , outFile = Recommendations, overwrite = TRUE )
+rxDataStep(inData = Recommendations_sql, outFile = Recommendations, overwrite = TRUE)
+

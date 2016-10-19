@@ -1,4 +1,4 @@
-# Campaign Management Template in SQL Server with R sevices
+#Campaign Management Template in SQL Server with R sevices
 --------------------------
  * **Introduction**
 	 * **System Requirements**
@@ -131,7 +131,7 @@ Related files:
 In this step, we create a stored procedure [dbo].[slitting] that splits the data into a training set and a testing set. The user has to specify a splitting ratio between 0 and 1. For example, if the splitting ratio is 0.7, 70% of the data will be put in the training set, while the other 30% will be assigned to the testing set. The resulting data, with a random binary vector Split_Vector, is stored in the table “CM_AD1”.
 
 
-Input:
+.Input:
 
 * "CM_AD0" table.
 
@@ -161,9 +161,9 @@ Related files:
 * step3b_train_model.sql
 
 ### Step 3c: Predicting (Scoring)
-In this step, we create a stored procedure [dbo].[TestModel] that scores the two trained models on the testing set, and then compute performance metrics (AUC and accuracy among others). The predictions are written in a table called “Prediction_Test”, and the performance metrics are written in “metrics_table”. 
+In this step, we create a stored procedure [dbo].[TestModel] that scores the two trained models on the testing set, and then compute performance metrics (AUC and accuracy among others). The predictions are written in a table called “Prediction_Test”, and the performance metrics are written in “metrics_table”. The best model name based on AUC is written to the table "best_model".
 
-Before proceeding to the next step, the user might want to inspect the metrics_table in order to select himself the model to be used for campaign recommendations. Since the AUC does not depend on the chosen decision threshold for the models, it is wiser to use it for model comparison
+Before proceeding to the next step, the user might want to inspect the metrics_table in order to select himself the model to be used for campaign recommendations. Since the AUC does not depend on the chosen decision threshold for the models, it is wiser to use it for model comparison. The PowerShell script will use by default the best model based on AUC but will give the user the option of choosing the other model.
 
 Input:
 
@@ -173,6 +173,7 @@ Output:
 
 * "Prediction_Test" table storing the predicted score in the last two columns.
 * "metrics_table" table containing the performance metrics of the two models.
+* "best_model" table containing the name of the model that gave the highest AUC on the testing set.
 
 
 Related files:

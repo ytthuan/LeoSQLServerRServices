@@ -31,7 +31,7 @@ DROP TABLE IF EXISTS Lead_Demography
 GO
 CREATE TABLE Lead_Demography
 (
-Lead_Id varchar(50),
+Lead_Id varchar(15),
 Age	varchar(30),
 Phone_No varchar(15),
 Annual_Income_Bucket varchar(15),
@@ -55,7 +55,7 @@ DROP TABLE IF EXISTS Market_Touchdown
 GO
 CREATE TABLE Market_Touchdown
 (
-Lead_Id varchar(50),
+Lead_Id varchar(15),
 Channel varchar(15),
 Time_Of_Day varchar(15),
 Day_Of_Week int,
@@ -89,59 +89,13 @@ Amt_on_Maturity_Bin	varchar(30)
 
 CREATE CLUSTERED COLUMNSTORE INDEX Product_cci ON Product WITH (DROP_EXISTING = OFF);
 
-/*  Create the Merged Table. It will be filled in Step 1 */  
-
-DROP TABLE IF EXISTS Merged
-GO
-CREATE TABLE Merged
-(
-Lead_Id varchar(50) NOT NULL
-,Age varchar(30)
-,Phone_No varchar(15)
-,Annual_Income_Bucket varchar(15)
-,Credit_Score  varchar(15)
-,Country varchar(5)
-,[State] varchar(2)
-,No_Of_Dependents int
-,Highest_Education varchar(30) 
-,Ethnicity varchar(20)
-,No_Of_Children int 
-,Household_Size int 
-,Gender varchar(1)
-,Marital_Status varchar(1)
-,Channel varchar(15)
-,Time_Of_Day varchar(15)
-,Conversion_Flag int
-,Campaign_Id int
-,Day_Of_Week varchar(1)
-,Comm_Id int NOT NULL
-,Time_Stamp varchar(12)
-,Product varchar(50)
-,Category varchar(15)
-,Term int
-,No_of_people_covered int
-,Premium int 
-,Payment_frequency varchar(20)
-,Amt_on_Maturity_Bin varchar(30)
-,Sub_Category varchar(15)
-,Campaign_Drivers varchar(50)
-,Campaign_Name varchar(50)
-,Launch_Date varchar(12)
-,Call_For_Action int
-,Focused_Geography varchar(15)
-,Tenure_Of_Campaign int
-,Net_Amt_Insured int
-,Product_Id int
-)
-;
-
 /* Create the CM_AD0 Table. It will be filled in Step 1, after removing NAs from the raw data. */  
 
 DROP TABLE IF EXISTS CM_AD0
 GO
 CREATE TABLE CM_AD0
 (
- Lead_Id varchar(50) NOT NULL
+ Lead_Id varchar(15) NOT NULL
 ,Age varchar(30)
 ,Phone_No varchar(15)
 ,Annual_Income_Bucket varchar(15)
@@ -189,7 +143,7 @@ DROP TABLE IF EXISTS CM_AD
 GO
 CREATE TABLE CM_AD
 (
- Lead_Id varchar(50) NOT NULL Primary Key
+ Lead_Id varchar(15) NOT NULL Primary Key
 ,Age varchar(30)
 ,Phone_No varchar(50)
 ,Annual_Income_Bucket varchar(15)
@@ -240,7 +194,7 @@ DROP TABLE IF EXISTS CM_AD1
 GO
 CREATE TABLE CM_AD1
 (
- Lead_Id varchar(50) NOT NULL Primary Key
+ Lead_Id varchar(15) NOT NULL Primary Key
 ,Age varchar(30)
 ,Phone_No varchar(50)
 ,Annual_Income_Bucket varchar(15)
@@ -285,12 +239,12 @@ CREATE TABLE CM_AD1
 )
 ;
 
-/* Create the AD_full_merged Table. It will be filled in Step 4.*/  
+/* Create the AD_full_merged Table. It will be filled in Step 4, after scoring the full data table with the selected model. */  
 DROP TABLE IF EXISTS AD_full_merged
 GO
 CREATE TABLE AD_full_merged
 (
- Lead_Id varchar(50) NOT NULL 
+ Lead_Id varchar(15) NOT NULL 
 ,Age varchar(30)
 ,Annual_Income_Bucket varchar(15)
 ,Credit_Score  varchar(15)
@@ -327,20 +281,21 @@ CREATE TABLE AD_full_merged
 )
 ;
 
+ALTER TABLE AD_full_merged add constraint pk_cadfull primary key clustered (Lead_Id, Channel, Day_Of_Week, Time_Of_Day);
+
 /* Create the Prob_Id Table. It will be filled in Step 4, after scoring the full data table with the selected model. */  
 
 DROP TABLE IF EXISTS Prob_Id
 GO
 CREATE TABLE Prob_Id
 (
-[0_prob] float, 
-[1_prob] float,
-[Majority-Vote] int, 
-Lead_Id varchar(50) NOT NULL, 
+[0_prob] float,
+[1_prob] float, 
+[Majority_Vote] int,
+Lead_Id varchar(15) NOT NULL, 
 Day_Of_Week varchar(1) NOT NULL, 
 Time_Of_Day varchar(15) NOT NULL, 
 Channel varchar(15) NOT NULL
 )
 ;
-
 

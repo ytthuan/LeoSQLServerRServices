@@ -4,7 +4,6 @@ GO
 SET QUOTED_IDENTIFIER ON
 GO
 
-
 /****** Stored Procedure to join the 4 tables and create the raw data set  ******/
 
 DROP PROCEDURE IF EXISTS [dbo].[Merging_Raw_Tables]
@@ -16,6 +15,11 @@ BEGIN
 
 	DROP TABLE if exists Campaign_Product
 	DROP TABLE if exists Market_Lead
+        DROP TABLE if exists Merged
+	UPDATE STATISTICS Product;
+	UPDATE STATISTICS Campaign_Detail;
+	UPDATE STATISTICS Lead_Demography;
+	UPDATE STATISTICS Market_Touchdown;
 
 /* Inner join of the tables Product and Campaign_Detail */ 
 	SELECT Campaign_Detail.*, Product.Product, Product.Term, Product.No_of_people_covered, Product.Premium, 
@@ -32,13 +36,16 @@ BEGIN
 	ON Market_Touchdown.Lead_Id = Lead_Demography.Lead_Id
 
 /* Inner join of the tables Campaign_Product and Market_Lead */ 
-	INSERT INTO  Merged
+	UPDATE STATISTICS Campaign_Product;
+	UPDATE STATISTICS Market_Lead;
+
 	SELECT Market_Lead.*, Campaign_Product.Product, Campaign_Product.Category, Campaign_Product.Term, 
-               Campaign_Product.No_of_people_covered, Campaign_Product.Premium, Campaign_Product.Payment_frequency, 
-               Campaign_Product.Amt_on_Maturity_Bin, Campaign_Product.Sub_Category, Campaign_Product.Campaign_Drivers, 
-               Campaign_Product.Campaign_Name, Campaign_Product.Launch_Date, Campaign_Product.Call_For_Action, 
-               Campaign_Product.Focused_Geography, Campaign_Product.Tenure_Of_Campaign, Campaign_Product.Net_Amt_Insured, 
-               Campaign_Product.Product_Id
+           Campaign_Product.No_of_people_covered, Campaign_Product.Premium, Campaign_Product.Payment_frequency, 
+           Campaign_Product.Amt_on_Maturity_Bin, Campaign_Product.Sub_Category, Campaign_Product.Campaign_Drivers, 
+           Campaign_Product.Campaign_Name, Campaign_Product.Launch_Date, Campaign_Product.Call_For_Action, 
+           Campaign_Product.Focused_Geography, Campaign_Product.Tenure_Of_Campaign, Campaign_Product.Net_Amt_Insured, 
+           Campaign_Product.Product_Id
+	INTO Merged
 	FROM Campaign_Product JOIN Market_Lead
 	ON Campaign_Product.Campaign_Id = Market_Lead.Campaign_Id 
 

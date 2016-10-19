@@ -64,6 +64,7 @@ Lead_Demography_col <- c(
   No_Of_Dependents = "numeric",
   Highest_Education = "character",
   Ethnicity = "character",
+
   No_Of_Children = "numeric",
   Household_Size = "numeric",
   Gender = "character",
@@ -119,8 +120,9 @@ rxDataStep(inData = table_Product, outFile = Product, overwrite = TRUE)
 rxSetComputeContext(sql)
 
 # Inner join of the tables Product and Campaign_Detail
-Campaign_Product_sql <- RxSqlServerData(      sqlQuery = "SELECT Campaign_Detail.*, Product.Product, Product.Term, Product.No_of_people_covered, Product.Premium, 
-                       Product.Payment_frequency, Product.Net_Amt_Insured, Product.Amt_on_Maturity, Product.Amt_on_Maturity_Bin
+Campaign_Product_sql <- RxSqlServerData(      
+  sqlQuery = "SELECT Campaign_Detail.*, Product.Product, Product.Term, Product.No_of_people_covered, Product.Premium, 
+                     Product.Payment_frequency, Product.Net_Amt_Insured, Product.Amt_on_Maturity, Product.Amt_on_Maturity_Bin
                 FROM Campaign_Detail JOIN Product
                 ON Product.Product_Id = Campaign_Detail.Product_Id",
     connectionString = connection_string)

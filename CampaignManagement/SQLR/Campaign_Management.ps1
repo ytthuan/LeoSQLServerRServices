@@ -44,7 +44,6 @@ $sqlscript
 # Function wrapper to invoke SQL query
 ##########################################################################
 function ExecuteSQLQuery
-
 {
 param(
 [String]
@@ -83,23 +82,17 @@ Invoke-Sqlcmd -ServerInstance $ServerName -Username $username -Password $passwor
 if ($? -eq $false)
 {
     Write-Host -ForegroundColor Red "Failed the test to connect to SQL server: $ServerName database: $DBName !"
-    Write-Host -ForegroundColor Red "Plese make sure: `n`t 1. SQL Server: $ServerName exists;
+    Write-Host -ForegroundColor Red "Please make sure: `n`t 1. SQL Server: $ServerName exists;
                                      `n`t 2. SQL database: $DBName exists;
                                      `n`t 3. SQL user: $username has the right credential for SQL server access."
     exit
 }
 
-$query = "ALTER AUTHORIZATION ON DATABASE::$DBName TO $username;"
-Invoke-Sqlcmd -ServerInstance $ServerName -Username $username -Password $password -Query $query -ErrorAction SilentlyContinue
-
-$query = "USE $DBName;"
-Invoke-Sqlcmd -ServerInstance $ServerName -Username $username -Password $password -Query $query -ErrorAction SilentlyContinue
-
 ##########################################################################
 # Create input tables and populate with data from csv files.
 ##########################################################################
 Write-Host -foregroundcolor 'green' ("Step 0: Create and populate tables in Database" -f $dbname)
-$ans = Read-Host 'Continue [y|Y], Exit [e|E]?'
+$ans = Read-Host 'Continue [y|Y], Exit [e|E], Skip [s|S]?'
 if ($ans -eq 'E' -or $ans -eq 'e')
 {
     return
@@ -141,7 +134,7 @@ if ($ans -eq 'y' -or $ans -eq 'Y')
 # Create and execute the stored procedure for data processing
 ##########################################################################
 Write-Host -foregroundcolor 'green' ("Step 1: Data Processing")
-$ans = Read-Host 'Continue [y|Y], Exit [e|E]?'
+$ans = Read-Host 'Continue [y|Y], Exit [e|E], Skip [s|S]?'
 if ($ans -eq 'E' -or $ans -eq 'e')
 {
     return
@@ -153,10 +146,12 @@ if ($ans -eq 'y' -or $ans -eq 'Y')
     ExecuteSQL $script
 
     # execute the merging
+    Write-Host -ForeGroundColor 'Cyan' (" Merging the 4 raw tables...")
     $query = "EXEC Merging_Raw_Tables"
     ExecuteSQLQuery $query
 
     # execute the NA replacement
+    Write-Host -ForeGroundColor 'Cyan' (" Replacing missing values with the mode...")
     $query = "EXEC fill_NA '$connectionString'"
     ExecuteSQLQuery $query
 }
@@ -165,7 +160,7 @@ if ($ans -eq 'y' -or $ans -eq 'Y')
 # Create and execute the stored procedure for feature engineering
 ##########################################################################
 Write-Host -foregroundcolor 'green' ("Step 2: Feature Engineering")
-$ans = Read-Host 'Continue [y|Y], Exit [e|E]?'
+$ans = Read-Host 'Continue [y|Y], Exit [e|E], Skip [s|S]?'
 if ($ans -eq 'E' -or $ans -eq 'e')
 {
     return
@@ -177,6 +172,7 @@ if ($ans -eq 'y' -or $ans -eq 'Y')
     ExecuteSQL $script
 
     # execute the feature engineering
+    Write-Host -ForeGroundColor 'Cyan' (" Computing new features and keeping last record per customer...")
     $query = "EXEC feature_engineering"
     ExecuteSQLQuery $query
 }
@@ -186,7 +182,7 @@ if ($ans -eq 'y' -or $ans -eq 'Y')
 ##########################################################################
 
 Write-Host -foregroundcolor 'green' ("Step 3a: Split the data into train and test")
-$ans = Read-Host 'Continue [y|Y], Exit [e|E]?'
+$ans = Read-Host 'Continue [y|Y], Exit [e|E], Skip [s|S]?'
 if ($ans -eq 'E' -or $ans -eq 'e')
 {
     return
@@ -200,6 +196,7 @@ if ($ans -eq 'y' -or $ans -eq 'Y')
     # execute the procedure
     Write-Host -foregroundcolor 'Cyan' ("Split Ratio ?") 
     $splitRatio = Read-Host 
+    Write-Host -ForeGroundColor 'Cyan' (" Splitting the data set...")
     $query = "EXEC splitting $splitRatio, '$connectionString'"
     ExecuteSQLQuery $query
 }
@@ -209,7 +206,7 @@ if ($ans -eq 'y' -or $ans -eq 'Y')
 ##########################################################################
 
 Write-Host -foregroundcolor 'green' ("Step 3b: Models Training")
-$ans = Read-Host 'Continue [y|Y], Exit [e|E]?'
+$ans = Read-Host 'Continue [y|Y], Exit [e|E], Skip [s|S]?'
 if ($ans -eq 'E' -or $ans -eq 'e')
 {
     return
@@ -221,11 +218,13 @@ if ($ans -eq 'y' -or $ans -eq 'Y')
     ExecuteSQL $script
 
     # execute the training
-    $modelName = 'rf'
+    Write-Host -ForeGroundColor 'Cyan' (" Training Random Forest (RF)...")
+    $modelName = 'RF'
     $query = "EXEC TrainModel $modelName"
     ExecuteSQLQuery $query
 
-    $modelName = 'btree'
+    Write-Host -ForeGroundColor 'Cyan' (" Training Gradient Boosted Trees (GBT)...")
+    $modelName = 'GBT'
     $query = "EXEC TrainModel $modelName"
     ExecuteSQLQuery $query
 }
@@ -235,7 +234,7 @@ if ($ans -eq 'y' -or $ans -eq 'Y')
 ##########################################################################
 
 Write-Host -foregroundcolor 'green' ("Step 3c: Models Evaluation")
-$ans = Read-Host 'Continue [y|Y], Exit [e|E]?'
+$ans = Read-Host 'Continue [y|Y], Exit [e|E], Skip [s|S]?'
 if ($ans -eq 'E' -or $ans -eq 'e')
 {
     return
@@ -247,9 +246,22 @@ if ($ans -eq 'y' -or $ans -eq 'Y')
     ExecuteSQL $script
 
     # execute the evaluation
-    $models = "'rf', 'btree'"
+    Write-Host -ForeGroundColor 'Cyan' (" Testing Random Forest (RF) and Gradient Boosted Trees (GBT)...")
+    $models = "'RF', 'GBT'"
     $query = "EXEC TestModel $models, '$connectionString'"
     ExecuteSQLQuery $query
+
+    $best_model = Invoke-sqlcmd -ServerInstance $ServerName -Database $DBName -Username $username -Password $password -Query “select best_model from best_model"
+    $best_model = $best_model.best_model
+    
+    if ($best_model -eq 'RF')
+    { 
+        $not_selected = 'GBT'
+    } 
+    else
+    {
+        $not_selected = 'RF'
+    }
 }
 
 ##########################################################################
@@ -257,22 +269,27 @@ if ($ans -eq 'y' -or $ans -eq 'Y')
 ##########################################################################
 
 Write-Host -foregroundcolor 'green' ("Step 4: Campaign Recommendations")
-$ans = Read-Host 'Continue [y|Y], Exit [e|E]?'
+$ans = Read-Host 'Continue [y|Y], Exit [e|E], Skip [s|S]?'
 if ($ans -eq 'E' -or $ans -eq 'e')
 {
     return
 } 
 if ($ans -eq 'y' -or $ans -eq 'Y')
 {
-    Write-Host -foregroundcolor 'Cyan' ("Best Model ? Random Forest ['rf'], Gradient Boosted Trees ['btree']?")
-    $best_model = Read-Host 
+    Write-Host -foregroundcolor 'Cyan' ("Best Model based on AUC is $best_model. Would you like to try $not_selected instead? ")
+    $ans = Read-Host 'Yes use the best model based on AUC [y|Y], No use the alternative model [n|N]?'
+    if($ans -eq 'n' -or $ans -eq 'N')
+    { 
+        $best_model = $not_selected
+    }
 
     # create the stored procedure for recommendations
     $script = $filepath + "step4_campaign_recommendations.sql"
     ExecuteSQL $script 
 
     # compute campaign recommendations
-    $query = "EXEC campaign_recommendation $best_model"
+    Write-Host -ForeGroundColor 'Cyan' (" Computing channel-day-time recommendations...")
+    $query = "EXEC campaign_recommendation_in_memory $best_model"
     ExecuteSQLQuery $query
 }
 

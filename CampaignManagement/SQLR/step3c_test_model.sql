@@ -13,9 +13,13 @@ CREATE PROCEDURE [TestModel] @modelrf varchar(20),
 		             @connectionString varchar(300)
 AS 
 BEGIN
+	DROP TABLE IF EXISTS best_model
+	CREATE TABLE best_model (best_model varchar(10))
+
 	DECLARE @inquery NVARCHAR(max) = N'SELECT * FROM CM_AD1 WHERE Split_Vector = 0';
 	DECLARE @model_rf varbinary(max) = (select model from Campaign_Models where model_name = @modelrf);
 	DECLARE @model_btree varbinary(max) = (select model from Campaign_Models where model_name = @modelbtree);
+	INSERT INTO best_model
 	EXECUTE sp_execute_external_script @language = N'R',
      					   @script = N' 
 ####################################################################################################
@@ -66,7 +70,8 @@ forest_prediction <- rxPredict(modelObject = forest_model,
 			       data = prediction_df,
 			       type = "prob",
                    extraVarsToWrite = c("Conversion_Flag"),
-			       overwrite = TRUE)
+
+overwrite = TRUE)
 
 threshold <- median(forest_prediction$X1_prob)
 
@@ -119,7 +124,12 @@ metrics_table <- RxSqlServerData(table = "Campaign_metrics",
                                  connectionString = connection_string)
 rxDataStep(inData = metrics_df,
            outFile = metrics_table,
-           overwrite = TRUE)'
+           overwrite = TRUE)
+##########################################################################################################################################
+## Select the best model based on AUC
+##########################################################################################################################################
+OutputDataSet <- data.frame(ifelse(forest_metrics[5] >= boosted_metrics[5], "RF", "GBT"))		 		   	   	   
+	   '
 , @input_data_1 = @inquery
 , @params = N'@forest_model varbinary(max), @boosted_model varbinary(max), @connection_string varchar(300)'
 , @forest_model = @model_rf
