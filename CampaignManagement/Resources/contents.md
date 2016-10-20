@@ -19,19 +19,21 @@ In this template with SQL Server R Services, three versions of the implementatio
 
 | File | Description |
 | --- | --- |
-| .\Data\campaign\_detail.csv | Campaign Metadata |
-| .\Data\market\_touchdown.csv | Historical Campaign data including lead responses |
-| .\Data\product.csv | Product Metadata |
-| .\Data\lead\_demography.csv | Demographic data of the leads |
+| .\Data\Campaign\_Detail.csv | Campaign Metadata |
+| .\Data\Market\_Touchdown.csv | Historical Campaign data including lead responses |
+| .\Data\Product.csv | Product Metadata |
+| .\Data\Lead\_Demography.csv | Demographic data of the leads |
 
 ## Model Development in R
 
 | File | Description |
 | --- | --- |
-| .\R\input\_data.r | Simulates the 4 input datasets |
-| .\R\feature\_engineering.r | Performs Feature Engg. On the input datasets |
-| .\R\RF\_model\_train.r | Builds Random Forest Model |
-| .\R\GBM\_model\_train.r | Builds Gradient Boosting Model |
+| step0\_data\_generation.R | Simulates the 4 input datasets |
+| step1\data\_processing.R | uploads .csv files to SQL and performs data preprocessing steps such as outlier treatment and missing value treatment  | 
+| step2\_feature\_engineering.R | Performs Feature Engineering and creates the Analytical Dataset 
+| step3\_training\_evaluation.R | Builds the Random Forest &amp; Gradient Boosting models, identifies the champion model | 
+| step4\_campaign\_recommendations.R | Build final recommendations from scoring 63 combinations per lead and selecting combo with highest conversion probability  |
+
 
 Follow the [R Instructions](Instructions/R_Instructions.md) to execute these scripts.
 
@@ -40,19 +42,13 @@ Follow the [R Instructions](Instructions/R_Instructions.md) to execute these scr
 
 | File | Description |
 | --- | --- |
-| .\SQLR\step0\_table\_structure\_input\_data.sql | SQL Script to create schema of the databases if the user wants to import the datasets instead of simulating them |
-| .\SQLR\step1(a)\_campaign\_detail.sql | SQLR Script to create the campaign detail dataset |
-| .\SQLR\step1(b)\_product.sql | SQLR Script to create Product dataset |
-| .\SQLR\step1(c)\_lead\_demography.sql | SQLR Script to create Lead Demography dataset |
-| .\SQLR\step1(d)\_market\_touchdown.sql | SQLR Script to create Market Touchdown dataset |
-| .\SQLR\step2(a)\_preprocessing\_market\_touchdown.sql  | Outliers in the market touchdown dataset are treated |
-| .\SQLR\step2(b)\_preprocessing\_lead\_demography.sql | Missing values in the Lead demography table are treated |
-| .\SQLR\step3\_feature\_engineering\_market\_touchdown.sql | Market touchdown dataset is aggregated and variables like #Emails, #Calls and #SMS are created |
-| .\SQLR\step4\_ad\_creation.sql | SQLR Script to create Analytical Dataset and split it into Train and Test |
-| .\SQLR\Step5(a)\_model\_train\_rf.sql | SQLR Script build Random Forest |
-| .\SQLR\Step5(b)\_model\_train\_rf.sql | SQLR Script build Gradient Boosting Model |
-| .\SQLR\step6\_models\_comparision.sql | SQLR Script to compute the model statistics of both the models |
-| .\SQLR\step7\_scoring\_leads.sql | SQLR Script to select the champion model and score the Analytical dataset on the champion model |
+| .\SQLR\step0\create\tables.sql | SQL Script to upload data tables into SQL |
+| .\SQLR\step1\_data\_processing.sql  | Outliers and missing values in data tables are treated |
+| .\SQLR\step2\_feature\_engineering.sql | Market touchdown dataset is aggregated and variables like #Emails, #Calls and #SMS are created |
+| .\SQLR\step43a\_splitting.sql | Split the analytical dataset (AD) into Train and Test |
+| .\SQLR\Step3b\train\_model.sql | Trains either RF or GBT model, depending on input parameter |
+| .\SQLR\Step3c)_test\_model.sql | Tests either RF or GBT model, dpending on input parameter |
+| .\SQLR\step4\_campaign\_recommendations.sql | score data with best model and output recommendations |
 
 Follow the [SQLR Instructions](Instructions/SQLR_Instructions.md) to execute these scripts.
 
@@ -60,9 +56,8 @@ Follow the [SQLR Instructions](Instructions/SQLR_Instructions.md) to execute the
 ## Automation with PowerShell
 | File | Description |
 | --- | --- |
-| .Analytical Dataset Creation.ps1 | Creates the Analytical/Scoring dataset |
-| .Model Development.ps1 | Trains the Random Forest and Gradient Boosting Models |
-| .Scoring.ps1 | Identifies the Champion Model and scores the Analytical/Scoring dataset |
+| .\SQLR\Campaign_Management.ps1 | Creates the Analytical/Scoring dataset |
+
 
 Follow the [PowerShell Instructions](Instructions/Powershell_Instructions.md) to execute these scripts.
 
@@ -81,13 +76,10 @@ Follow the [PowerShell Instructions](Instructions/Powershell_Instructions.md) to
 ###  Instructions for Running this Solution Packet
 | File | Description |
 | --- | --- |
-| .\Resources\Instructions\Data Setup.md | [Use this to setup data](Instructions/Data_Setup.md) for a quick or more detailed execution |
+| .\Resources\Instructions\START_HERE.md | **[START HERE](Instructions/START_HERE.md)** to learn how to set up your computer for all solution paths |
 | .\Resources\Instructions\Powershell_Instructions.md | [Instructions for running the solution from PowerShell](Instructions/Powershell_Instructions.md) |
 | .\Resources\Instructions\R_Instructions.md | [Instructions for running the solution in R](Instructions/R_Instructions.md) on a local machine |
-| .\Resources\Instructions\START_HERE.md | **[START HERE](Instructions/START_HERE.md)** to learn how to set up your computer for all solution paths |
 | .\Resources\Instructions\Visualize_Results.md | [Instructions for visualizing your results](Instructions/Visualize_Results.md) in the PowerBI template |
-
-
 
 
 [&lt; Back to ReadMe](../readme.md)

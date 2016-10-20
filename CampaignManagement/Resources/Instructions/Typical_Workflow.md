@@ -32,7 +32,9 @@ Now that Debra's environment is set up, she  opens her IDE and performs the foll
     ```
     connection_string <- "Driver=SQL Server;Server=myServerName;Database=Campaign_Management;UID=rdemo;PWD=D@tascience"
     ```
-    
+
+    *Make sure not to add spaces around the "=" in the connection string - it will not work correctly when spaces are present*
+
     This connection string contains all the information necessary to connect to the SQL Server from inside the R session. As you can see in the script, this information is then used in the `RxInSqlServer()` command to setup a `sql` string.  The `sql` string is in turn used in the `rxSetComputeContext()` to execute code directly on the SQL Server machine.  You can see this in the .R files:
 
     ```
@@ -73,9 +75,9 @@ Debra has completed her tasks.  She has connected to the SQL database, executed 
 
 While this task is complete for the current set of leads, our company will want to perform these actions for each new campaign that they deploy.  Instead of going back to Debra each time, Danny can operationalize the code in TSQL files which he can then run himself each month for the newest campaign rollouts.
 
-Debra hands over her scripts to Danny who adds the code to the files you can see in the **CampaignManagement\\SQL** directory. He'll test out the start to finish set of TSQL code by running them - you can do this yourself by following the directions in the [SQLR Instructions](SQLR_Instructions.md).
+Debra hands over her scripts to Danny who adds the code to the files you can see in the **CampaignManagement\\SQL** directory. He'll test out the start to finish set of TSQL code by running them - you can do this yourself by following the directions in the [SQLR Instructions](SQLR_Instructions.md).  (This is an alternate way to create the same set of tables and models as the above R scripts.)
 
-Finally, Danny may want to automate the process even more by developing the PowerShell scripts to invoke the TSQL files.  You can find this script in the **CampaignManagement\\SQL** directory, and execute it yourself by following the [PowerShell Instructions](Powershell_Instructions.md).  As noted earlier, this is the fastest way to execute all the code included in this solution.
+Finally, Danny may want to automate the process even more by developing the PowerShell scripts to invoke the TSQL files.  You can find this script in the **CampaignManagement\\SQL** directory, and execute it yourself by following the [PowerShell Instructions](Powershell_Instructions.md).  As noted earlier, this is the fastest way to execute all the code included in this solution.  (This is the third way to create the same set of tables and models as the above R scripts.)
 
 A summary of this process and all the files involved is described in more detail [here](../data-scientist.md).
 

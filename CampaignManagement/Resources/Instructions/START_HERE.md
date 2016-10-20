@@ -6,6 +6,7 @@ START HERE: Setup </h1>
 Complete the steps in the Set up SQL Server R Services (In-Database) Instructions. The set up instructions file can found at  <a href="https://msdn.microsoft.com/en-us/library/mt696069.aspx" target="_blank"> https://msdn.microsoft.com/en-us/library/mt696069.aspx</a>
 
 <h2>Set up logins in SQL Server</h2>
+If you are administering your own server and want to add a user to run the code of this solution, use the steps below.  
 <ol>
 <li>	In SSMS, connect to the Server with your admin account</li>.
 <li>	Create a new user: Right click on <code>Security</code> and select <code>New &gt; Login</code> <br/>
@@ -21,34 +22,10 @@ To find your computer name - Click the <code>Start</code> button, right-click <c
 <img src="../Images/sqluser.png" width="75%" >
 </li>
  
-
-
-(It is mandatory to use the Trusted Connection method of accessing the database in an R connection string.)
-
-<li>	Create the "rdemo" user  by opening the <code>Resources/createuser.sql</code> file and executing it.
- (This user login will be used to install data and procedures via the PowerShell script in a later step in this setup).
+<li>	Create the "rdemo" user  by double clicking on the <code>Resources/createuser.sql</code> file and executing it.
+ (This user login will be used to install data and procedures).
 <br/>
 
-<li>	In the Object Explorer, select this new user and double click or right click and select `Properties`.  (If you don’t see the new user, right click on <code>Logins</code> and select <code>Refresh</code> first.)
-<br/>
-<img src="../Images/rdemo.png" width="50%" >
-    </li>
-</li>
- 
-<li>	On the Server Roles tab check <code>public</code> and <code>sysadmin</code>.
-<br/>
-<img src="../Images/rdemoprop1.png" width="75%" > 
-</li>
-
-<li>	
-On the User Mapping tab, check  <code>master</code> in the top section, then check  <code>db_datareader</code>, 
- <code>db_datawriter </code>,  <code>db_owner</code>, and  <code>public</code> in the bottom table.  
-<br/>
-<img src="../Images/rdemoprop2.png" width="75%" >
-<li>Click <code>OK</code> to close the dialog.
-</li>
-
- 
 <li>	Check to make sure you have set your Server Authentication mode to SQL Server and Windows Authentication mode.  
     <ul>
 <li>	In SQL Server Management Studio Object Explorer, right-click the server, and then click <code>Properties</code>.</li>
