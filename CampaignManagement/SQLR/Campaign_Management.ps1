@@ -88,6 +88,9 @@ if ($? -eq $false)
     exit
 }
 
+$query = "USE $DBName;"
+Invoke-Sqlcmd -ServerInstance $ServerName -Username $username -Password $password -Query $query 
+
 ##########################################################################
 # Create input tables and populate with data from csv files.
 ##########################################################################
@@ -251,7 +254,7 @@ if ($ans -eq 'y' -or $ans -eq 'Y')
     $query = "EXEC TestModel $models, '$connectionString'"
     ExecuteSQLQuery $query
 
-    $best_model = Invoke-sqlcmd -ServerInstance $ServerName -Database $DBName -Username $username -Password $password -Query “select best_model from best_model"
+    $best_model = Invoke-sqlcmd -ServerInstance $ServerName -Database $DBName -Username $username -Password $password -Query "select best_model from best_model;"
     $best_model = $best_model.best_model
     
     if ($best_model -eq 'RF')
@@ -289,7 +292,7 @@ if ($ans -eq 'y' -or $ans -eq 'Y')
 
     # compute campaign recommendations
     Write-Host -ForeGroundColor 'Cyan' (" Computing channel-day-time recommendations...")
-    $query = "EXEC campaign_recommendation_in_memory $best_model"
+    $query = "EXEC campaign_recommendation_not_in_memory $best_model, '$connectionString'"
     ExecuteSQLQuery $query
 }
 
