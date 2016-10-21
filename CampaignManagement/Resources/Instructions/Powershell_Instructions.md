@@ -27,16 +27,8 @@ Answer `y` to the prompt to allow the following scripts to execute.
 ```
 4.  Answer the prompts...**MORE HERE WALK THROUGH EACH PROMPT**  for now, say Y each time, use .7 as the split ratio.  *Will beef this up before finalizing it.!*
 
-22.	Once the PowerShell script has completed, log into the SQL Server to view all the datasets that have been created in the `Campaign` database.  Hit `Refresh` if necessary.
- <br/>
- <img src="../Images/alltables.png" width="30%">
 
- Right click on `dbo.Recommendations` and select `View Top 1000 Rows` to preview the scored data.
  
-<h2>Visualizing Results </h2>
-Now proceed to <a href="Visualize_Results.md">Visualizing Results with PowerBI</a>.
-
-
 
 Once the PowerShell script has completed successfully, log into the SQL Server to view all the datasets that have been created in the `CampaignManagement` database.  
 Hit `Refresh` if necessary.
@@ -46,10 +38,12 @@ Hit `Refresh` if necessary.
 Right click on `dbo.Recommendations` and select `View Top 1000 Rows` to preview the scored data.
 
 ## Visualizing Results 
-Now proceed to <a href="Visualize_Results.md">Visualizing Results with PowerBI</a>.
+You've now  created and processed data, created models, picked the best one and used the model to recommend a combination of Channel/Time/Day as described  [here](../data-scientist.md). This powershell script also created the stored procedures that can be used to score new data for the next campaign.  
+
+Let's look at our current results. Proceed to <a href="Visualize_Results.md">Visualizing Results with PowerBI</a>.
 
 ## Other Solution Paths
 
 You've just completed the fully automated solution that simulates the data, trains and scores the models by executing PowerShell scripts.  
 
-See the [Typical Workflow Walkthrough](Typical_Workflow.md) for a description of how these files were created and 
+See the [Typical Workflow Walkthrough](Typical_Workflow.md) for a description of how these files were first created in R by a Data Scientist.
