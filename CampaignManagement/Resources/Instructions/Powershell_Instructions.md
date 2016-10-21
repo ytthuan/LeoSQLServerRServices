@@ -30,7 +30,7 @@ Answer `y` to the prompt to allow the following scripts to execute.
 
  
 
-Once the PowerShell script has completed successfully, log into the SQL Server to view all the datasets that have been created in the `CampaignManagement` database.  
+Once the PowerShell script has completed successfully, log into the SQL Server to view all the datasets that have been created in the `Campaign` database.  
 Hit `Refresh` if necessary.
 <br/>
 <img src="../Images/alltables.png" width="30%">
