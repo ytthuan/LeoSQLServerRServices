@@ -22,9 +22,9 @@ Running this PowerShell script will create stored procedures for the the operati
 Answer `y` to the prompt to allow the following scripts to execute.
 
 3.  Now CD to the **SQLR** directory and run the following command, inserting your server name (or "." if you are on the same machine as the SQL server)
-```
-.\Campaign_Management.ps1 -ServerName "Server Name" -DBName "Campaign"
-```
+    ```
+    .\Campaign_Management.ps1 -ServerName "Server Name" -DBName "Campaign"
+    ```
 4.  Answer the prompts...**MORE HERE WALK THROUGH EACH PROMPT**  for now, say Y each time, use .7 as the split ratio.  *Will beef this up before finalizing it.!*
 
 
