@@ -143,8 +143,10 @@ formula <- as.formula(paste("Conversion_Flag ~", paste(traning_variables, collap
 # Train the Random Forest.
 forest_model <- rxDForest(formula = formula,
                           data = CM_AD_Train,
-                          nTree = 40, 
-                          cp = 0.05,
+                          nTree = 40,
+                          minSplit = 10,
+                          minBucket = 5,
+                          cp = 0.00005,
                           seed = 5)
 
 # Save the Random Forest in SQL. The compute context is set to local in order to export the model. 
@@ -168,10 +170,10 @@ rxSetComputeContext(sql)
 # Train the GBT.
 btree_model <- rxBTrees(formula = formula,
                         data = CM_AD_Train,
-                        learningRate = 0.0005,
-                        minSplit = 100,
-                        minBucket = 33,
-                        cp = 0.05,
+                        learningRate = 0.05,
+                        minSplit = 10,
+                        minBucket = 5,
+                        cp = 0.0005,
                         nTree = 40,
                         seed = 5,
                         lossFunction = "multinomial")

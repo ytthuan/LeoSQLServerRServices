@@ -41,8 +41,8 @@ table_Product <- read.csv(file.path(file_path, "Product.csv"))
 
 # Specify the variable types.
 Campaign_Detail_col <- c(
-  Campaign_Name = "character",
   Campaign_Id = "numeric",
+  Campaign_Name = "character",
   Category = "character",
   Launch_Date = "character",
   Sub_Category = "character",
@@ -64,7 +64,6 @@ Lead_Demography_col <- c(
   No_Of_Dependents = "numeric",
   Highest_Education = "character",
   Ethnicity = "character",
-
   No_Of_Children = "numeric",
   Household_Size = "numeric",
   Gender = "character",
@@ -76,11 +75,11 @@ Market_Touchdown_col <- c(
   Channel = "character",
   Time_Of_Day = "character",
   Day_Of_Week = "numeric",
-  Source = "character",
   Campaign_Id = "numeric",
   Conversion_Flag = "numeric",
-  Comm_Id = "numeric",
-  Time_Stamp="character"
+  Source = "character",
+  Time_Stamp="character",
+  Comm_Id = "numeric"
 )
 
 Product_col <- c(
@@ -169,16 +168,24 @@ rxSqlServerDropTable(table = "Market_Lead")
 Mode_Replace <- function(data) {
   data <- data.frame(data)
   var <- colnames(data)[! colnames(data) %in% c("Lead_Id", "Phone_No", "Campaign_Id", "Comm_Id", "Time_Stamp", "Launch_Date", "Product_Id")]
-  for(j in 1:length(var)){
-      row_na <- which(is.na(data[, var[j]]) == TRUE) 
+  numeric_var <- c("No_Of_Dependents", "No_Of_Children", "Household_Size", "Term", "No_of_people_covered", "Premium", "Net_Amt_Insured")
+  character_var <- var[! var %in% numeric_var]
+  for(j in 1:length(character_var)){
+    data[, character_var[j]] <- as.character(data[, character_var[j]])
+      row_na <- which(is.na(data[, character_var[j]]) == TRUE) 
       if(length(row_na) > 0){
-        xtab <- table(data[,var[j]])
+        xtab <- table(data[, character_var[j]])
         mode <- names(which(xtab==max(xtab)))
-        if(is.character(data[, var[j]]) | is.factor(data[, var[j]])){
-          data[row_na, var[j]] <- as.character(mode)
-        } else{
-          data[row_na, var[j]] <- as.integer(mode)
+        data[row_na, character_var[j]] <- as.character(mode)
       }
+  }
+  for(j in 1:length(numeric_var)){
+    data[, numeric_var[j]] <- as.numeric(data[, numeric_var[j]])
+    row_na <- which(is.na(data[, numeric_var[j]]) == TRUE) 
+    if(length(row_na) > 0){
+      xtab <- table(data[, numeric_var[j]])
+      mode <- names(which(xtab==max(xtab)))
+      data[row_na, numeric_var[j]] <- as.numeric(mode)
     }
   }
   return(data)

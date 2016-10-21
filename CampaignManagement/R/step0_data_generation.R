@@ -90,11 +90,11 @@ table_target$Conversion_Flag <- sample(c(0,1), no_of_unique_leads, replace = TRU
 
 ## Probabilities for Labels 0 and 1
 age_list <- c("Young","Middle Age","Senior Citizen")
-age_p0 <- c(0.6, 0.1, 0.3)
-age_p1 <- c(0.2, 0.7, 0.1)
+age_p0 <- c(0.45, 0.25, 0.3)
+age_p1 <- c(0.25, 0.5, 0.25)
 annual_income_bucket_list <- c("<60k", "60k-120k", ">120k")  
 annual_income_bucket_p0 <- c(0.6, 0.2, 0.2) 
-annual_income_bucket_p1 <- c(0.1, 0.6, 0.3)  
+annual_income_bucket_p1 <- c(0.2, 0.5, 0.3)  
 credit_score_list <- c("<350", "350-700", ">700")  
 credit_score_p0 <- c(0.5, 0.2, 0.3) 
 credit_score_p1 <- c(0.2, 0.6, 0.2) 
@@ -128,33 +128,35 @@ source_p1<- c(1/3, 1/3, 1/3)
 # Indeed, if there is no conditional sampling on other features, whatever demographic or campaign variables,
 # the probability of conversion would depend only on Day_Of_Week, Time_Of_Day and Channel. 
 
-## Condition Day_Of_Week on Age (and Conversion_Flag)
+## Condition Day_Of_Week on Annual_Income_Bucket and Conversion_Flag
 day_of_week_list <- seq(1, 7)
-day_of_week_p0Young <- c(0.10, 0.40, 0.30, 0.05, 0.05, 0.05, 0.05)
+day_of_week_p0Low <- c(0.10, 0.40, 0.30, 0.05, 0.05, 0.05, 0.05)
 day_of_week_p0Middle <- c(0.20, 0.1, 0.1, 0.10, 0.10, 0.20, 0.20)
-day_of_week_p0Senior <- c(0.25, 0.15, 0.05, 0.15, 0.10, 0.15, 0.15)
+day_of_week_p0High <- c(0.25, 0.15, 0.05, 0.15, 0.10, 0.15, 0.15)
 
-day_of_week_p1Young <- c(0.30, 0.1, 0.1, 0.10, 0.10, 0.15, 0.15)
-day_of_week_p1Middle <- c(0.05, 0.15, 0.30, 0.31, 0.09, 0.05, 0.05)
-day_of_week_p1Senior <- c(0.15, 0.35, 0.25, 0.1, 0.05, 0.1, 0.1)
+day_of_week_p1Low <- c(0.09, 0.30, 0.2, 0.25, 0.1, 0.03, 0.03)
+day_of_week_p1Middle <- c(0.05, 0.15, 0.30, 0.35, 0.05, 0.05, 0.05)
+day_of_week_p1High <- c(0.10, 0.2, 0.1, 0.12, 0.05, 0.21, 0.22)
 
-## Condition Time_Of_Day on Credit_Score.
+## Condition Time_Of_Day on Age and Conversion_Flag.
 time_of_day_list <- c("Morning", "Afternoon", "Evening")
-time_of_day_p0Low <- c(0.8, 0.1, 0.1)
+time_of_day_p0Young <- c(0.8, 0.1, 0.1)
 time_of_day_p0Middle <- c(0.2, 0.3, 0.5)
-time_of_day_p0High <- c(0.1, 0.3, 0.6)
+time_of_day_p0Senior <- c(0.1, 0.3, 0.6)
 
-time_of_day_p1Low <- c(0.2, 0.3, 0.5)
-time_of_day_p1Middle <- c(0.3, 0.5, 0.2)
-time_of_day_p1High <- c(0.2, 0.2, 0.6)
+time_of_day_p1Young <- c(0.1, 0.2, 0.7)
+time_of_day_p1Middle <- c(0.33, 0.33, 0.34)
+time_of_day_p1Senior <- c(0.5, 0.1, 0.4)
 
-## Condition Channel on Gender.
+## Condition Channel on Age and Conversion_Flag.
 channel_list <- c("Email", "Cold Calling", "SMS")
-channel_p0M <- c(0.60, 0.10, 0.30)
-channel_p0F <- c(0.20, 0.60, 0.20)
+channel_p0Young <- c(0.60, 0.10, 0.30)
+channel_p0Middle <- c(0.20, 0.60, 0.20)
+channel_p0Senior <- c(0.30, 0.50, 0.20)
 
-channel_p1M <- c(0.20, 0.60, 0.20)
-channel_p1F <- c(0.30, 0.10, 0.60)
+channel_p1Young <- c(0.40, 0.10, 0.50)
+channel_p1Middle <- c(0.20, 0.40, 0.40)
+channel_p1Senior <- c(0.30, 0.65, 0.05)
 
 ## Sample for Conversion_Flag = 0 
 table_target0 <- table_target[table_target$Conversion_Flag == 0, ]
@@ -184,19 +186,22 @@ table_target0$Campaign_Id <- sample(seq(2, 6), n0, replace = TRUE)
 
 ### Creating Time_Stamp, Day_Of_Week, Time_Of_Day and Channel by conditional random sampling.
 table_target0$Day_Of_Week <-  
-ifelse(table_target0$Age  == "Young", sample(seq(1, 7), n0, replace = T, prob = day_of_week_p0Young),
-ifelse(table_target0$Age  == "Middle Age", sample(seq(1, 7), n0, replace = T, prob = day_of_week_p0Middle),
-                                           sample(seq(1, 7), n0, replace = T, prob = day_of_week_p0Senior)))
+ifelse(table_target0$Annual_Income_Bucket  == "<60k", sample(seq(1, 7), n0, replace = T, prob = day_of_week_p0Low),
+ifelse(table_target0$Annual_Income_Bucket  == "60k-120k", sample(seq(1, 7), n0, replace = T, prob = day_of_week_p0Middle),
+                                           sample(seq(1, 7), n0, replace = T, prob = day_of_week_p0High)))
 
 
 table_target0$Time_Of_Day <- 
-ifelse(table_target0$Credit_Score == "<350", sample(c("Morning", "Afternoon", "Evening"), n0, replace = T, prob = time_of_day_p0Low),
-ifelse(table_target0$Credit_Score == "350-700", sample(c("Morning", "Afternoon", "Evening"), n0, replace = T, prob = time_of_day_p0Middle),
-                                                sample(c("Morning", "Afternoon", "Evening"), n0, replace = T, prob = time_of_day_p0High)))
+ifelse(table_target0$Age == "Young", sample(c("Morning", "Afternoon", "Evening"), n0, replace = T, prob = time_of_day_p0Young),
+ifelse(table_target0$Age == "Middle Age", sample(c("Morning", "Afternoon", "Evening"), n0, replace = T, prob = time_of_day_p0Middle),
+                                                sample(c("Morning", "Afternoon", "Evening"), n0, replace = T, prob = time_of_day_p0Senior)))
 
 table_target0$Channel <- 
-ifelse(table_target0$Gender  == "M", sample(c("Email", "Cold Calling", "SMS"), n0, replace = T, prob = channel_p0M),
-                                     sample(c("Email", "Cold Calling", "SMS"), n0, replace = T, prob = channel_p0F))
+ifelse(table_target0$Age  == "Young", sample(c("Email", "Cold Calling", "SMS"), n0, replace = T, prob = channel_p0Young),
+ifelse(table_target0$Age  == "Middle Age", sample(c("Email", "Cold Calling", "SMS"), n0, replace = T, prob = channel_p0Middle),
+                                           sample(c("Email", "Cold Calling", "SMS"), n0, replace = T, prob = channel_p0Senior)))  
+
+
 
 ## Sample for Conversion_Flag = 1 
 table_target1 <- table_target[table_target$Conversion_Flag == 1, ]
@@ -227,18 +232,19 @@ table_target1$Campaign_Id <-  sample(seq(2, 6), n1, replace = TRUE)
 
 ### Creating Time_Stamp, Day_Of_Week, Time_Of_Day and Channel by conditional random sampling.
 table_target1$Day_Of_Week <-  
-ifelse(table_target1$Age  == "Young", sample(seq(1, 7), n1, replace = TRUE, prob = day_of_week_p1Young),
-ifelse(table_target1$Age  == "Middle Age", sample(seq(1, 7), n1, replace = TRUE, prob = day_of_week_p1Middle),
-                                           sample(seq(1, 7), n1, replace = TRUE, prob = day_of_week_p1Senior)))
+ifelse(table_target1$Annual_Income_Bucket  == "<60k", sample(seq(1, 7), n1, replace = TRUE, prob = day_of_week_p1Low),
+ifelse(table_target1$Annual_Income_Bucket  == "60k-120k", sample(seq(1, 7), n1, replace = TRUE, prob = day_of_week_p1Middle),
+                                           sample(seq(1, 7), n1, replace = TRUE, prob = day_of_week_p1High)))
 
 table_target1$Time_Of_Day <- 
-ifelse(table_target1$Credit_Score == "<350", sample(c("Morning", "Afternoon", "Evening"), n1, replace = T, prob = time_of_day_p1Low),
-ifelse(table_target1$Credit_Score == "350-700", sample(c("Morning", "Afternoon", "Evening"), n1, replace = T, prob = time_of_day_p1Middle),
-                                                sample(c("Morning", "Afternoon", "Evening"), n1, replace = T, prob = time_of_day_p0High)))
+ifelse(table_target1$Age == "Young", sample(c("Morning", "Afternoon", "Evening"), n1, replace = T, prob = time_of_day_p1Young),
+ifelse(table_target1$Age == "Middle Age", sample(c("Morning", "Afternoon", "Evening"), n1, replace = T, prob = time_of_day_p1Middle),
+                                                sample(c("Morning", "Afternoon", "Evening"), n1, replace = T, prob = time_of_day_p1Senior)))
 
 table_target1$Channel <- 
-ifelse(table_target1$Gender  == "M", sample(c("Email", "Cold Calling", "SMS"), n1, replace = T, prob = channel_p1M),
-                                    sample(c("Email", "Cold Calling", "SMS"), n1, replace = T, prob = channel_p1F))
+ifelse(table_target1$Age  == "Young", sample(c("Email", "Cold Calling", "SMS"), n1, replace = T, prob = channel_p1Young),
+ifelse(table_target1$Age  == "Middle Age", sample(c("Email", "Cold Calling", "SMS"), n1, replace = T, prob = channel_p1Middle),
+                                              sample(c("Email", "Cold Calling", "SMS"), n1, replace = T, prob = channel_p1Senior)))      
 
 # Merge the data sets. 
 table_target <- rbind(table_target0, table_target1)
@@ -248,7 +254,7 @@ Lead_Demography <- table_target[c("Lead_Id", "Age", "Phone_No", "Annual_Income_B
                                   "No_Of_Dependents", "Highest_Education", "Ethnicity", "No_Of_Children", "Household_Size",
                                   "Gender", "Marital_Status" )]
 campaign_table1 <- table_target[c("Lead_Id", "Channel", "Time_Of_Day", "Day_Of_Week", "Campaign_Id", "Conversion_Flag", 
-                                  "Source", "Gender", "Age", "Credit_Score" )]
+                                  "Source", "Annual_Income_Bucket", "Age" )]
 
 ### Creating Time_Stamp.
 campaign_table1$Time_Stamp <-  
@@ -264,7 +270,7 @@ ifelse(campaign_table1$Campaign_Id == 5, format(sample(seq(ISOdate(2014, 9, 27),
 Lead_Demography$No_Of_Children <- ifelse(sample(c(1, 2), no_of_unique_leads,replace = TRUE, prob = c(0.99, 0.01)) == 1, 
                                          Lead_Demography$No_Of_Children, "")
 Lead_Demography$Household_Size <- ifelse(sample(c(1, 2), no_of_unique_leads,replace = TRUE, prob = c(0.99, 0.01)) == 1, 
-                                         Lead_Demography$Household_Size,"")
+                                         Lead_Demography$Household_Size, "")
 Lead_Demography$No_Of_Dependents <- ifelse(sample(c(1, 2), no_of_unique_leads,replace = TRUE, prob = c(0.99, 0.01)) == 1, 
                                          Lead_Demography$No_Of_Dependents, "")
 Lead_Demography$Highest_Education <- ifelse(sample(c(1, 2), no_of_unique_leads,replace = TRUE, prob = c(0.99, 0.01)) == 1, 
@@ -292,20 +298,21 @@ campaign_table2 <- campaign_table1
 campaign_table2$Conversion_Flag <- rep(0, no_of_unique_leads)
 campaign_table2$Campaign_Id <- rep(1, no_of_unique_leads)
 
-campaign_table2$Channel <-  
-ifelse(campaign_table2$Gender  == "M", sample(c("Email", "Cold Calling", "SMS"), no_of_unique_leads, replace = T, prob = channel_p0M),
-                                       sample(c("Email", "Cold Calling", "SMS"), no_of_unique_leads, replace = T, prob = channel_p0F))
+campaign_table2$Channel <- 
+ifelse(campaign_table2$Age  == "Young", sample(c("Email", "Cold Calling", "SMS"), no_of_unique_leads, replace = T, prob = channel_p0Young),
+ifelse(campaign_table2$Age  == "Middle Age", sample(c("Email", "Cold Calling", "SMS"), no_of_unique_leads, replace = T, prob = channel_p0Middle),
+                                             sample(c("Email", "Cold Calling", "SMS"), no_of_unique_leads, replace = T, prob = channel_p0Senior)))  
 
 campaign_table2$Day_Of_Week <- 
-ifelse(campaign_table2$Age  == "Young", sample(seq(1, 7), no_of_unique_leads, replace = T, prob = day_of_week_p0Young),
-ifelse(campaign_table2$Age  == "Middle Age", sample(seq(1, 7), no_of_unique_leads, replace = T, prob = day_of_week_p0Middle),
-                                             sample(seq(1, 7), no_of_unique_leads, replace = T, prob = day_of_week_p0Senior)))
+ifelse(campaign_table2$Annual_Income_Bucket  == "<60k", sample(seq(1, 7), no_of_unique_leads, replace = T, prob = day_of_week_p0Low),
+ifelse(campaign_table2$Annual_Income_Bucket  == "60k-120k", sample(seq(1, 7), no_of_unique_leads, replace = T, prob = day_of_week_p0Middle),
+                                             sample(seq(1, 7), no_of_unique_leads, replace = T, prob = day_of_week_p0High)))
 
 tod_list <- c("Morning", "Afternoon", "Evening")
 campaign_table2$Time_Of_Day <- 
-ifelse(campaign_table2$Credit_Score == "<350", sample(tod_list, no_of_unique_leads, replace = T, prob = time_of_day_p0Low),
-ifelse(campaign_table2$Credit_Score == "350-700", sample(tod_list, no_of_unique_leads, replace = T, prob = time_of_day_p0Middle),
-                                                  sample(tod_list, no_of_unique_leads, replace = T, prob = time_of_day_p0High)))
+ifelse(campaign_table2$Age == "Young", sample(tod_list, no_of_unique_leads, replace = T, prob = time_of_day_p0Young),
+ifelse(campaign_table2$Age == "Middle Age", sample(tod_list, no_of_unique_leads, replace = T, prob = time_of_day_p0Middle),
+                                                  sample(tod_list, no_of_unique_leads, replace = T, prob = time_of_day_p0Senior)))
 
 campaign_table2$Time_Stamp <-  
 format(sample(seq(ISOdate(2014, 1, 1), ISOdate(2014, 3, 20), by="day"), no_of_unique_leads, replace=T), "%D")
@@ -325,19 +332,19 @@ campaign_table3$Campaign_Id <-
 
 
 campaign_table3$Channel <- 
-ifelse(campaign_table3$Gender  == "M", sample(c("Email", "Cold Calling", "SMS"), n3, replace = TRUE, prob = channel_p0M),
-                                       sample(c("Email", "Cold Calling", "SMS"), n3, replace = TRUE, prob = channel_p0F))
+  ifelse(campaign_table3$Age  == "Young", sample(c("Email", "Cold Calling", "SMS"), n3, replace = T, prob = channel_p0Young),
+         ifelse(campaign_table3$Age  == "Middle Age", sample(c("Email", "Cold Calling", "SMS"), n3, replace = T, prob = channel_p0Middle),
+                sample(c("Email", "Cold Calling", "SMS"), n3, replace = T, prob = channel_p0Senior)))
 
 campaign_table3$Day_Of_Week <- 
-ifelse(campaign_table3$Age  == "Young", sample(seq(1, 7), n3, replace = TRUE, prob = day_of_week_p0Young),
-ifelse(campaign_table3$Age  == "Middle Age", sample(seq(1, 7), n3, replace = TRUE, prob = day_of_week_p0Middle),
-                                             sample(seq(1, 7), n3, replace = TRUE, prob = day_of_week_p0Senior)))
+ifelse(campaign_table3$Annual_Income_Bucket  == "<60k", sample(seq(1, 7), n3, replace = TRUE, prob = day_of_week_p0Low),
+ifelse(campaign_table3$Annual_Income_Bucket  == "60k-120k", sample(seq(1, 7), n3, replace = TRUE, prob = day_of_week_p0Middle),
+                                             sample(seq(1, 7), n3, replace = TRUE, prob = day_of_week_p0High)))
 
 campaign_table3$Time_Of_Day <- 
-ifelse(campaign_table3$Credit_Score  == "<350", sample(tod_list, n3, replace = TRUE, prob = time_of_day_p0Low),
-ifelse(campaign_table3$Credit_Score  ==  "350-700", sample(tod_list, n3, replace = TRUE, prob = time_of_day_p0Middle),
-                                                    sample(tod_list, n3, replace = TRUE, prob = time_of_day_p0High)))
-
+ifelse(campaign_table3$Age  == "Young", sample(tod_list, n3, replace = TRUE, prob = time_of_day_p0Young),
+ifelse(campaign_table3$Age  ==  "Middle Age", sample(tod_list, n3, replace = TRUE, prob = time_of_day_p0Middle),
+                                                    sample(tod_list, n3, replace = TRUE, prob = time_of_day_p0Senior)))
 
 campaign_table3$Time_Stamp <-  
 ifelse(campaign_table3$Campaign_Id == 1, format(sample(seq(ISOdate(2014, 1, 1), ISOdate(2014, 3, 20), by = "day"), n3, replace = T),"%D"), 
@@ -356,9 +363,8 @@ rm(campaign_table2)
 rm(campaign_table3)
 
 # Remove unnecessary variables.
-Market_Touchdown$Gender <- NULL
 Market_Touchdown$Age <- NULL
-Market_Touchdown$Credit_Score <- NULL
+Market_Touchdown$Annual_Income_Bucket <- NULL
 
 # Add a counter, Comm_Id, that gives an ID to every communication made during the campaign for a given Lead_Id. 
 Market_Touchdown <- data.table(Market_Touchdown)
