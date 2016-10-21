@@ -49,18 +49,20 @@ if (model_name == "RF") {
 	# Train the Random Forest.
 	model <- rxDForest(formula = formula,
 	 			     data = trainDS,
-				     nTree = 40, 
-				     cp = 0.05,
+				     nTree = 40,
+ 				     minBucket = 5,
+				     minSplit = 10
+				     cp = 0.00005,
 				     seed = 5, 
 				     importance = TRUE)
 } else {
 	# Train the GBT.
 	model <- rxBTrees(formula = formula,
 				    data = trainDS,
-				    learningRate = 0.0005,
-				    minSplit = 100,
-				    minBucket = 33,
-				    cp = 0.05,
+				    learningRate = 0.05,				    
+				    minBucket = 5,
+				    minSplit = 10,
+				    cp = 0.0005,
 				    nTree = 40,
 				    seed = 5,
 				    lossFunction = "multinomial")
