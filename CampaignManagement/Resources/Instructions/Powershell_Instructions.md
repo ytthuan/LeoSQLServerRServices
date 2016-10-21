@@ -6,7 +6,7 @@ Execution with PowerShell</h1>
 Running these PowerShell scripts performs the automated version of the solution – dataset creation, modeling, and scoring as described  [here](../data-scientist.md).
 
 
-Make sure you have set up your SQL Server and ODBC connection between SQL and PowerBI by following the instructions in <a href="START_HERE.md">START HERE</a>.  Then proceed with the steps below to run the solution template using the automated PowerShell files. 
+Make sure you have set up your SQL Server by following the instructions in <a href="START_HERE.md">START HERE</a>.  Then proceed with the steps below to run the solution template using the automated PowerShell files. 
 
 
 Running this PowerShell script will create stored procedures for the the operationalization of this solution.  It will also execute these procedures to create full database with results of the steps  – dataset creation, modeling, and scoring as described  [here](../data-scientist.md).
