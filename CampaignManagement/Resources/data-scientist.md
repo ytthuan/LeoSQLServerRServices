@@ -8,7 +8,7 @@ This solution packet shows how to create and refine data, train R models, and pe
 
 Data scientists who are testing and developing solutions can work from the convenience of their R IDE on their client machine, while <a href="https://msdn.microsoft.com/en-us/library/mt604885.aspx" target="_blank">pushing the compute to the SQL Server machine</a>.  They can then deploy the completed solutions to SQL Server 2016 by embedding calls to R in stored procedures. These solutions can then be further automated by the use of SQL Server Integration Services and SQL Server agent.
 
-This solution packet includes the R code a data scientist would develop in the **R** folder.  It shows the stored procedures (.sql files) that can be deployed in the **SQLR** folder.  Finally, there are four PowerShell scripts (.ps1 files) that automate the running of the SQL code.
+This solution packet includes the R code a data scientist would develop in the **R** folder.  It then incorporates this R code in  stored procedures (.sql files) that can be found in the **SQLR** folder.  Finally, there is a PowerShell script (.ps1 file) that automates the running of the SQL/R code.
  
 To try this out yourself: 
 * Download this template by navigating to the top folder in this repository and using the **Clone or Download** button.
@@ -19,32 +19,36 @@ If you need a trial version of SQL Server 2016, see [What's New in SQL Server 20
 
 The rest of this page describes what happens in each of the steps: dataset creation, model development, scoring, and deployment in more detail.
 
-##  Analytical Dataset Creation
+##  Analytical Dataset Preprocessing and Feature Engineering
 
 This templage simulates input data and performs preprocessing and feature engineering to create the analytical dataset. 
 
 The R code to perform these steps can be run from an R client with the following scripts:
 
-* **step1_input_data.R**:  Simulates the 4 input datasets.
+### step1_data_processing.R
 
-* **step2_data_preprocessing.R**: Performs preprocessing steps like outlier treatment and missing value treatment on the input dataset.
+This script creates the database tables and performs missing value and outlier treatment on the lead demography and market touchdown tables. Both these updated tables are then exported back to SQL Server 
+1.	Market Touchdown: The Communication latency variable in this table was created to have outliers. The lower extremes are replaced with the difference of Mean and Standard Deviation. The higher extremes are replaced with the sum of Mean and two Standard Deviations
+2.	Lead Demography: The missing values in variables like number of children/dependents, highest education & household size are replaced with the Mode value
 
-* **step3_feature_engineering_AD_creation.R**:  Performs Feature Engineering and creates the Analytical Dataset.  Features are created by aggregating historical data to find number of contacts for each channel as well as last and next to last channel in which contact was made (Sms\_Count, Email\_Count, Call\_Count, Last\_Channel, Second\_Last\_Channel).
+##E step2_feature_engineering.R
+
+This script performs feature engineering on the Market Touchdown table and then merges to generate the Analytical Dataset. Finally, the analytical dataset along with training and test datasets are exported to SQL Server.
+1.	Market Touchdown: The table is aggregated at a lead level, so variables like channel which will have more than one value for each user are pivoted and aggregated to from variables like SMS count, Email count, Call Count, Last Communication Channel, Second Last Communication Channel etc.
+2.	Analytical Dataset: Analytical Dataset: The latest version of all the 4 input datasets are merged together to create the analytical dataset. The analytical dataset is further split into train and test datasets. Some temporary tables are created which will later be overwritten with model variables in step_4.
+
 
 The R scripts were originally developed and executed in an R IDE. Once complete, the R code was operationalized in .sql files to be executed through T-SQL.   The diagram below shows the .sql files used to perform these actions, incorporating the code from the R scripts above. 
-
-Finally, the **Analytical Dataset Creation.ps1** script was developed be used to automate the the execution of these .sql files.  
- 
-![Data Creation](Images/datacreate.png?raw=true)
 
 
 
 ## Model Development
 Two models, Random Forest and Gradient Boosting are developed to model Campaign Responses.  The R code to develop these models is included in the **step4_model_rf_gbm.R script**.
 
-This R code is incorporated into following .sql files, automated in the **Model Development.ps1** script.
+## step3_training_evaluation.R
 
-![Model Development](Images/model.png?raw=true)
+In this step, two models are built using 2 statistical techniques on the training Dataset. Once the models are trained, AUC of both the models are calculated using the test dataset. The model with the best AUC is selected as the champion model.
+
 
 
 
@@ -52,10 +56,9 @@ This R code is incorporated into following .sql files, automated in the **Model 
 
 The models are compared and the champion model is used for scoring.  The prediction results from the scoring step are the recommendations for contact for the campaigns - when and how to contact each lead for the optimal predicted response rate.
 
-The R code for this step is also included in the **step4_model_rf_gbm.R script**.
+## step4_campaign_recommendations.R
 
-The .sql files using this code are present in **step6_models_comparision.sql** which was included in the **Model Development.ps1** script, while the 
-scoring is accomplished in the <b>step7\*.sql</b> files, automated by **Scoring.ps1**.
+This script scores 63 combinations for each lead: 7 Days x 3 Times x 3 Channels = 63.  Each combination is scored with the best model and the combo with the highest conversion probability is used as the recommendation for that lead.  Results from this step are stored in the **Recommendations** database table. 
 
 ![Scoring](Images/model_score.png?raw=true)
 

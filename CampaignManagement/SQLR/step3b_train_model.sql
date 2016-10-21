@@ -51,7 +51,7 @@ if (model_name == "RF") {
 	 			     data = trainDS,
 				     nTree = 40,
  				     minBucket = 5,
-				     minSplit = 10
+				     minSplit = 10,
 				     cp = 0.00005,
 				     seed = 5, 
 				     importance = TRUE)

@@ -1,5 +1,5 @@
 <img src="../Images/management.png" align="right">
-<h1>Campaign Management:
+<h1>Campaign Optimization:
 Execution with SQLR Scripts</h1>
 
 Make sure you have set up your SQL Server and ODBC connection between SQL and PowerBI by following the instructions in <a href="START_HERE.md">START HERE</a>.  Then proceed with the steps below to run the solution template using the automated PowerShell files. 
@@ -16,7 +16,7 @@ Login to SSMS using the credential created in [START HERE](START_HERE.md).
 The first step we need to do is import the raw datasets into the SQL Server. In this solution we will use a PowerShell window to import the raw datasets into SQL Server.  
  
 
-1.	Click on the windows key on your keyboard. Type the words `PowerShell` and open the Windows PowerShell.
+1.	Click on the windows key on your keyboard. Type the words `PowerShell`.  Right click on Windows Powershell to and select `Run as administrator` to open the PowerShell window.
 
 
 2.	In the Powershell command window, type the following command:
@@ -27,11 +27,11 @@ Answer `y` to the prompt to allow the following scripts to execute.
 
 3.  Now CD to the **SQLR** directory and run the following command, inserting your server name (or "." if you are on the same machine as the SQL server)
 ```
-.\Campaign_Management.ps1 -ServerName "Server Name" -DBName "Campaign_Management"
+.\Campaign_Management.ps1 -ServerName "Server Name" -DBName "Campaign"
 ```
 4.  Answer the prompts...**MORE HERE WALK THROUGH EACH PROMPT**
 
-22.	Once the PowerShell script has run, log into the SQL Server to view all the datasets that have been created in the `CampaignManagement` database.  Hit `Refresh` if necessary.
+22.	Once the PowerShell script has completed, log into the SQL Server to view all the datasets that have been created in the `CampaignManagement` database.  Hit `Refresh` if necessary.
  <br/>
  <img src="../Images/alltables.png" width="30%">
 

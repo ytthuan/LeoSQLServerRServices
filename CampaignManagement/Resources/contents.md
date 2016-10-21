@@ -1,5 +1,5 @@
 <img src="Images/management.png" align="right">
-# Campaign Management Template with SQL Server 2016 R Services – Template Contents
+# Campaign Optimization Template with SQL Server 2016 R Services – Template Contents
 
 The following is the directory structure for this template:
 

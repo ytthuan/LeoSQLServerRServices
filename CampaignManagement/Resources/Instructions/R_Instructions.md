@@ -1,5 +1,5 @@
 <img src="../Images/management.png" align="right">
-<h1>Campaign Management:
+<h1>Campaign Optimization:
 Execution with R Scripts</h1>
 
 Make sure you have set up your SQL Server and ODBC connection between SQL and PowerBI by following the instructions in <a href="START_HERE.md">START HERE</a>.  Then proceed with the steps below to run the solution template using the R script files. 
@@ -40,14 +40,13 @@ The R code shown here was then incorporated into the [.sql files](../../SQLR/rea
         ,[Sms_Count]
         ,[Email_Count]
         ,[Call_Count]
-        ,[Last_Channel]
-        ,[Second_Last_Channel]
-    FROM [CampaignManagement].[dbo].[market_touchdown_agg]
+        ,[Previous_Channel]
+    FROM [Campaign].[dbo].[CM_AD]
     ```
 
     d.	**step3_training_evaluation.R**:  Builds the Random Forest & Gradient Boosting models and identifies the champion model. Displays an ROC curve and confusion matrix for each model.  
 
-    e.   **step4_campaign_recommendations.R**: Creates 63 combinations for each lead: 7 Days x 3 Times x 3 Channels = 63.  Each combination is scored with the best model and the combo with the highest conversion probability is used as the recommendation for that lead.  Results from this step are stored in the **Recommendations** database table.  This script will take somewhere between 7-8 minutes with the default 100K leads.  
+    e.   **step4_campaign_recommendations.R**: Creates 63 combinations for each lead: 7 Days x 3 Times x 3 Channels = 63.  Each combination is scored with the best model and the combo with the highest conversion probability is used as the recommendation for that lead.  Results from this step are stored in the **Recommendations** database table.  This script may take some time to complete, depending on your machine resources.
 
 6.	Run each script in order.  Note some may take some time to finish.  You’ll know they are done when you put cursor in the Console area (labeled “R Interactive” in RTVS)  and it is no longer spinning.  Also when done you’ll see the command prompt “>” ready for the next interactive command. 
 <br/>
@@ -70,7 +69,5 @@ Now proceed to <a href="Visualize_Results.md">Visualizing Results with PowerBI</
 You have just completed a step-through of the  process from the perspective of a data scientist writing in R.
 
 You may also want to try out the fully automated solution that simulates the data, trains and scores the models by executing PowerShell scripts. This is the fastest way to deploy. See [PowerShell Instructions](Powershell_Instructions.md) for this deployment.
-
-Finally, we have also prepared a version that steps through the process using T-SQL commands. To do so, follow the [SQLR Instructions](SQLR_Instructions.md).
 	
-While we show all three paths in this solution package as full alternatives, we expect that a more typical scenario would be for a data scientist to perform data exploration and predictive modeling in R followed by scoring in production using T-SQL. 
+While we show multiple paths in this solution package as full alternatives, we expect that a more typical scenario would be for a data scientist to perform data exploration and predictive modeling in R followed by scoring in production using T-SQL.  See [Typical Workflow](Typical_Workflow.md) for more details.

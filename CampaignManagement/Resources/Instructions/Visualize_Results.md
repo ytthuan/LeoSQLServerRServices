@@ -1,10 +1,12 @@
 <img src="../Images/management.png" align="right">
-<h1>Campaign Management:
+<h1>Campaign Optimization:
 Visualizing Results with PowerBI
 </h1>
 
-Steps 1-9 only need to be performed once, across all solution paths (running from R, from SQLR, or Powershell scripts). After you’ve performed this once, you can simply <a href="#step10">
-skip to step 10</a> to see new results after any new model scoring.   
+Steps 1-10 only need to be performed once, across all solution paths (running from R, from SQLR, or Powershell scripts). After you’ve performed this once, you can simply <a href="#laststep">
+skip to step 11</a> to see new results after any new model scoring. 
+
+1.  Set up Connection between SQL Server and PowerBI  using [these instructions](ODBC.md).
 
 1.	Open the CampaignManagementDashboard.pbix file in the Campaign Management folder and click on Get Data and select ‘More...’
 The PowerBI dashboard will show charts built from cached data. We need to set it up to use the latest available scored dataset in the SQL Server.
@@ -47,12 +49,11 @@ The PowerBI dashboard will show charts built from cached data. We need to set it
  <br/>
  <img src="../Images/vis9.png" width="75%" >
 
- <a name="step10" id="step10"></a>
+ <a name="laststep" id="laststep"></a>
 
 10.	Press `Refresh`. This should refresh the back end data of the dashboard and refresh the visuals.  You are now viewing data from your SQL Database, rather than the imported data that was part of the initial solution package.  Updates from the SQL Database will be reflected each time you hit `Refresh`
  <br/>
  <img src="../Images/vis10.png" width="75%" >
 
-The visuals in the dashboard might not make much sense if you built the model on 10,000 leads. Re-do the entire process but this time keep the number of leads at 100,000 or 1,000,000. Also change the nTree values back to 500. (Find these settings in [Data Setup](Data_Setup.md).  This will build a better model and in-turn a better dashboard.
 
 [&lt; Back to ReadMe](../../readme.md)

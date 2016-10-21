@@ -1,5 +1,5 @@
 <img src="../Images/management.png" align="right">
-<h1>Campaign Management:
+<h1>Campaign Optimization:
 Typical Workflow Walkthrough</h1>
 
 To demonstrate a typical workflow, we'll introduce you to a few personas.  You can follow along by performing the same steps for each persona.  
@@ -10,7 +10,7 @@ NOTE: If you’re just interested in the outcomes of this process we have also c
 
 Let me introduce you to  Danny, the DB Admin. It is Danny's job to configure and maintain the SQL Server that stores all the historical data about campaigns at our insurance company.  
 
-Danny was responsible for installing and configuring the SQL Server, as well as configuring the ODBC connection between SQL and PowerBI.  You can perform these steps by using the instructions in <a href="START_HERE.md">START HERE</a>. 
+Danny was responsible for installing and configuring the SQL Server.  You can perform these steps by using the instructions in <a href="START_HERE.md">START HERE</a>. 
 
 ## Data Prep and Modeling with Debra the Data Scientist
 
@@ -53,9 +53,8 @@ Now that Debra's environment is set up, she  opens her IDE and performs the foll
     ,[Sms_Count]
     ,[Email_Count]
     ,[Call_Count]
-    ,[Last_Channel]
-    ,[Second_Last_Channel]
-  FROM [CampaignManagement].[dbo].[market_touchdown_agg]
+    ,[Previous_Channel]
+  FROM [Campaign].[dbo].[CM_AD]
   ```
 
 5.  Now she is ready for training the models.  She creates and executes the script you can find in **step3_training_evaluation.R**. Again, remember to replace the `connection_string` value with your information at the top of the file before you run this yourself.)  
@@ -75,9 +74,8 @@ Debra has completed her tasks.  She has connected to the SQL database, executed 
 
 While this task is complete for the current set of leads, our company will want to perform these actions for each new campaign that they deploy.  Instead of going back to Debra each time, Danny can operationalize the code in TSQL files which he can then run himself each month for the newest campaign rollouts.
 
-Debra hands over her scripts to Danny who adds the code to the files you can see in the **CampaignManagement\\SQL** directory. He'll test out the start to finish set of TSQL code by running them - you can do this yourself by following the directions in the [SQLR Instructions](SQLR_Instructions.md).  (This is an alternate way to create the same set of tables and models as the above R scripts.)
-
-Finally, Danny may want to automate the process even more by developing the PowerShell scripts to invoke the TSQL files.  You can find this script in the **CampaignManagement\\SQL** directory, and execute it yourself by following the [PowerShell Instructions](Powershell_Instructions.md).  As noted earlier, this is the fastest way to execute all the code included in this solution.  (This is the third way to create the same set of tables and models as the above R scripts.)
+Debra hands over her scripts to Danny who adds the code to the files you can see in the **CampaignManagement\\SQL** directory. 
+Finally, Danny will automate the process or running this code by developing the PowerShell script to invoke the TSQL files.  You can find this script in the **CampaignManagement\\SQL** directory, and execute it yourself by following the [PowerShell Instructions](Powershell_Instructions.md).  As noted earlier, this is the fastest way to execute all the code included in this solution.  (This is the third way to create the same set of tables and models as the above R scripts.)
 
 A summary of this process and all the files involved is described in more detail [here](../data-scientist.md).
 
