@@ -84,7 +84,7 @@ AD_full_merged_sql <- RxSqlServerData(
               FROM (
                     SELECT Lead_Id, Age, Annual_Income_Bucket, Credit_Score, State,No_Of_Dependents, Highest_Education, Ethnicity,
                     No_Of_Children, Household_Size, Gender, Marital_Status, Campaign_Id, Product_Id, Product, Term,
-                    No_Of_People_Covered, Premium, Payment_Frequency, Amt_On_Maturity_Bin, Sub_Category,Campaign_Drivers,
+                    No_of_people_covered, Premium, Payment_frequency, Amt_on_Maturity_Bin, Sub_Category,Campaign_Drivers,
                     Campaign_Name, Call_For_Action, Tenure_Of_Campaign,Net_Amt_Insured, SMS_Count, Email_Count,  Call_Count, 
                     Previous_Channel, Conversion_Flag
                     FROM CM_AD) a,

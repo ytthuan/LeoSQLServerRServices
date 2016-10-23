@@ -90,11 +90,11 @@ table_target$Conversion_Flag <- sample(c(0,1), no_of_unique_leads, replace = TRU
 
 ## Probabilities for Labels 0 and 1
 age_list <- c("Young","Middle Age","Senior Citizen")
-age_p0 <- c(0.45, 0.25, 0.3)
-age_p1 <- c(0.25, 0.5, 0.25)
+age_p0 <- c(0.33, 0.33, 0.34)
+age_p1 <- c(0.33, 0.33, 0.34)
 annual_income_bucket_list <- c("<60k", "60k-120k", ">120k")  
-annual_income_bucket_p0 <- c(0.6, 0.2, 0.2) 
-annual_income_bucket_p1 <- c(0.2, 0.5, 0.3)  
+annual_income_bucket_p0 <- c(0.33, 0.33, 0.34)
+annual_income_bucket_p1 <- c(0.33, 0.33, 0.34)  
 credit_score_list <- c("<350", "350-700", ">700")  
 credit_score_p0 <- c(0.5, 0.2, 0.3) 
 credit_score_p1 <- c(0.2, 0.6, 0.2) 
@@ -130,33 +130,33 @@ source_p1<- c(1/3, 1/3, 1/3)
 
 ## Condition Day_Of_Week on Annual_Income_Bucket and Conversion_Flag
 day_of_week_list <- seq(1, 7)
-day_of_week_p0Low <- c(0.10, 0.40, 0.30, 0.05, 0.05, 0.05, 0.05)
-day_of_week_p0Middle <- c(0.20, 0.1, 0.1, 0.10, 0.10, 0.20, 0.20)
-day_of_week_p0High <- c(0.25, 0.15, 0.05, 0.15, 0.10, 0.15, 0.15)
+day_of_week_p0Low <- c(0.03, 0.02, 0.03, 0.05, 0.30, 0.29, 0.29)
+day_of_week_p0Middle <- c(0.1, 0.16, 0.1, 0.1, 0.10, 0.17, 0.27)
+day_of_week_p0High <- c(0.5, 0.15, 0.20, 0.1, 0.03, 0.01, 0.01)
 
-day_of_week_p1Low <- c(0.09, 0.30, 0.2, 0.25, 0.1, 0.03, 0.03)
-day_of_week_p1Middle <- c(0.05, 0.15, 0.30, 0.35, 0.05, 0.05, 0.05)
-day_of_week_p1High <- c(0.10, 0.2, 0.1, 0.12, 0.05, 0.21, 0.22)
+day_of_week_p1Low <- c(0.20, 0.30, 0.2, 0.14, 0.1, 0.03, 0.03)
+day_of_week_p1Middle <- c(0.05, 0.15, 0.30, 0.30, 0.1, 0.05, 0.05)
+day_of_week_p1High <- c(0.10, 0.1, 0.1, 0.12, 0.15, 0.21, 0.22)
 
 ## Condition Time_Of_Day on Age and Conversion_Flag.
 time_of_day_list <- c("Morning", "Afternoon", "Evening")
-time_of_day_p0Young <- c(0.8, 0.1, 0.1)
-time_of_day_p0Middle <- c(0.2, 0.3, 0.5)
-time_of_day_p0Senior <- c(0.1, 0.3, 0.6)
+time_of_day_p0Young <- c(0.5, 0.25, 0.25)
+time_of_day_p0Middle <- c(0.33, 0.33, 0.34)
+time_of_day_p0Senior <- c(0.2, 0.4, 0.4)
 
-time_of_day_p1Young <- c(0.1, 0.2, 0.7)
+time_of_day_p1Young <- c(0.2, 0.25, 0.55)
 time_of_day_p1Middle <- c(0.33, 0.33, 0.34)
-time_of_day_p1Senior <- c(0.5, 0.1, 0.4)
+time_of_day_p1Senior <- c(0.62, 0.2, 0.18)
 
 ## Condition Channel on Age and Conversion_Flag.
 channel_list <- c("Email", "Cold Calling", "SMS")
-channel_p0Young <- c(0.60, 0.10, 0.30)
-channel_p0Middle <- c(0.20, 0.60, 0.20)
-channel_p0Senior <- c(0.30, 0.50, 0.20)
+channel_p0Young <- c(0.15, 0.60, 0.25)
+channel_p0Middle <- c(0.40, 0.2, 0.40)
+channel_p0Senior <- c(0.25, 0.15, 0.60)
 
-channel_p1Young <- c(0.40, 0.10, 0.50)
-channel_p1Middle <- c(0.20, 0.40, 0.40)
-channel_p1Senior <- c(0.30, 0.65, 0.05)
+channel_p1Young <- c(0.30, 0.1, 0.60)
+channel_p1Middle <- c(0.30, 0.55, 0.15)
+channel_p1Senior <- c(0.33, 0.45, 0.22)
 
 ## Sample for Conversion_Flag = 0 
 table_target0 <- table_target[table_target$Conversion_Flag == 0, ]
