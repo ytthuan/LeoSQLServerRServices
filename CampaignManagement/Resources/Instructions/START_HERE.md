@@ -1,6 +1,6 @@
 <img src="../Images/management.png" align="right">
 <h1>Campaign Optimization:
-START HERE: Setup </h1>
+START HERE: Setup SQL Server 2016 </h1>
 
 <h2>Prepare your SQL Server 2016 Installation</h2>
 Complete the steps in the Set up SQL Server R Services (In-Database) Instructions. The set up instructions file can found at  <a href="https://msdn.microsoft.com/en-us/library/mt696069.aspx" target="_blank"> https://msdn.microsoft.com/en-us/library/mt696069.aspx</a>
