@@ -22,7 +22,7 @@ A high level description of this solution is [described here](Resources/business
 This template showcases the use of Random Forest and Gradient Boosting to model for Campaign Responses. Data Scientists can follow the steps of data creation, model development, scoring and deployment.  The final deployed recommendations will then be visualized in PowerBI. [See more details and explanations of all the files involved in this solution.](Resources/data-scientist.md).
 
 ## Typical Workflow
-[This guide](Resource/Instructions/Typical_Workflow.md) describes the roles of multiple personas involved in creating, deploying, and consuming this solution.
+[This guide](Resources/Instructions/Typical_Workflow.md) describes the roles of multiple personas involved in creating, deploying, and consuming this solution.
 
 ## Quick Start
 If you’re just interested in creating this solution on your computer, use this fully automated solution that uploads the data to your SQL Server, preprocesses data, performs feature engineering, trains and scores the models by executing a PowerShell script. This is the fastest way to deploy the entire solution. See [PowerShell Instructions](Resources/Instructions/Powershell_Instructions.md) for this deployment.
