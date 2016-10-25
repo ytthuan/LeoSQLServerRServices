@@ -18,11 +18,11 @@ The PowerBI dashboard will show charts built from cached data. We need to set it
  <img src="../Images/vis2.png" width="75%" >
 
 
-3.	Under Data Source Name Enter ‘CampaignManagement’ and click ‘Ok’
+3.	Under Data Source Name Enter ‘Campaign’ and click ‘Ok’
  <br/>
  <img src="../Images/vis3.png" width="75%" >
 
-4.	Navigate to CampaignManagement >  dbo and check Lead Scored Dataset. Click ‘Load’
+4.	Navigate to Campaign >  dbo and check Recommendations. Click ‘Load’
  <br/>
  <img src="../Images/vis4.png" width="75%" >
 
