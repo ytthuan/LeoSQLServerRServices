@@ -30,7 +30,7 @@ Now that Debra's environment is set up, she  opens her IDE and performs the foll
 3.  If you are following along, you will need to replace the connection string at the top of each file with details of your login and database name in each file.  For example:
    
     ```
-    connection_string <- "Driver=SQL Server;Server=myServerName;Database=Campaign_Management;UID=rdemo;PWD=D@tascience"
+    connection_string <- "Driver=SQL Server;Server=myServerName;Database=Campaign;UID=rdemo;PWD=D@tascience"
     ```
 
     *Make sure not to add spaces around the "=" in the connection string - it will not work correctly when spaces are present*

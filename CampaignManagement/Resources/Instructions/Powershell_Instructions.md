@@ -3,7 +3,7 @@
 Execution with PowerShell</h1>
 
 
-Run these PowerShell scripts to perform the automated version of the solution – dataset creation, modeling, and scoring as described  [here](../data-scientist.md).
+Run this PowerShell script to perform the automated version of the solution – dataset creation, modeling, and scoring as described  [here](../data-scientist.md).
 
 
 Make sure you have set up your SQL Server by following the instructions in <a href="START_HERE.md">START HERE</a>.  Then proceed with the steps below to run the solution template using the automated PowerShell files. Run this on the machine where SQL Server 2016 is installed.
@@ -40,7 +40,7 @@ Running this PowerShell script will create stored procedures for the the operati
 
 ## Review Data
 
-Once the PowerShell script has completed successfully, log into the SQL Server Management Studio to view all the datasets that have been created in the `Campaign` database.  You can do this either on the SQL Server machine or another computer containing y Data Science environmen.
+Once the PowerShell script has completed successfully, log into the SQL Server Management Studio to view all the datasets that have been created in the `Campaign` database.  
 Hit `Refresh` if necessary.
 <br/>
 <img src="../Images/alltables.png" width="30%">
