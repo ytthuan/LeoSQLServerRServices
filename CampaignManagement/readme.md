@@ -19,7 +19,7 @@ A high level description of this solution is [described here](Resources/business
 
 ## For the Data Scientist 
 
-This template showcases the use of Random Forest and Gradient Boosting to model for Campaign Responses. Data Scientists can follow the steps of data creation, model development, scoring and deployment.  The final deployed recommendations will then be visualized in PowerBI. [See more details and explanations of all the files involved in this solution.](data-scientist.md).
+This template showcases the use of Random Forest and Gradient Boosting to model for Campaign Responses. Data Scientists can follow the steps of data creation, model development, scoring and deployment.  The final deployed recommendations will then be visualized in PowerBI. [See more details and explanations of all the files involved in this solution.](Resources/data-scientist.md).
 
 ## Typical Workflow
 [This guide](Resource/Instructions/Typical_Workflow.md) describes the roles of multiple personas involved in creating, deploying, and consuming this solution.
