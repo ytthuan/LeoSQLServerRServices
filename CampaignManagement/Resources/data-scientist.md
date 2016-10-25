@@ -49,7 +49,7 @@ Two models, Random Forest and Gradient Boosting are developed to model Campaign 
 
 In this step, two models are built using 2 statistical techniques on the training Dataset. Once the models are trained, AUC of both the models are calculated using the test dataset. The model with the best AUC is selected as the champion model.
 
-
+![Training / Testing ](Images/model.png?raw=true)
 
 
 ##  Scoring
