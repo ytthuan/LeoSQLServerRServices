@@ -34,24 +34,8 @@ To run the scripts, it requires the following:
 
 ### Workflow Automation
 -------------------
-Run the following to allow access to the PowerShell script:
-
- ```
- Set-ExecutionPolicy Unrestricted -Scope Process
- ```
-
-We provide a Windows PowerShell script to demonstrate the end-to-end workflow. To learn how to run the script, open a PowerShell command prompt, navigate to the directory storing the PowerShell script and type:
+Follow the [PowerShell instructions](../Resources/Instructions/Powershell_instructions.md) to execute all the scripts described below.
  
- ```
- Get-Help .\SQLR-Campaign_Management.ps1
- ```
-
-To invoke the PowerShell script, type:
-
- ```
- .\Campaign_Management.ps1 -ServerName "Server Name" -DBName "Campaign"
- ```                
-You can choose whether to execute each step or not.
 
 ### Step 0: Creating Tables
 

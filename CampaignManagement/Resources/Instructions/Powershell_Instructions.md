@@ -9,23 +9,33 @@ Run these PowerShell scripts to perform the automated version of the solution �
 Make sure you have set up your SQL Server by following the instructions in <a href="START_HERE.md">START HERE</a>.  Then proceed with the steps below to run the solution template using the automated PowerShell files. Run this on the machine where SQL Server 2016 is installed.
 
 
-Running this PowerShell script will create stored procedures for the the operationalization of this solution.  It will also execute these procedures to create full database with results of the steps  – dataset creation, modeling, and scoring as described  [here](../data-scientist.md).
+Running this PowerShell script will create stored procedures for the the operationalization of this solution.  It will also execute these procedures to create full database with results of the steps  – dataset creation, modeling, and scoring as described  [here](../../SQLR/README.md).
+
 
 
 1.	Click on the windows key on your keyboard. Type the words `PowerShell`.  Right click on Windows Powershell to and select `Run as administrator` to open the PowerShell window.
 
 
 2.	In the Powershell command window, type the following command:
- ```
- Set-ExecutionPolicy Unrestricted -Scope Process
- ```
-Answer `y` to the prompt to allow the following scripts to execute.
+  
+    ```
+    Set-ExecutionPolicy Unrestricted -Scope Process
+    ```
 
-3.  Now CD to the **SQLR** directory and run the following command, inserting your server name (or "." if you are on the same machine as the SQL server)
+    Answer `y` to the prompt to allow the following scripts to execute.
+
+3. Create a directory on your computer where you will put this solution.  CD to the directory and then clone the repository into it:
+    
+    ```
+    git clone https://github.com/Microsoft/SQL-Server-R-Services-Samples.git
+    ```
+
+4.  Now CD to the **CampaignManagement/SQLR** directory and run the following command, inserting your server name (or "." if you are on the same machine as the SQL server)
+    
     ```
     .\Campaign_Management.ps1 -ServerName "Server Name" -DBName "Campaign"
     ```
-4.  Answer the prompts...**MORE HERE WALK THROUGH EACH PROMPT**  for now, say Y each time, use .7 as the split ratio.  *Will beef this up before finalizing it.!*
+5.  Answer the prompts.  The first time through, do not skip any steps.  (If you exit before completing all steps, the next time through you may skip the steps that have already been completed.)  
 
 
 ## Review Data
