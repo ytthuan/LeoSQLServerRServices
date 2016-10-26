@@ -19,11 +19,13 @@ The R code shown here was then incorporated into the [.sql files](../../SQLR/rea
 
 3.  Open the five files in the R directory into your IDE configured with R Client.
 
+3.  In SSMS, create the databae table you wish to use if it does not yet exist.
+
 4.	Replace the connection string at the top of each file with details of your login and database name in each of the four files.  For example:
  <br/>
  <img src="../Images/r2.png">
  
- Note: You can use “.” for the server name as shown here if using a local SQL Server (on the same machine as your code). Also note that there can be NO SPACES between the "=" in the connection string.  That is  "Database=Campaign_Management" will work while " Database = Campaign_Management" will give an error!  
+ Note: You can use “.” for the server name as shown here if using a local SQL Server (on the same machine as your code). Also note that there can be NO SPACES between the "=" in the connection string.  That is  "Database=Campaign" will work while " Database = Campaign" will give an error!  
 
 5.	The scripts perform the following actions:
 
@@ -56,7 +58,7 @@ The R code shown here was then incorporated into the [.sql files](../../SQLR/rea
  <br/>
  <img src="../Images/r5.png" width="30%">
 
-7.	When you have finished with all  scripts, log into the SQL Server to view all the datasets that have been created in the `CampaignManagement` database.  Hit `Refresh` if necessary.
+7.	When you have finished with all  scripts, log into the SQL Server to view all the datasets that have been created in the `Campaign` database.  Hit `Refresh` if necessary.
  <br/>
  <img src="../Images/alltables.png" width="30%">
 
