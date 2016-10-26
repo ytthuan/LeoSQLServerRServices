@@ -44,7 +44,6 @@ if(best == "RF"){
   forest_model_char <- rxImport(forest_model_sql)
   forest_model_raw <- as.raw(strtoi(forest_model_char$x, 16))
   writeBin(forest_model_raw,con="forest_model.rds")
-
   best_model <- readRDS(file="forest_model.rds")
 }
 
@@ -61,7 +60,7 @@ if(best == "GBT"){
 ## Create a full data table with all the unique combinations of Day_of_Week, Channel, Time_Of_Day 
 
 ##########################################################################################################################################
-
+Sys.time()
 # Create a table with all the unique combinations of Day_of_Week, Channel, Time_Of_Day.
 Day_of_Week_unique <- data.frame(seq(1, 7))
 Channel_unique <-data.frame(c("Email", "Cold Calling", "SMS"))
@@ -79,10 +78,11 @@ rxSetComputeContext(sql)
 
 # We create a table that has, for each Lead_Id and its corresponding variables (except Day_of_Week, Channel, Time_Of_Day),
 # One row for each possible combination of Day_of_Week, Channel and Time_Of_Day.
+# FOR DEMO PURPOSES: WE SELECT 10K LEAD_IDs OUT OF THE 100K.
 AD_full_merged_sql <- RxSqlServerData(
   sqlQuery = "SELECT * 
               FROM (
-                    SELECT Lead_Id, Age, Annual_Income_Bucket, Credit_Score, State,No_Of_Dependents, Highest_Education, Ethnicity,
+                    SELECT TOP(10000) Lead_Id, Age, Annual_Income_Bucket, Credit_Score, State,No_Of_Dependents, Highest_Education, Ethnicity,
                     No_Of_Children, Household_Size, Gender, Marital_Status, Campaign_Id, Product_Id, Product, Term,
                     No_of_people_covered, Premium, Payment_frequency, Amt_on_Maturity_Bin, Sub_Category,Campaign_Drivers,
                     Campaign_Name, Call_For_Action, Tenure_Of_Campaign,Net_Amt_Insured, SMS_Count, Email_Count,  Call_Count, 
@@ -91,21 +91,21 @@ AD_full_merged_sql <- RxSqlServerData(
                     (SELECT * FROM Unique_Combos_sql) b", 
   stringsAsFactors = T, connectionString = connection_string, colInfo = column_info)
 
-AD_full_merged <- RxSqlServerData(table = "AD_full_merged", stringsAsFactors = T, connectionString = connection_string, 
+AD_full_merged <- RxSqlServerData(table = "AD_full_merged", connectionString = connection_string, 
                                   colInfo = column_info)
 rxDataStep(inData = AD_full_merged_sql, outFile = AD_full_merged, overwrite = TRUE)
-
+Sys.time()
 ##########################################################################################################################################
 
 ## Compute the predicted probabilities for each Lead_Id, for each combination of Day_of_Week, Channel, Time_Of_Day, using best_model
 
 ##########################################################################################################################################
-
+Sys.time()
 # Score the full data by using the best model.
 Prob_Id <- RxSqlServerData(table = "Prob_Id ", stringsAsFactors = T, connectionString = connection_string)
 rxPredict(best_model, data = AD_full_merged, outData = Prob_Id, overwrite = T, type = "prob",
           extraVarsToWrite = c("Lead_Id", "Day_Of_Week","Time_Of_Day","Channel"))
-
+Sys.time()
 
 ##########################################################################################################################################
 

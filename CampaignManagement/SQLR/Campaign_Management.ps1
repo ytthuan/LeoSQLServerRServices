@@ -223,12 +223,12 @@ if ($ans -eq 'y' -or $ans -eq 'Y')
     # execute the training
     Write-Host -ForeGroundColor 'Cyan' (" Training Random Forest (RF)...")
     $modelName = 'RF'
-    $query = "EXEC TrainModel $modelName"
+    $query = "EXEC TrainModel $modelName, '$connectionString'"
     ExecuteSQLQuery $query
 
     Write-Host -ForeGroundColor 'Cyan' (" Training Gradient Boosted Trees (GBT)...")
     $modelName = 'GBT'
-    $query = "EXEC TrainModel $modelName"
+    $query = "EXEC TrainModel $modelName, '$connectionString'"
     ExecuteSQLQuery $query
 }
 

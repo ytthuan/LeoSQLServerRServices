@@ -38,8 +38,8 @@ BEGIN
 			SELECT Lead_Id, Age, Annual_Income_Bucket, Credit_Score, [State], No_Of_Dependents, Highest_Education, Ethnicity,
 			       No_Of_Children, Household_Size, Gender, Marital_Status, Campaign_Id, Product_Id, Product, Term,
 			       No_Of_People_Covered, Premium, Payment_frequency, Amt_on_Maturity_Bin, Sub_Category,Campaign_Drivers,
-                               Campaign_Name, Call_For_Action, Tenure_Of_Campaign,Net_Amt_Insured, SMS_Count, Email_Count,  Call_Count, 
-                               Previous_Channel, Conversion_Flag
+                   Campaign_Name, Call_For_Action, Tenure_Of_Campaign,Net_Amt_Insured, SMS_Count, Email_Count,  Call_Count, 
+                   Previous_Channel, Conversion_Flag
 			FROM CM_AD) a,
 		   (SELECT * FROM Unique_Combos) b
 
@@ -51,6 +51,7 @@ BEGIN
 ;
 END
 GO
+
 /********** NOT In-Memory Versions; Slower but to be used for large data sets ********/
 /****** Stored Procedure to Compute the predicted probabilities for each Lead_Id, for each combination of Day-Channel-Time using best_model****/
 
@@ -64,20 +65,36 @@ AS
 BEGIN
     DECLARE @bestmodel varbinary(max) = (SELECT model FROM Campaign_Models WHERE model_name = @best_model);
 	EXEC sp_execute_external_script @language = N'R',
-					@script = N'								  
+									@script = N'								  
 
 # Get best_model.
 best_model <- unserialize(best_model)
 
-# Point to the input table AD_full_merged.
-AD_full_merged <- RxSqlServerData(table = "AD_full_merged", connectionString = connection_string)
+##########################################################################################################################################
+##	Specify the types of the features before the scoring
+##########################################################################################################################################
+# Names of numeric variables: 
+# "No_Of_Dependents", "No_Of_Children", "Household_Size", "No_of_people_covered", "Premium", "Net_Amt_Insured",
+# "SMS_Count", "Email_Count", "Call_Count"
 
-# Point to the output data set
+# Import the analytical data set to get the variables names, types and levels for factors.
+CM_AD <- RxSqlServerData(table = "CM_AD", connectionString = connection_string, stringsAsFactors = T)
+column_info <- rxCreateColInfo(CM_AD)
+
+##########################################################################################################################################
+##	Point to the input and output tables and use the column_info list to specify the types of the features.
+##########################################################################################################################################
+# Point to the full merged data set. 
+AD_full_merged <- RxSqlServerData(table = "AD_full_merged", connectionString = connection_string, colInfo = column_info)
+
+# Point to the output data set.
 Prob_Id <- RxSqlServerData(table = "Prob_Id", connectionString = connection_string)
-# Score the full data by using the best model.
+
+##########################################################################################################################################
+##	Score the full data by using the best model.
+##########################################################################################################################################
 rxPredict(best_model, data = AD_full_merged, outData = Prob_Id, type = "prob",
           extraVarsToWrite = c("Lead_Id", "Day_Of_Week","Time_Of_Day","Channel"), overwrite = T)
-
 '
 , @params = N' @best_model varbinary(max), @connection_string varchar(300)' 
 , @best_model = @bestmodel 
@@ -103,8 +120,6 @@ BEGIN
 
 	EXEC [generate_full_table] 
 	EXEC [scoring_not_in_memory] @best_model = @best_model, @connectionString = @connectionString 
-
-	CREATE NONCLUSTERED INDEX idx_prob ON Prob_Id(Lead_Id, [1_prob]) INCLUDE (Day_Of_Week, Channel, Time_Of_Day)
 
 /* For each Lead_Id, get one of the combinations of Day_of_Week, Channel, and Time_Of_Day giving highest conversion probability */ 
 	
@@ -158,13 +173,19 @@ BEGIN
 	EXEC sp_execute_external_script @language = N'R',
 									@script = N'								  
 
-# Get best_model.
+##########################################################################################################################################
+##	Get the best model
+##########################################################################################################################################
 best_model <- unserialize(best_model)
 
-# Import the input table AD_full_merged.
+##########################################################################################################################################
+##	Import the input table AD_full_merged
+##########################################################################################################################################
 AD_full_merged <- InputDataSet
 
-# Score the full data by using the best model.
+##########################################################################################################################################
+##	Score the full data by using the best model
+##########################################################################################################################################
 score <- rxPredict(best_model, data = AD_full_merged, type = "prob",
           extraVarsToWrite = c("Lead_Id", "Day_Of_Week","Time_Of_Day","Channel"))
 
@@ -199,8 +220,6 @@ BEGIN
 
 	EXEC [generate_full_table] 
 	EXEC [scoring_in_memory] @best_model = @best_model
-
-	CREATE NONCLUSTERED INDEX idx_prob ON Prob_Id(Lead_Id, [1_prob]) INCLUDE (Day_Of_Week, Channel, Time_Of_Day)
 
 /* For each Lead_Id, get one of the combinations of Day_of_Week, Channel, and Time_Of_Day giving highest conversion probability */ 
 	

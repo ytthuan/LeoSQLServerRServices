@@ -32,58 +32,27 @@ rxSetComputeContext(sql)
 
 ##########################################################################################################################################
 
-
 CM_AD <- RxSqlServerData(table = "CM_AD", connectionString = connection_string, stringsAsFactors = T)
 
 
 ##########################################################################################################################################
 
-##	Specify the type of every feature that will be used for the training
+##	Specify the type of the features before the training
 
 ##########################################################################################################################################
 
-column_info <- list(
-  Age = list(type = "factor", levels = c("Young", "Senior Citizen", "Middle Age")),
-  Annual_Income_Bucket = list(type = "factor", levels = c(">120k", "60k-120k", "<60k")),
-  Credit_Score = list(type =  "factor", levels = c(">700", "<350", "350-700")),
-  State = list(type ="factor",levels = c("US",  "AL",	"AK",	"AZ",	"AR",	"CA",	"CO",	"CT",	"DE",	"DC",	"FL",	"GA",	
-                                          "HI",	"ID",	"IL",	"IN",	"IA",	"KS",	"KY",	"LA",	"ME",	"MD",	"MA",	"MI",	
-                                          "MN",	"MS",	"MO",	"MT",	"NE",	"NV",	"NH",	"NJ",	"NM",	"NY",	"NC",	"ND",	
-                                          "OH",	"OK",	"OR",	"PA",	"RI",	"SC",	"SD",	"TN",	"TX",	"UT",	"VT",	"VA",	
-                                          "WA",	"WV",	"WI",	"WY",	"AS",	"GU",	"MP",	"PR",	"VI",	"UM",	"FM",	"MH",
-                                          "PW")),
-  No_Of_Dependents = list(type = "numeric"),
-  Highest_Education = list(type = "factor", levels = c("High School", "Attended Vocational", "Graduate School", "College")),  
-  Ethnicity = list(type = "factor", levels = c("White Americans", "African American", "Hispanic", "Latino")),
-  No_Of_Children = list(type = "numeric"),
-  Household_Size = list(type = "numeric"),
-  Gender = list(type = "factor", levels = c("M", "F")),
-  Marital_Status = list(type = "factor", levels = c("M", "W", "D", "S")),
-  Channel = list(type = "factor", levels = c("Email", "Cold Calling", "SMS")),
-  Previous_Channel = list(type = "factor", levels = c("Email", "Cold Calling", "SMS")),
-  Time_Of_Day = list(type = "factor", levels = c("Morning","Afternoon","Evening")),
-  Day_Of_Week = list(type = "factor", levels = c("1", "2", "3", "4", "5", "6", "7")),
-  Campaign_Id = list(type = "factor", levels = c("1", "2", "3", "4", "5", "6")),
-  Product_Id = list(type = "factor", levels = c("1", "2", "3", "4", "5", "6")),
-  Product = list(type = "factor", levels = c("Protect Your Future", "Live Free", "Secured Happiness", "Making Tomorrow Better", 
-                                             "Secured Life", "Live Happy")),
-  Term = list(type = "factor", levels = c("10", "15", "20", "30", "24", "16")),
-  No_of_people_covered = list(type = "numeric"),
-  Premium = list(type = "numeric"),
-  Payment_frequency = list(type = "factor", levels = c("Monthly", "Yearly", "Quarterly")),
-  Amt_on_Maturity_Bin = list(type = "factor", levels = c("<200000", "<400000")),
-  Sub_Category = list(type = "factor", levels = c("Penetration", "Seasonal", "Branding")),
-  Campaign_Drivers = list(type = "factor", levels = c("Discount offer", "Additional Coverage", "Extra benefits")),
-  Campaign_Name = list(type = "factor", levels = c("Above all in service", "All your protection under one roof", "Be life full confident", 
-                                                   "Together we are stronger", "The power to help you succeed", "Know Money")),
-  Call_For_Action = list(type = "factor", levels = c("1", "0")),
-  Tenure_Of_Campaign = list(type = "factor", levels = c("1", "2")),
-  Net_Amt_Insured = list(type = "numeric"),
-  SMS_Count = list(type = "numeric"),
-  Email_Count = list(type = "numeric"),
-  Call_Count = list(type = "numeric"),
-  Conversion_Flag = list(type = "factor", levels = c("0", "1"))
-)
+# Names of the numeric variables. 
+# numeric_names <- c("No_Of_Dependents", "No_Of_Children", "Household_Size", "No_of_people_covered", "Premium", "Net_Amt_Insured",
+#                   "SMS_Count", "Email_Count", "Call_Count")
+
+column_info <- rxCreateColInfo(CM_AD)
+
+# Enforce the conversion of some integers to factors.
+column_info$Conversion_Flag$type <- "factor" 
+column_info$Conversion_Flag$levels <- c("0", "1")
+
+column_info$Day_Of_Week$type <- "factor" 
+column_info$Day_Of_Week$levels <- c("1", "2", "3", "4", "5", "6", "7")
 
 
 ##########################################################################################################################################
@@ -112,6 +81,8 @@ CM_AD_Train <- RxSqlServerData(
               WHERE Split_Vector = 1",
   connectionString = connection_string, colInfo = column_info)
 
+
+
 # Point to the testing set.
 CM_AD_Test <- RxSqlServerData(  
   sqlQuery = "SELECT *   
@@ -129,7 +100,7 @@ CM_AD_Test <- RxSqlServerData(
 # Write the formula after removing variables not used in the modeling.
 variables_all <- rxGetVarNames(CM_AD_Train)
 variables_to_remove <- c("Lead_Id", "Phone_No", "Country", "Comm_Id", "Time_Stamp", "Category", "Launch_Date", "Focused_Geography",
-                         "Split_Vector")
+                         "Split_Vector", "Call_For_Action")
 traning_variables <- variables_all[!(variables_all %in% c("Conversion_Flag", variables_to_remove))]
 formula <- as.formula(paste("Conversion_Flag ~", paste(traning_variables, collapse = "+")))
 

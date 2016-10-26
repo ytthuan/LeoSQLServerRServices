@@ -11,16 +11,16 @@ DROP TABLE IF EXISTS Campaign_Detail
 GO
 CREATE TABLE Campaign_Detail
 (
-Campaign_Id int,
+Campaign_Id varchar(1),
 Campaign_Name varchar(50),
 Category varchar(15),
 Launch_Date varchar(12),
 Sub_Category varchar(15),
 Campaign_Drivers varchar(50),
-Product_Id int,
-Call_For_Action	int,
+Product_Id varchar(1),
+Call_For_Action	varchar(1),
 Focused_Geography varchar(15),
-Tenure_Of_Campaign int
+Tenure_Of_Campaign varchar(1)
 );
 
 CREATE CLUSTERED COLUMNSTORE INDEX campaign_detail_cci ON Campaign_Detail WITH (DROP_EXISTING = OFF);
@@ -58,9 +58,9 @@ CREATE TABLE Market_Touchdown
 Lead_Id varchar(15),
 Channel varchar(15),
 Time_Of_Day varchar(15),
-Day_Of_Week int,
-Campaign_Id int,
-Conversion_Flag int,
+Day_Of_Week varchar(1),
+Campaign_Id varchar(1),
+Conversion_Flag varchar(1),
 Source	varchar(30),
 Time_Stamp varchar(12),
 Comm_Id int
@@ -75,7 +75,7 @@ DROP TABLE IF EXISTS Product
 GO
 CREATE TABLE Product
 (
-Product_Id	int,
+Product_Id	varchar(1),
 Product varchar(50),
 Category varchar(50),
 Term int,
@@ -111,8 +111,8 @@ CREATE TABLE CM_AD0
 ,Marital_Status varchar(1)
 ,Channel varchar(15)
 ,Time_Of_Day varchar(15)
-,Conversion_Flag int
-,Campaign_Id int
+,Conversion_Flag varchar(1)
+,Campaign_Id varchar(1)
 ,Day_Of_Week varchar(1)
 ,Comm_Id int  NOT NULL
 ,Time_Stamp date
@@ -127,11 +127,11 @@ CREATE TABLE CM_AD0
 ,Campaign_Drivers varchar(50)
 ,Campaign_Name varchar(50)
 ,Launch_Date date
-,Call_For_Action int
+,Call_For_Action varchar(1)
 ,Focused_Geography varchar(15)
-,Tenure_Of_Campaign int
+,Tenure_Of_Campaign varchar(1)
 ,Net_Amt_Insured int
-,Product_Id int
+,Product_Id varchar(1)
 )
 ;
 
@@ -159,8 +159,8 @@ CREATE TABLE CM_AD
 ,Marital_Status varchar(1)
 ,Channel varchar(15)
 ,Time_Of_Day varchar(15)
-,Conversion_Flag int
-,Campaign_Id int
+,Conversion_Flag varchar(1)
+,Campaign_Id varchar(1)
 ,Day_Of_Week varchar(1)
 ,Comm_Id int 
 ,Time_Stamp varchar(12)
@@ -175,11 +175,11 @@ CREATE TABLE CM_AD
 ,Campaign_Drivers varchar(50)
 ,Campaign_Name varchar(50)
 ,Launch_Date varchar(12)
-,Call_For_Action int
+,Call_For_Action varchar(1)
 ,Focused_Geography varchar(15)
-,Tenure_Of_Campaign int
+,Tenure_Of_Campaign varchar(1)
 ,Net_Amt_Insured int
-,Product_Id int
+,Product_Id varchar(1)
 ,SMS_Count int
 ,Email_Count int
 ,Call_Count int 
@@ -194,7 +194,7 @@ DROP TABLE IF EXISTS CM_AD1
 GO
 CREATE TABLE CM_AD1
 (
- Lead_Id varchar(15) NOT NULL Primary Key
+  Lead_Id varchar(15) NOT NULL Primary Key
 ,Age varchar(30)
 ,Phone_No varchar(50)
 ,Annual_Income_Bucket varchar(15)
@@ -210,8 +210,8 @@ CREATE TABLE CM_AD1
 ,Marital_Status varchar(1)
 ,Channel varchar(15)
 ,Time_Of_Day varchar(15)
-,Conversion_Flag int
-,Campaign_Id int
+,Conversion_Flag varchar(1)
+,Campaign_Id varchar(1)
 ,Day_Of_Week varchar(1)
 ,Comm_Id int 
 ,Time_Stamp varchar(12)
@@ -226,11 +226,11 @@ CREATE TABLE CM_AD1
 ,Campaign_Drivers varchar(50)
 ,Campaign_Name varchar(50)
 ,Launch_Date varchar(12)
-,Call_For_Action int
+,Call_For_Action varchar(1)
 ,Focused_Geography varchar(15)
-,Tenure_Of_Campaign int
+,Tenure_Of_Campaign varchar(1)
 ,Net_Amt_Insured int
-,Product_Id int
+,Product_Id varchar(1)
 ,SMS_Count int
 ,Email_Count int
 ,Call_Count int 
@@ -256,8 +256,8 @@ CREATE TABLE AD_full_merged
 ,Household_Size int 
 ,Gender varchar(1)
 ,Marital_Status varchar(1)
-,Campaign_Id int
-,Product_Id int
+,Campaign_Id varchar(1)
+,Product_Id varchar(1)
 ,Product varchar(50)
 ,Term int
 ,No_of_people_covered int
@@ -267,14 +267,14 @@ CREATE TABLE AD_full_merged
 ,Sub_Category varchar(15)
 ,Campaign_Drivers varchar(50)
 ,Campaign_Name varchar(50)
-,Call_For_Action int
-,Tenure_Of_Campaign int
+,Call_For_Action varchar(1)
+,Tenure_Of_Campaign varchar(1)
 ,Net_Amt_Insured int
 ,SMS_Count int
 ,Email_Count int
 ,Call_Count int 
 ,Previous_Channel varchar(15)
-,Conversion_Flag int
+,Conversion_Flag varchar(1)
 ,Channel varchar(15) NOT NULL
 ,Day_Of_Week varchar(1) NOT NULL
 ,Time_Of_Day varchar(15) NOT NULL
