@@ -11,14 +11,13 @@ This solution packet shows how to create and refine data, train R models, and pe
 ![Visualize](Images/visualize.png?raw=true)
 
 
-You can try out this dashboard by [installing PowerBI Desktop](https://powerbi.microsoft.com/en-us/desktop/) and [downloading and opening the CampaignManagement Dashboard](Campaign%20Management%20Dashboard.pbix) to see the simulated results.
+You can try out this dashboard by <a href="https://powerbi.microsoft.com/en-us/desktop/" target="_blank">installing PowerBI Desktop</a> and <a href="Campaign%20Management%20Dashboard.pbix" target="_blank">downloading and opening the CampaignManagement Dashboard</a> to see the simulated results.
 
 The first tab of this dashboard shows the predicted recommendations.  At the top is a table of individual leads for our new deployment - lead ID, campaign and product, populated with leads using business rules, followed by the model predictions for each one, giving the optimal channel and time to contact the lead, and finally the conversion probability for the lead using these recommendations.  Since these recommendation represent the optimal combination for contacting the lead, this probability would be useful in limiting the number of leads to contact --  either by using the value itself (i.e., "all over .65") or by taking the top "N" leads.
 
 Also on the first tab are various summaries of recommendations and demographic information on the leads. 
 
-The second tab of the dashboard gives information on a deployed campaign after using the recommendations from the first tab.
-Note this Campaign Summary has been simulated but in a real setting you'd use the information on this page to assess how well the recommendations from the model had performed.
+The second tab of the dashboard shows summaries of the historical data used to create the predicted recommendations.  While this tab also shows values of Day of Week, Time of Day, and Channel, these values are actual past observations, not to be confused with the recommendations shown on the first tab.  
 
 To understand more about the entire process of modeling and deploying this example, see [For the Data Scientist](data-scientist.md).
  
