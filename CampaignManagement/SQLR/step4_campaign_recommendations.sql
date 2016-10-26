@@ -1,5 +1,5 @@
 
-/****** Stored Procedure to create a table that has, for each Lead_Id and its corresponding variables (except Day_of_Week, Channel, Time_Of_Day)******/
+/****** Stored Procedure to create a table that has, for each Lead_Id and its corresponding variables******/
 /****** One row for each possible combination of Day_of_Week, Channel and Time_Of_Day  ******/
 SET ANSI_NULLS ON 
 GO 
@@ -35,13 +35,13 @@ BEGIN
 	INSERT INTO AD_full_merged
 	SELECT * 
 	FROM (
-			SELECT Lead_Id, Age, Annual_Income_Bucket, Credit_Score, [State], No_Of_Dependents, Highest_Education, Ethnicity,
-			       No_Of_Children, Household_Size, Gender, Marital_Status, Campaign_Id, Product_Id, Product, Term,
-			       No_Of_People_Covered, Premium, Payment_frequency, Amt_on_Maturity_Bin, Sub_Category,Campaign_Drivers,
-                   Campaign_Name, Call_For_Action, Tenure_Of_Campaign,Net_Amt_Insured, SMS_Count, Email_Count,  Call_Count, 
-                   Previous_Channel, Conversion_Flag
-			FROM CM_AD) a,
-		   (SELECT * FROM Unique_Combos) b
+		SELECT Lead_Id, Age, Annual_Income_Bucket, Credit_Score, [State], No_Of_Dependents, Highest_Education, Ethnicity,
+		       No_Of_Children, Household_Size, Gender, Marital_Status, Campaign_Id, Product_Id, Product, Term,
+		       No_Of_People_Covered, Premium, Payment_frequency, Amt_on_Maturity_Bin, Sub_Category,Campaign_Drivers,
+                       Campaign_Name, Call_For_Action, Tenure_Of_Campaign,Net_Amt_Insured, SMS_Count, Email_Count,  Call_Count, 
+                       Previous_Channel, Conversion_Flag
+		FROM CM_AD) a,
+		(SELECT * FROM Unique_Combos) b
 
 /* Drop intermediate tables */
 	DROP TABLE Day_Of_Week
@@ -53,20 +53,18 @@ END
 GO
 
 /********** NOT In-Memory Versions; Slower but to be used for large data sets ********/
-/****** Stored Procedure to Compute the predicted probabilities for each Lead_Id, for each combination of Day-Channel-Time using best_model****/
+/*Stored Procedure to Compute the predicted probabilities for each Lead_Id, for each combination of Day-Channel-Time using best_model**/
 
 DROP PROCEDURE IF EXISTS [dbo].[scoring_not_in_memory]
 GO
 
-CREATE PROCEDURE [scoring_not_in_memory] @best_model varchar(300),
-										 @connectionString varchar(300)
+CREATE PROCEDURE [scoring_not_in_memory] @best_model varchar(300), @connectionString varchar(300)
 
 AS
 BEGIN
     DECLARE @bestmodel varbinary(max) = (SELECT model FROM Campaign_Models WHERE model_name = @best_model);
-	EXEC sp_execute_external_script @language = N'R',
-									@script = N'								  
-
+    EXEC sp_execute_external_script @language = N'R',
+				    @script = N'								  
 # Get best_model.
 best_model <- unserialize(best_model)
 
@@ -103,13 +101,13 @@ rxPredict(best_model, data = AD_full_merged, outData = Prob_Id, type = "prob",
 END
 GO
 
-/****** Stored Procedure to provide, for each Lead_Id, a combination of Day_of_Week, Channel, and Time_Of_Day that has the highest conversion probability  ******/
+/****** Stored Procedure to provide, for each Lead_Id, a combination of Day_of_Week, Channel, and Time_Of_Da that has the highest conversion probability  ******/
 
 DROP PROCEDURE IF EXISTS [dbo].[campaign_recommendation_not_in_memory]
 GO
 
 CREATE PROCEDURE [campaign_recommendation_not_in_memory] @best_model varchar(300),
-														 @connectionString varchar(300)
+							 @connectionString varchar(300)
 											
 											  
 AS
@@ -139,7 +137,7 @@ BEGIN
 
 /* 	Add demographics information to the recommendation table  */
 
-	SELECT Age, Annual_Income_Bucket, Credit_Score, Product, Campaign_Name as [Campaign Name], [State], Conversion_Flag as Converts,
+	SELECT Age, Annual_Income_Bucket, Credit_Score, Product, Campaign_Name as [Campaign Name], [State], CAST(Conversion_Flag AS int) as Converts,
                CM_AD.Day_Of_Week as [Day of Week], CM_AD.Time_Of_Day as [Time of Day], CM_AD.Channel,  CM_AD.Lead_Id as [Lead ID],
 	       Recommended_Combinations.Day_Of_Week as [Recommended Day], Recommended_Combinations.Time_Of_Day as [Recommended Time],
 	       Recommended_Combinations.Channel as [Recommended Channel], Recommended_Combinations.MaxProb
@@ -188,7 +186,6 @@ AD_full_merged <- InputDataSet
 ##########################################################################################################################################
 score <- rxPredict(best_model, data = AD_full_merged, type = "prob",
           extraVarsToWrite = c("Lead_Id", "Day_Of_Week","Time_Of_Day","Channel"))
-
 OutputDataSet <- score
 '
 , @input_data_1 = @inquery
@@ -239,7 +236,7 @@ BEGIN
 
 /* 	Add demographics information to the recommendation table  */
 
-	SELECT Age, Annual_Income_Bucket, Credit_Score, Product, Campaign_Name as [Campaign Name], [State], Conversion_Flag as Converts,
+	SELECT Age, Annual_Income_Bucket, Credit_Score, Product, Campaign_Name as [Campaign Name], [State], CAST(Conversion_Flag AS int) as Converts,
                CM_AD.Day_Of_Week as [Day of Week], CM_AD.Time_Of_Day as [Time of Day], CM_AD.Channel,  CM_AD.Lead_Id as [Lead ID],
 	       Recommended_Combinations.Day_Of_Week as [Recommended Day], Recommended_Combinations.Time_Of_Day as [Recommended Time],
 	       Recommended_Combinations.Channel as [Recommended Channel], Recommended_Combinations.MaxProb
