@@ -29,7 +29,8 @@ The R code to perform these steps can be run from an R client with the following
 
 This script creates the database tables and performs missing value and outlier treatment on the lead demography and market touchdown tables. Both these updated tables are then exported back to SQL Server 
 1.	Market Touchdown: The Communication latency variable in this table was created to have outliers. The lower extremes are replaced with the difference of Mean and Standard Deviation. The higher extremes are replaced with the sum of Mean and two Standard Deviations
-2.	Lead Demography: The missing values in variables like number of children/dependents, highest education & household size are replaced with the Mode value
+2.	Lead Demography: The missing values in variables like number of children/dependents, highest education & household size are replaced with the Mode value.
+
 
 ### step2_feature_engineering.R
 
@@ -38,9 +39,7 @@ This script performs feature engineering on the Market Touchdown table and then 
 2.	Analytical Dataset: Analytical Dataset: The latest version of all the 4 input datasets are merged together to create the analytical dataset. The analytical dataset is further split into train and test datasets. Some temporary tables are created which will later be overwritten with model variables in step_4.
 
 
-The R scripts were originally developed and executed in an R IDE. Once complete, the R code was operationalized in .sql files to be executed through T-SQL.   The diagram below shows the .sql files used to perform these actions, incorporating the code from the R scripts above. 
-
-
+![Data Processing ](Images/datacreate.png?raw=true)
 
 ## Model Development
 Two models, Random Forest and Gradient Boosting are developed to model Campaign Responses.  The R code to develop these models is included in the **step4_model_rf_gbm.R script**.
