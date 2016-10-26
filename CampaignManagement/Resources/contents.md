@@ -8,11 +8,10 @@ The following is the directory structure for this template:
 - [**Resources**](#resources-for-the-solution-packet) This directory contains the detailed description and instructions for this packet as well as the PowerBI file used to visualize results
 - [**SQLR**](#model-development-in-sql-server-2016-r-services) This contains the SQLR codes to simulate the input datasets, create the analytical datasets, train the models, identify champion model and score the analytical/scorings dataset. It also contains PowerShell scripts automate the entire process
 
-In this template with SQL Server R Services, three versions of the implementation module have been showcased:
+In this template with SQL Server R Services, two versions of the implementation:
 
 1. [**Model Development in R IDE**](#model-development-in-r)  . Run the R code in R IDE (e.g., RStudio, R Tools for Visual Studio).
-2. [**Model Development in SQL**](#model-development-in-sql-server-2016-r-services). Run the SQL code in SQL Server using SQLR scripts
-3. [**Automation in PowerShell**](#automation-with-powershell). Run the PowerShell scripts which automates the Model Development and Scoring Process
+2. [**Operationalize in SQL**](#model-development-in-sql-server-2016-r-services). Run the SQL code in SQL Server using SQLR scripts, automated with the use of a PowerShell script.
 
 
 ## Copy of Input Datasets
@@ -50,16 +49,10 @@ Follow the [R Instructions](Instructions/R_Instructions.md) to execute these scr
 | .\SQLR\Step3c)_test\_model.sql | Tests either RF or GBT model, dpending on input parameter |
 | .\SQLR\step4\_campaign\_recommendations.sql | score data with best model and output recommendations |
 
-Follow the [SQLR Instructions](Instructions/SQLR_Instructions.md) to execute these scripts.
+Follow the [PowerShell Instructions](Instructions/PowerShell_Instructions.md) to execute these scripts.
 
-
-## Automation with PowerShell
-| File | Description |
 | --- | --- |
 | .\SQLR\Campaign_Management.ps1 | Creates the Analytical/Scoring dataset |
-
-
-Follow the [PowerShell Instructions](Instructions/Powershell_Instructions.md) to execute these scripts.
 
 
 ## Resources for the Solution Packet
@@ -68,7 +61,7 @@ Follow the [PowerShell Instructions](Instructions/Powershell_Instructions.md) to
 | .\Resources\business-manager.md | Describes the solution for the Business Manager |
 | .\Resources\Campaign Management Dashboard.pbix | PowerBI Dashboard showing the recommendation results |
 | .\Resources\contents.md | This document |
-| .\Resources\createusr.sql | used during initial setup, referenced in **.\Resources\Instructions\START HERE.docx** |
+| .\Resources\createusr.sql | used during initial SQL Server setup, referenced in **.\Resources\Instructions\START HERE.docx** |
 | .\Resources\data-scientist.md | Describes the solution for the Data Scientist |
 | .\Resources\Microsoft - Campaign Management.pptx | Powerpoint description of the solution packet |
 | .\Resources\Images\ | Directory of images used for the various Readme.md files in this packet |
