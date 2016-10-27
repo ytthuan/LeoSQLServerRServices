@@ -28,15 +28,19 @@ The R code to perform these steps can be run from an R client with the following
 
 ### step1_data_processing.R
 
-This script creates the database tables and performs missing value and outlier treatment on the lead demography and market touchdown tables. Both these updated tables are then exported back to SQL Server 
+This script creates the database tables and performs missing value and outlier treatment on the lead demography and market touchdown tables. Both these updated tables are then exported back to SQL Server.
+
 1.	Market Touchdown: The Communication latency variable in this table was created to have outliers. The lower extremes are replaced with the difference of Mean and Standard Deviation. The higher extremes are replaced with the sum of Mean and two Standard Deviations
+
 2.	Lead Demography: The missing values in variables like number of children/dependents, highest education & household size are replaced with the Mode value.
 
 
 ### step2_feature_engineering.R
 
 This script performs feature engineering on the Market Touchdown table and then merges to generate the Analytical Dataset. Finally, the analytical dataset along with training and test datasets are exported to SQL Server.
+
 1.	Market Touchdown: The table is aggregated at a lead level, so variables like channel which will have more than one value for each user are pivoted and aggregated to from variables like SMS count, Email count, Call Count, Last Communication Channel, Second Last Communication Channel etc.
+
 2.	Analytical Dataset: Analytical Dataset: The latest version of all the 4 input datasets are merged together to create the analytical dataset. The analytical dataset is further split into train and test datasets. Some temporary tables are created which will later be overwritten with model variables in step_4.
 
 
