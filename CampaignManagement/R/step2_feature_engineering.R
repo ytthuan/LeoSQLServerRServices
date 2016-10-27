@@ -13,7 +13,7 @@
 
 ##########################################################################################################################################
 
-# Load revolution R library and data.table. 
+# Load revolution R library. 
 library(RevoScaleR)
 
 # Compute Contexts.

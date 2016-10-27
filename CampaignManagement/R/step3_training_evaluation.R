@@ -1,12 +1,12 @@
 ##########################################################################################################################################
 ## This R script will do the following:
 ## 1. Split CM_AD into a Training CM_AD_Train, and a Testing set CM_AD_Test.  
-## 2. Train two models Random Forest (RF) and Gradient Boosting Trees (GBT) on CM_AD_train, and save them to SQL. 
-## 3. Score RF & GBT on CM_AD_Test.
+## 2. Train Random Forest (RF) and Gradient Boosting Trees (GBT) on CM_AD_Train, and save them to SQL. 
+## 3. Score RF and GBT on CM_AD_Test.
 ## 4. Select the best model based on AUC. 
 
 ## Input : Data set CM_AD
-## Output: A random forest and a GBT models saved to SQL. One of them is chosen based on AUC. 
+## Output: Random forest and GBT models saved to SQL. One of them is chosen based on AUC.  
 
 ##########################################################################################################################################
 
@@ -14,7 +14,7 @@
 
 ##########################################################################################################################################
 
-# Load revolution R library and data.table. 
+# Load revolution R library. 
 library(RevoScaleR)
 
 # Compute Contexts.
@@ -226,7 +226,7 @@ threshold <- median(Prediction_RF$`1_prob`)
 
 # Compute the performance metrics of the model. The Compute Context should be set to local. 
 rxSetComputeContext(local)
-Metrics_RF <- evaluate_model(observed = observed, predicted_probability = Prediction_RF$`1_prob`,threshold = threshold,
+Metrics_RF <- evaluate_model(observed = observed, predicted_probability = Prediction_RF$`1_prob`, threshold = threshold,
                              model_name = "RF")
 
 # Set back the compute context to SQL.
@@ -251,7 +251,7 @@ threshold <- median(Prediction_GBT$`1_prob`)
 
 # Compute the performance metrics of the model. The Compute Context should be set to local.
 rxSetComputeContext(local)
-Metrics_GBT <- evaluate_model(observed = observed, predicted_probability = Prediction_GBT$`1_prob`,threshold = threshold, 
+Metrics_GBT <- evaluate_model(observed = observed, predicted_probability = Prediction_GBT$`1_prob`, threshold = threshold, 
                               model_name = "GBT")
 
 # Set back the compute context to SQL.

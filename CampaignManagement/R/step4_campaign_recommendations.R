@@ -17,7 +17,7 @@
 
 ##########################################################################################################################################
 
-# Load revolution R library and data.table. 
+# Load revolution R library. 
 library(RevoScaleR)
 
 # Compute Contexts.
@@ -60,7 +60,6 @@ if(best == "GBT"){
 ## Create a full data table with all the unique combinations of Day_of_Week, Channel, Time_Of_Day 
 
 ##########################################################################################################################################
-Sys.time()
 # Create a table with all the unique combinations of Day_of_Week, Channel, Time_Of_Day.
 Day_of_Week_unique <- data.frame(seq(1, 7))
 Channel_unique <-data.frame(c("Email", "Cold Calling", "SMS"))
@@ -100,12 +99,11 @@ Sys.time()
 ## Compute the predicted probabilities for each Lead_Id, for each combination of Day_of_Week, Channel, Time_Of_Day, using best_model
 
 ##########################################################################################################################################
-Sys.time()
+
 # Score the full data by using the best model.
 Prob_Id <- RxSqlServerData(table = "Prob_Id ", stringsAsFactors = T, connectionString = connection_string)
 rxPredict(best_model, data = AD_full_merged, outData = Prob_Id, overwrite = T, type = "prob",
           extraVarsToWrite = c("Lead_Id", "Day_Of_Week","Time_Of_Day","Channel"))
-Sys.time()
 
 ##########################################################################################################################################
 
@@ -139,9 +137,9 @@ rxDataStep(inData = Max_Probability, outFile = Recommended_Combinations, overwri
 
 Recommendations_sql <- RxSqlServerData(
   sqlQuery = "SELECT Age, Annual_Income_Bucket, Credit_Score, Product, Campaign_Name as [Campaign Name], State,  
-    Conversion_Flag as Converts,
+      Conversion_Flag as Converts,
       CM_AD.Day_Of_Week as [Day of Week], CM_AD.Time_Of_Day as [Time of Day], CM_AD.Channel,
-    CM_AD.Lead_Id as [Lead ID],
+      CM_AD.Lead_Id as [Lead ID],
       Recommended_Combinations.Day_Of_Week as [Recommended Day],
       Recommended_Combinations.Time_Of_Day as [Recommended Time],
       Recommended_Combinations.Channel as [Recommended Channel], Recommended_Combinations.MaxProb 

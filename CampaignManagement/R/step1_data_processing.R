@@ -1,11 +1,11 @@
 
 ##########################################################################################################################################
 ## This R script will do the following:
-## 1. Read the 4 data sets Campaign_Detail, Lead_Demography, Market-Touchdown, and Product, and load them into SQL.
+## 1. Read the 4 data sets Campaign_Detail, Lead_Demography, Market_Touchdown, and Product, and load them into SQL.
 ## 2. Join the 4 tables into one.
-## 2. Clean the merged data set: replace NAs with the mode.
+## 3. Clean the merged data set: replace NAs with the mode.
 
-## Input : 4 Data Tables: Campaign_Detail, Lead_Demography, Market-Touchdown, and Product.
+## Input : 4 Data Tables: Campaign_Detail, Lead_Demography, Market_Touchdown, and Product.
 ## Output: Cleaned raw data set CM_AD0.
 
 ##########################################################################################################################################
@@ -14,7 +14,7 @@
 
 ##########################################################################################################################################
 
-# Load revolution R library and data.table. 
+# Load revolution R library. 
 library(RevoScaleR)
 
 # Compute Contexts.
