@@ -47,7 +47,6 @@ The PowerBI dashboard will show charts built from cached data. We need to set it
 
 9.	Next, click on `Close` and `Apply`. This will refresh the backend data on the PowerBI and connect it to the SQL Server
  <br/>
- <img src="../Images/vis9.png" width="75%" >
 
  <a name="laststep" id="laststep"></a>
 
