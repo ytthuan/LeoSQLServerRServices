@@ -1,4 +1,5 @@
-#Campaign Optimization Template in SQL Server with R sevices
+<img src="../Images/management.png" align="right">
+# Campaign Optimization Template in SQL Server with R Services
 --------------------------
  * **Introduction**
 	 * **System Requirements**
@@ -25,7 +26,7 @@ All the steps can be executed on SQL Server client environment (such as SQL Serv
 ### System Requirements
 -----------------------
 
-To run the scripts, it requires the following:
+To run the scripts requires the following:
  * SQL server 2016 CTP 3 with Microsoft R server installed and configured;
  * The SQL user name and password, and the user is configured properly to execute R scripts in-memory;
  * SQL Database which the user has write permission and execute stored procedures;
