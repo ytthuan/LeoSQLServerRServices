@@ -33,9 +33,11 @@ The PowerBI dashboard will show charts built from cached data. We need to set it
   Notice that on the left hand side you have 2 datasets: `Lead_Scored_Dataset` and `Recommendations`. 
 
 
+6.	Click on the second dataset (`Recommendations`) and then click on ‘Advanced Editor’ in the toolbar. Select and copy all the code in the dialog that appears.  Then click `Done` to close this dialog.
  <br/>
  <img src="../Images/vis6.png" width="75%" >
 
+7.	Next, click on the first dataset (`Lead_Scored_Dataset`) and then click on ‘Advanced Editor’ in the toolbar. Delete all the code here and paste what you just copied into this dialog.  Click `Done` to close this dialog.
  <br/>
  <img src="../Images/vis7.png" width="75%" >
 
