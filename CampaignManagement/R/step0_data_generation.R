@@ -18,7 +18,7 @@ library(RevoScaleR)
 library(data.table)
 
 # Compute Contexts.
-connection_string <- "Driver=SQL Server; Server=[Server Name]; Database=Campaign_Management; UID=[User ID]; PWD=[User Password]"
+connection_string <- "Driver=SQL Server; Server=[Server Name]; Database=Campaign; UID=[User ID]; PWD=[User Password]"
 sql <- RxInSqlServer(connectionString = connection_string)
 local <- RxLocalSeq()
 
