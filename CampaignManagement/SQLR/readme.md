@@ -1,4 +1,4 @@
-<img src="../Images/management.png" align="right">
+<img src="..Resources/Images/management.png" align="right">
 # Campaign Optimization Template in SQL Server with R Services
 --------------------------
  * **Introduction**
