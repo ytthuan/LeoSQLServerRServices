@@ -30,18 +30,16 @@ The PowerBI dashboard will show charts built from cached data. We need to set it
  <br/>
  <img src="../Images/vis5.png" width="75%" >
 
-  Notice that on the left hand side you have 2 datasets. 
+  Notice that on the left hand side you have 2 datasets: `Lead_Scored_Dataset` and `Recommendations`. 
 
 
-6.	Click on the second dataset and then click on ‘Advanced Editor’. Copy the code in side this
  <br/>
  <img src="../Images/vis6.png" width="75%" >
 
-7.	Next, click on the first dataset and then click on ‘Advanced Editor’. Delete the code here and paste what you had copied earlier
  <br/>
  <img src="../Images/vis7.png" width="75%" >
 
-8.	Next, click on the second dataset and press the delete key on your keyboard. You will see a pop up asking if you want to delete it. Click on `delete`.
+8.	Next, click on the second dataset (`Recommendations`)  and press the delete key on your keyboard. You will see a pop up asking if you want to delete it. Click on `delete`.
  <br/>
  <img src="../Images/vis8.png" width="50%" >
 
