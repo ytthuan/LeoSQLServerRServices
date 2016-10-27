@@ -14,24 +14,26 @@ The R code shown here was then incorporated into the [.sql files](../../SQLR/rea
 
 <h2>Solution with R Server</h2>
 
-1.  You will need  [R Client](https://msdn.microsoft.com/en-us/microsoft-r/install-r-client-windows) to execute these R scripts.  You will also want to [install and configure an R IDE](https://msdn.microsoft.com/en-us/microsoft-r/r-client-get-started#configure-ide) to use with R Client.  
+1.  You will need  [R Client](https://msdn.microsoft.com/en-us/microsoft-r/install-r-client-windows) to execute these R scripts.  You will also want to [install and configure an R IDE](https://msdn.microsoft.com/en-us/microsoft-r/r-client-get-started#configure-ide) to use with R Client.  (These are both already installed and configured if you are using a Data Science VM created from the Cortana Analytics Gallery.)
 
 
-3.  Open the five files in the R directory into your IDE configured with R Client.
+3.  Open the files from the R directory into your IDE configured with R Client.
 
-3.  In SSMS, create the databae table you wish to use if it does not yet exist.
+3.  In SSMS, create the database table you wish to use if it does not yet exist.  (If you have previously run the PowerShell script, the database "Campaign" will already exist.)
 
-4.	Replace the connection string at the top of each file with details of your login and database name in each of the four files.  For example:
- <br/>
- <img src="../Images/r2.png">
+4.	Replace the connection string at the top of each file with details of your login and database name in each of the files.  For example:
+
+    ```
+    connection_string <- "Driver=SQL Server; Server=.; Database=Campaign; UID=rdemo; PWD=D@tascience"
+    ```
  
  Note: You can use “.” for the server name as shown here if using a local SQL Server (on the same machine as your code). Also note that there can be NO SPACES between the "=" in the connection string.  That is  "Database=Campaign" will work while " Database = Campaign" will give an error!  
 
 5.	The scripts perform the following actions:
 
-    a.	**step0_data_generation.R**:  Simulates the 4 input datasets.  Use this to create different size datasets.
+    a.	**step0_data_generation.R**:  Simulates the 4 input datasets.  Use this to create different size datasets.  
 
-    b.	**step1_data_processing.R**: Uploads .csv files to the database and perfroms preprocessing steps such as outlier treatment and missing value treatment on the input datasets
+    b.	**step1_data_processing.R**: Uploads .csv files to the database and perfroms preprocessing steps such as outlier treatment and missing value treatment on the input datasets.  Notice it is set up to use the files from the ../Data directory.  Change the path if you wish to use different data, such as that created from the step0_data_generation.R script.
 
     c.	**step2_feature_engineering.R**:  Performs Feature Engineering and creates the Analytical Dataset.   Feature Engineering consists of creating new variables in the market touchdown dataset by aggregating the data in multiple levels.  The table is aggregated at a lead level, so variables like channel which will have more than one value for each user are pivoted and aggregated to variables like SMS count, Email count, Call Count, Last Communication Channel, Second Last Communication Channel etc.
 
