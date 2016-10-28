@@ -14,7 +14,7 @@ The R code shown here was then incorporated into the [.sql files](../../SQLR/rea
 
 <h2>Solution with R Server</h2>
 
-1.  You will need  [R Client](https://msdn.microsoft.com/en-us/microsoft-r/install-r-client-windows) to execute these R scripts.  You will also want to [install and configure an R IDE](https://msdn.microsoft.com/en-us/microsoft-r/r-client-get-started#configure-ide) to use with R Client.  (These are both already installed and configured if you are using a Data Science VM created from the Cortana Analytics Gallery.)
+1.  You will need  [R Client](https://msdn.microsoft.com/en-us/microsoft-r/install-r-client-windows) to execute these R scripts.  You will also want to [install and configure an R IDE](https://msdn.microsoft.com/en-us/microsoft-r/r-client-get-started#configure-ide) to use with R Client.  (These are both already installed and configured if you are using a Data Science VM created from the [Cortana Intelligence Gallery](https://gallery.cortanaintelligence.com/Solution/e992f8c1b29f4df897301d11796f9e7c).)
 
 
 3.  Open the files from the R directory into your IDE configured with R Client.
