@@ -27,7 +27,7 @@ begin
 			where TransactionTime<=dateAdd(day, -1*(select ChurnPeriod from ChurnVars), (select max(TransactionTime) from  Activities)) 
 			group by UserId
 
-	-- Create tags: those with fewer transactions than a threshold in the churn period are tagged as churners
+	-- Create tags: those with fewer transactions than a threshold in the churn period are tagged as churners. A binary version is also created. 
 	alter table Tags add Tag varchar(10)
 	update Tags 
 		set Tags.Tag = case 
@@ -38,6 +38,17 @@ begin
 		full join #OverallActivities
 		on Tags.UserId = #OverallActivities.UserId
 
+	alter table Tags add TagId varchar(10)
+	update Tags 
+		set Tags.TagId = case 
+							when ((OverallProductsPurchased-PrechurnProductsPurchased)<=(select ChurnThreshold from ChurnVars))  then '1'
+							else '0'
+						end
+		from Tags 
+		full join #OverallActivities
+		on Tags.UserId = #OverallActivities.UserId
+
+
 	alter table Tags 
 	drop column PrechurnProductsPurchased
 end
@@ -45,3 +56,4 @@ go
 
 execute CreateTag
 go
+

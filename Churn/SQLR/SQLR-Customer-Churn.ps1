@@ -83,17 +83,20 @@ $pwd = Read-Host 'Password:' -AsSecureString
 $password = [Runtime.InteropServices.Marshal]::PtrToStringAuto([Runtime.InteropServices.Marshal]::SecureStringToBSTR($pwd))
 
 ##########################################################################
-# Check the SQL server or database exists
+# Check if the SQL server exists
 ##########################################################################
-Invoke-Sqlcmd -ServerInstance $ServerName -Username $username -Password $password -Query "use $DBName" -ErrorAction SilentlyContinue
+$query = "IF NOT EXISTS(SELECT * FROM sys.databases WHERE NAME = '$DBName') CREATE DATABASE $DBName"
+Invoke-Sqlcmd -ServerInstance $ServerName -Username $username -Password $password -Query $query -ErrorAction SilentlyContinue
 if ($? -eq $false)
 {
     Write-Host -ForegroundColor Red "Failed the test to connect to SQL server: $ServerName database: $DBName !"
-    Write-Host -ForegroundColor Red "Plese make sure: `n`t 1. SQL Server: $ServerName exists;
-                                     `n`t 2. SQL database: $DBName exists;
-                                     `n`t 3. SQL user: $username has the right credential for SQL server access."
+    Write-Host -ForegroundColor Red "Please make sure: `n`t 1. SQL Server: $ServerName exists;
+                                     `n`t 2. SQL user: $username has the right credential for SQL server access."
     exit
 }
+
+$query = "USE $DBName;"
+Invoke-Sqlcmd -ServerInstance $ServerName -Username $username -Password $password -Query $query 
 
 ##########################################################################
 # Update the SQL scripts
@@ -131,7 +134,7 @@ if ($ans -eq 'y' -or $ans -eq 'Y')
             $tableSchema = $parentPath + "/data/" + $dataFile + ".xml"
             bcp $tableName format nul -c -x -f $tableSchema  -U $username -S $ServerName -P $password  -t ','
             Write-Host -ForeGroundColor 'magenta'("    Loading {0} to SQL table..." -f $dataFile)
-            bcp $tableName in $destination -t ',' -S $ServerName -f $tableSchema -F 1 -C "RAW" -b 20000 -U $username -P $password
+            bcp $tableName in $destination -t ',' -S $ServerName -f $tableSchema -F 2 -C "RAW" -b 20000 -U $username -P $password 
             Write-Host -ForeGroundColor 'magenta'("    Done...Loading {0} to SQL table..." -f $dataFile)
         }
     }

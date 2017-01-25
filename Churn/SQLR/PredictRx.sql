@@ -17,16 +17,14 @@ begin
   insert into ChurnPredictRx
   exec sp_execute_external_script @language = N'R',
                                   @script = N'
-library(ROCR)
 mod <- unserialize(as.raw(model));
 print(summary(mod))
-Scores<-rxPredict(modelObject = mod, data = InputDataSet, outData = NULL, 
-          predVarNames = "Score", type = "response", writeModelVars = FALSE, overwrite = TRUE);
-OutputDataSet <- data.frame(InputDataSet$UserId,InputDataSet$Tag,Scores)
-Scores$Tag <- InputDataSet$Tag
-predictROC <- rxRoc(actualVarName = "Tag", predVarNames = "TagPred1", data = Scores, numBreaks = 10) 
-auc = rxAuc(predictROC)
-OutputDataSet$Auc  =  rep(auc,nrow(InputDataSet))'
+Scores <- rxPredict(modelObject = mod, data = InputDataSet, outData = NULL, 
+                   predVarNames = "Score", type = "response", writeModelVars = FALSE, overwrite = TRUE);
+Scores$TagId <- as.numeric(as.character(InputDataSet$TagId))
+predictROC <- rxRoc(actualVarName = c("TagId"), predVarNames = c("Score"), data = Scores, numBreaks = 100)
+Auc <- rxAuc(predictROC)
+OutputDataSet <- data.frame(InputDataSet$UserId,InputDataSet$Tag,InputDataSet$TagId,Scores$Score,Auc)'
 ,@input_data_1 = @inquery
 ,@output_data_1_name = N'OutputDataSet'
 ,@params = N'@model varbinary(max)'
@@ -36,7 +34,7 @@ go
 
 declare @query_string nvarchar(max)
 set @query_string='
-select F.*, Tags.Tag from
+select F.*, Tags.Tag, Tags.TagId from
 (select a.* from Features a
 left outer join
 (
@@ -48,5 +46,6 @@ where b.UserId is null) F join Tags on F.UserId=Tags.UserId
 '
 execute PredictChurnRx @inquery = @query_string;
 go
+
 
 

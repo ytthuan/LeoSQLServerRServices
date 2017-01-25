@@ -34,7 +34,7 @@ create table ChurnVars
 	ChurnPeriod int,
 	ChurnThreshold int
 )
-insert into ChurnVars (ChurnPeriod,ChurnThreshold)   values (21, 0)
+insert into ChurnVars (ChurnPeriod,ChurnThreshold)        values (21, 0)
 
 DROP TABLE IF EXISTS ChurnModelR
 GO
@@ -58,7 +58,8 @@ GO
 create table ChurnPredictR
 (
        UserId varchar(50), 
-       Tag varchar(10),    
+       Tag varchar(10),   
+	   TagId char(1), 
        Score float,
 	   Auc float
 )
@@ -70,6 +71,7 @@ create table ChurnPredictRx
 (
        UserId varchar(50), 
        Tag varchar(10),    
+	   TagId char(1), 
        Score float,
 	   Auc float
 )
