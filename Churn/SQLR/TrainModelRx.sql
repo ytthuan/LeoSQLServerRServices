@@ -20,7 +20,7 @@ begin
 	UniqueTransactionId, UniqueItemId, UniqueLocation, UniqueProductCategory,
 	TotalQuantityperUniqueTransactionId, TotalQuantityperUniqueItemId, TotalQuantityperUniqueLocation, TotalQuantityperUniqueProductCategory, 
 	TotalValueperUniqueTransactionId, TotalValueperUniqueItemId, TotalValueperUniqueLocation, TotalValueperUniqueProductCategory,
-	Tag
+	TagId
     from Features
     tablesample (70 percent) repeatable (98052)
 	join Tags on Features.UserId=Tags.UserId
@@ -31,11 +31,11 @@ begin
                                   @script = N'
 
 ## Create model
-InputDataSet$Tag <- factor(InputDataSet$Tag)
+InputDataSet$TagId <- factor(InputDataSet$TagId)
 InputDataSet$Age <- factor(InputDataSet$Age)
 Vars <- rxGetVarNames(InputDataSet)
-Vars <- Vars[!Vars  %in% c("Tag")]
-formula <- as.formula(paste("Tag~", paste(Vars, collapse = "+")))
+Vars <- Vars[!Vars  %in% c("TagId")]
+formula <- as.formula(paste("TagId~", paste(Vars, collapse = "+")))
 InputDataSet$Address <- factor(InputDataSet$Address)
 logitObj <- rxLogit(formula = formula, data = InputDataSet)
 summary(logitObj)

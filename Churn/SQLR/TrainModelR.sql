@@ -20,7 +20,7 @@ begin
 	UniqueTransactionId, UniqueItemId, UniqueLocation, UniqueProductCategory,
 	TotalQuantityperUniqueTransactionId, TotalQuantityperUniqueItemId, TotalQuantityperUniqueLocation, TotalQuantityperUniqueProductCategory, 
 	TotalValueperUniqueTransactionId, TotalValueperUniqueItemId, TotalValueperUniqueLocation, TotalValueperUniqueProductCategory,
-	Tag
+	TagId
     from Features
     tablesample (70 percent) repeatable (98052)
 	join Tags on Features.UserId=Tags.UserId
@@ -31,10 +31,10 @@ begin
                                   @script = N'
 
 ## Create model
-InputDataSet$Tag <- factor(InputDataSet$Tag)
+InputDataSet$TagId <- factor(InputDataSet$TagId)
 InputDataSet$Age <- factor(InputDataSet$Age)
 InputDataSet$Address <- factor(InputDataSet$Address)
-logitObj <- glm(Tag ~ ., family = binomial, data = InputDataSet)
+logitObj <- glm(TagId ~ ., family = binomial, data = InputDataSet)
 summary(logitObj)
 
 ## Serialize model and put it in data frame
