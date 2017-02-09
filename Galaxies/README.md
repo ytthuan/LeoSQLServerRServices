@@ -10,3 +10,9 @@ This sample provides the supporting SQL and R scripts for the blogpost [How six 
 - train_NN_model.sql: stored procedure for training NN model with Microsoft ML
 - predict_NN_model.sql: stored procedure for scoring
 - trigger_predict_model.sql: script to invoke scoring.
+
+For end-to-end training and prediction the images could be downloaded from public storage.
+See this links for more info:
+http://skyserver.sdss.org/dr13/en/help/browser/browser.aspx#&&history=description+zoo2MainSpecz+U
+https://arxiv.org/pdf/1308.3496v2.pdf
+http://skyserver.sdss.org/dr13/en/tools/search/sql.aspx
