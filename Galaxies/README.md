@@ -13,6 +13,7 @@ This sample provides the supporting SQL and R scripts for the blogpost [How six 
 
 For end-to-end training and prediction the images could be downloaded from public storage.
 See this links for more info:
-http://skyserver.sdss.org/dr13/en/help/browser/browser.aspx#&&history=description+zoo2MainSpecz+U
-https://arxiv.org/pdf/1308.3496v2.pdf
-http://skyserver.sdss.org/dr13/en/tools/search/sql.aspx
+- [Morphological classifications of main-sample spectroscopic galaxies from Galaxy Zoo 2](http://skyserver.sdss.org/dr13/en/help/browser/browser.aspx#&&history=description+zoo2MainSpecz+U)
+- [Galaxy Zoo 2: detailed morphological classifications for
+304,122 galaxies from the Sloan Digital Sky Survey](https://arxiv.org/pdf/1308.3496v2.pdf)
+- [SkyServer SQL Search](http://skyserver.sdss.org/dr13/en/tools/search/sql.aspx)
