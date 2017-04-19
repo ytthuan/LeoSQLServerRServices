@@ -14,11 +14,11 @@ A key challenge in this use case is how to convert unstructured text feature int
 
 ## Hardware Specifications
 
-The hardware used in this tutorial is SQL Server 2016 Enterprise on Azure. This edition has been pre-configured with Microsoft R Server (in-database) installation. Microsoft R Server provides the option to develop high performance R solutions on Windows while connecting to the database or data source of your choice. The detailed hardware configuration is show as follows.
+The hardware used in this tutorial is '**SQL Server 2016 SP1 Enterprise on Windows Server 2016**' on Azure. This edition has been pre-configured with Microsoft R Server (in-database) installation. Microsoft R Server provides the option to develop high performance R solutions on Windows while connecting to the database or data source of your choice. The detailed hardware configuration is show as follows. Please follow [this instruction](https://docs.microsoft.com/en-us/azure/virtual-machines/windows/sql/virtual-machines-windows-portal-sql-server-provision) on how to provision a SQL Server virtual machine in the Azure Portal.
 
-
-| Attribute  | Description|
-|------------|------------|
+| Attribute  | Description |
+|------------|-------------|
+| SQL Server | DS15_V2 Standard |
 | Processor  | Intel(R) Xeon(R) CPU E5-2673 v3 @ 2.40 GHz, **20 Cores** in total |
 | Sockets    | 2 |
 | Memory     | 140 GB |
@@ -38,21 +38,21 @@ Three synthetic datasets were generated for the purpose of demonstrating the sce
 
 ## Enable to run R script within SQL query
 
-In order to run R script within SQL query, we first need to enable this functionality. You can enable the R Services when you are previsioning the VM. If you forgot to do so, we are showing the detailed steps to enable SQL Server to run R code.
+In order to run R script within SQL query, we first need to enable this functionality. You can enable the R Services when you are provisioning the VM. If you forgot to do so, we are showing the detailed steps to enable SQL Server to run R code.
 
-* **Step 1:** Run the following command to explicitly enable the R Services feature; otherwise, it will not be possible to invoke R scripts even if the feature has been installed by setup.
+* **Step 1:** Run the following SQL query to explicitly enable the R Services feature on SQL Server; otherwise, it will not be possible to invoke R scripts even if the feature has been installed by setup.
     ```sql
     Exec sp_configure 'external scripts enabled', 1
     Reconfigure with override
     ```
 * **Step 2:** Restart the SQL server for the SQL Server instance.
 
-* **Step 3:** Verify that the R feature is enabled by running the following command and checking that the run value is set to 1.
+* **Step 3:** Verify that the R feature is enabled by running the following command and checking that the returning value is set to 1.
     ```sql
     Exec sp_configure 'external scripts enabled'
     ```
 
-* **Step 4:** Run simple R scripts like the following in SQL Server Management Studio.
+* **Step 4:** Run a simple R scripts like the following in SQL Server Management Studio.
     ```sql
     exec sp_execute_external_script @language =N'R',
     @script=N'OutputDataSet<-InputDataSet',
@@ -98,7 +98,9 @@ We first need to create the database and tables for this problem. In total, we w
 | _dbo.PredictionsR_ | 5 | Table used to store all good matches |
 | _dbo.scoring\_stats_ | 8 | Scoring statistics |
 
-The SQL query can be found in file "***step1_create_database_and_tables.sql***" under "***SQLR***" folder. We created three memory-optimized tables (full durable) such that we can leverage the performance optimization using memory. Please pay attention to the "**WITH (MEMORY\_OPTIMIZED=ON)**" clause when creating _dbo.Resumes_, _dbo.Projects_, and _dbo.PredictionsR_ tables. Those three tables were configurated as memory optimized.
+The SQL query can be found in file "***step1_create_database_and_tables.sql***" under "***SQLR***" folder. The first optimization applied in this tutorial is memory optimized tables. We created three memory-optimized tables (full durable) such that we can leverage the performance optimization using memory. Please pay attention to the "**WITH (MEMORY\_OPTIMIZED=ON)**" clause when creating _dbo.Resumes_, _dbo.Projects_, and _dbo.PredictionsR_ tables. Those three tables were configurated as memory optimized. On SQL Server, before you can create a memory-optimized table you will need to create a FILEGROUP that you declare CONTAINS MEMORY\_OPTIMIZED\_DATA. In this instruction, the file group is created under F drive. There is a folder '**F:\\Data**' created to save the data in the SQL script. Please change it accordingly when you run the SQL script below.
+
+Those memory optimized tables help improve performance of OLTP applications through efficient, memory-optimized data access. The primary store for memory-optimized tables is main memory that rows in the table are read from and written to memory. The entire table resides in memory. While a second copy of the table data is maintained on disk, but only for durability purposes. Detailed information please refer to this [Introduction to Memory-Optimized Tables](https://docs.microsoft.com/en-us/sql/relational-databases/in-memory-oltp/introduction-to-memory-optimized-tables).
 
 ```sql
 USE master
@@ -134,10 +136,11 @@ GO
 --Memory optimized configurations
 ALTER DATABASE CURRENT SET MEMORY_OPTIMIZED_ELEVATE_TO_SNAPSHOT = ON
 GO
-ALTER DATABASE CURRENT SET COMPATIBILITY_LEVEL = 130 
+ALTER DATABASE CURRENT SET COMPATIBILITY_LEVEL = 130
 GO
 
-ALTER DATABASE ResumeMatching ADD FILEGROUP imoltp_mod CONTAINS MEMORY_OPTIMIZED_DATA 
+--Change the file group path accordingly
+ALTER DATABASE ResumeMatching ADD FILEGROUP imoltp_mod CONTAINS MEMORY_OPTIMIZED_DATA
 ALTER DATABASE ResumeMatching ADD FILE (name='imoltp_mod1', filename='F:\Data\imoltp_mod1') TO FILEGROUP imoltp_mod
 
 DROP TABLE IF EXISTS dbo.Resumes
@@ -317,7 +320,7 @@ GO
 
 ### **Load Dataset**
 
-We can direct download the dataset and store all those datasets into SQL talbes by executing the following SQL query. The details can be found in SQL script "***step2_load_data.sql***". And we are assuming you have downloaded all 3 csv files under folder "**C:\\resumematching\\Data\\**".
+We can directly download the datasets and store all those datasets into SQL talbes by executing the following SQL query. The details can be found in SQL script "***step2_load_data.sql***". And we are assuming you have downloaded all 3 csv files under folder "**C:\\resumematching\\Data\\**". _Please note that if you put those csv files under your home folder, SQL Server will NOT have access to read those files since SQL threads are under a special user group_.
 
 ```sql
 USE ResumeMatching
@@ -345,15 +348,17 @@ EXEC sp_execute_external_script
 
 The SQL Server optimizations is the key to handle this problem. Those optimizations can be find in the SQL query file ***step3_optimizations.sql*** under ***SQLR*** folder. We will only show the steps of those optimizations and configurations but not include the technical details of those optimizations.
 
-#### **Step 1: Setup Soft-NUMA**
+#### **Step 1: Set up Soft-NUMA**
 
-We will first setup soft-NUMA to enable the ability to partition service threads per NUMA node. And it generally increases scalability and performance by reducing IO and lazy writer bottlenecks on computers with many CPUs and no hardware NUMA. The SQL Server we used is a 20 cores Azure SQL Server 2016 with R Services, which has 2 NUMA sockets and each socket has 10 cores.
+We will first setup soft-NUMA to enable the ability to partition service threads per NUMA node. And it generally increases scalability and performance by reducing IO and lazy writer bottlenecks on computers with many CPUs and no hardware NUMA. The SQL Server we used is a 20 cores Azure SQL Server 2016 with R Services, which has 2 NUMA sockets and each socket contains 10 cores.
 
 ```sql
 -- Step 1: Setup Soft-NUMA
 alter server configuration
 set process affinity numanode = 0 to 1
 ```
+
+By default, SQL Server will use soft affinity and as a result the OS can move SQL threads to any CPU which may resulting unpredictability. This configuration will configure the SQL Server using hard affinity and improve the performance. This '[Understanding Non-uniform Memory Access](https://msdn.microsoft.com/en-us/library/ms178144.aspx)' blog will help you to better understand NUMA nodes.
 
 #### **Step 2: Determine the CPUs to be allocated per resource pool**
 
@@ -615,7 +620,7 @@ The training dataset is a synthetic dataset which contains of 50,000 rows of dat
 
 1. Train model (Gradient Boosted Decision Tree)
 
-1. Store model in database
+1. Store prediction model in database
 
 The joined dataset is then used to train a Gradient Boosted Decision Tree model with 100 trees. The model is stored in the database with a specific name such that we can choose which model we want to use during prediction. We created a stored procedure "_train\_model\_for\_matching_" and we can call this procedure to train a prediction model. Detailed SQL query please refer to "***step4_train_model.sql***".
 
@@ -693,7 +698,7 @@ We then train a prediction model by running the SQL query:
 EXEC [dbo].[train_model_for_matching] "rxBTrees"
 ```
 
-A prediction model named "rxBTrees" will be saved in table "_dbo.ClassificationModelR_".
+A prediction model named "_rxBTrees_" will be saved in table "_dbo.ClassificationModelR_".
 
 
 ## Prediction
@@ -789,13 +794,13 @@ BEGIN
 END
 ```
 
-This script will create a saved procedure called "score_for_matching_batch".
+This script will create a saved procedure called "score\_for\_matching\_batch".
 
 ## Concurrent Scoring
 
 We created a PowerShell script to use the Invoke-SqlCmd cmdlet to execute multiple concurrent scoring tasks. Since we have divided 20 CPUs into 4 buckets that each bucket contains 5 CPUs on the same NUMA node, the maximum concurrent is set to 8. In another word, each workload group will need to handle 2 scoring tasks. The reason we double the concurrent tasks is that when one task is finishing reading data and start scoring, the other one can start reading data from database.
 
-The PowerShell code called "***experiment.ps1***" can be found in the "***SQLR***" folder as well. And hereafter we are showing the code how to initiate the scoring tasks in parallel with a specific application name:
+The PowerShell code called "***experiment.ps1***" can be found in the "***SQLR***" folder as well. And hereafter we are showing the code how to initiate the scoring tasks in parallel with a specific application name. **Please note that you will need to update the _vServerName_ variable (it's been named 'SQLRTUTORIAL' here) accordingly to run the script on your machine**. The script will also use the previous trained model *_rxBTrees_*. So if you have changed your model name, please change it here as well.
 
 ```bash
 $count = 1
@@ -869,7 +874,7 @@ while (($EndCtr -le $TotalRows) -and ($count -le $num_workload_group))
 
 ## Get Results
 
-After running the PowerShell script to find best matches for an open job, all results will be write back to the database. In addition, we also write back the statistics of the prediction into table "***dbo.scoring_stats***". We also created a SQL script ***step6_scoring_stats.sql*** to query the running statistic result.
+After running the PowerShell script to find best matches for an open job, all results will be write back to the database. In addition, we also write back the statistics of the prediction into table "***dbo.scoring_stats***". A SQL script ***step6_scoring_stats.sql*** is created to query the running statistic result.
 
 ```sql
 declare @pid bigint = 1000001
