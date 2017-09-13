@@ -1,4 +1,4 @@
-#Machine Learning Templates with SQL Server 2016 R Services
+# Machine Learning Templates with SQL Server 2016 R Services
 
 In these examples, we will demonstrate how to develop and deploy end-to-end advanced analytics solutions with [SQL Server 2016 R Services](https://msdn.microsoft.com/en-us/library/mt674876.aspx). 
 
@@ -18,10 +18,10 @@ The available templates are listed below. Please check back often, as there will
 
 - **Predictive Maintenance**.  Predict machine failures.
 - **Customer Churn Prediction**.   Predict when a customer churn happens.
-- **Online Purchase Fraud Detection**. Predict if an online purchase transactions is fraudulent.  Versions of this template can be deployed from the Cortana Intelligence Gallery with [SQL](https://aka.ms/fraud-detection) or [HDInsight Spark Cluster](https://aka.ms/fraud-detection-hdi)
+- **Online Purchase Fraud Detection**. Predict if an online purchase transactions is fraudulent.  Versions of this template can be deployed from the Cortana Intelligence Gallery with [SQL Server](https://aka.ms/fraud-detection) or [HDInsight Spark Cluster](https://aka.ms/fraud-detection-hdi)
 - **Energy Demand Forecasting**. Forecast electricity demand of multiple regions. 
 - **Retail Forecasting** Forecast the product sales for a retail store.
-- **Campaign Management** Predict when and how to contact potential customers. Versions of this template can be deployed from the Cortana Intelligence Gallery with [SQL](https://aka.ms/campaignoptimization) or [HDInsight Spark Cluster](https://aka.ms/campaign-hdi)
+- **Campaign Management** Predict when and how to contact potential customers. Versions of this template can be deployed from the Cortana Intelligence Gallery with [SQL Server](https://aka.ms/campaignoptimization) or [HDInsight Spark Cluster](https://aka.ms/campaign-hdi)
 
 **Templates with SQL Server R Services**. In these templates, we show the two version of implementations:
  
@@ -34,9 +34,9 @@ The following is the directory structure for each template:
 * **R**	      This contains the R development code (Microsoft R Server). It runs in R IDE, with computation being done in-database (by setting compute context to SQL Server). 
 * **SQLR**    This contains the Stored SQL procedures from data processing to model deployment. It runs in SQL environment. A Powershell script is provided to invoke the modeling steps end-to-end. 
 
-**Performance Turning**. This folds provide a few tips on how to improve performance of running R script in SQL Server compute context.
+**Performance Turning**. This folder provide a few tips on how to improve performance of running R script in SQL Server compute context.
 
-**NOTE:** Please don't use "Download ZIP" to get this repository, as it will change the line endings in the data file. Use "git clone" to get a local copy of this repository. 
+**NOTE:** Please don't use "Download ZIP" to get this repository, as it will change the line endings in the data files. Use "git clone" to get a local copy of this repository. 
  
 This project has adopted the [Microsoft Open Source Code of Conduct](https://opensource.microsoft.com/codeofconduct/). For more information see the [Code of Conduct FAQ](https://opensource.microsoft.com/codeofconduct/faq/) or contact [opencode@microsoft.com](mailto:opencode@microsoft.com) with any additional questions or comments.
 
