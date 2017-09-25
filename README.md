@@ -1,5 +1,7 @@
 # Machine Learning Templates with SQL Server 2016 R Services
 
+> Discover more examples at [Microsoft Machine Learning Server](https://github.com/Microsoft/ML-Server)
+
 In these examples, we will demonstrate how to develop and deploy end-to-end advanced analytics solutions with [SQL Server 2016 R Services](https://msdn.microsoft.com/en-us/library/mt674876.aspx). 
 
 **Develop models in R IDE**. SQL Server 2016 R services allows Data Scientists to develop solutions in an R IDE (such as RStudio, Visual Studio R Tools) with Open Source R or Microsoft R Server, using data residing in SQL Server, and computing done in-database. 
