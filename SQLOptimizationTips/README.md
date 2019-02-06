@@ -358,7 +358,7 @@ alter server configuration
 set process affinity numanode = 0 to 1
 ```
 
-By default, SQL Server will use soft affinity and as a result the OS can move SQL threads to any CPU which may resulting unpredictability. This configuration will configure the SQL Server using hard affinity and improve the performance. This '[Understanding Non-uniform Memory Access](https://msdn.microsoft.com/en-us/library/ms178144.aspx)' blog will help you to better understand NUMA nodes.
+By default, SQL Server will use soft affinity and as a result the OS can move SQL threads to any CPU which may resulting unpredictability. This configuration will configure the SQL Server using hard affinity and improve the performance. This '[Understanding Non-uniform Memory Access](https://docs.microsoft.com/en-us/previous-versions/sql/sql-server-2008-r2/ms178144(v=sql.105))' blog will help you to better understand NUMA nodes.
 
 #### **Step 2: Determine the CPUs to be allocated per resource pool**
 
@@ -894,20 +894,20 @@ SQL Server 2016 with R Service provides a scalable solution to handle the resume
 
 ## Useful References
 
-[Configure and Manage Advanced Analytics Extensions](https://msdn.microsoft.com/en-US/library/mt590869.aspx)
+[Configure and Manage Advanced Analytics Extensions](https://docs.microsoft.com/en-us/sql/advanced-analytics/r/managing-and-monitoring-r-solutions)
 
-[Set up SQL Server R Services (In-Database)](https://msdn.microsoft.com/en-us/library/mt696069.aspx)
+[Set up SQL Server R Services (In-Database)](https://docs.microsoft.com/en-us/sql/advanced-analytics/install/sql-r-services-windows-install)
 
-[Use sqlBindR.exe to Upgrade an Instance of R Services](https://msdn.microsoft.com/en-US/library/mt791781.aspx)
+[Use sqlBindR.exe to Upgrade an Instance of R Services](https://docs.microsoft.com/en-us/sql/advanced-analytics/r/use-sqlbindr-exe-to-upgrade-an-instance-of-sql-server)
 
-[Recommendations and guidelines for the "max degree of parallelism" configuration option in SQL Server](https://support.microsoft.com/en-us/kb/2806535)
+[Recommendations and guidelines for the "max degree of parallelism" configuration option in SQL Server](https://support.microsoft.com/en-us/help/2806535/recommendations-and-guidelines-for-the-max-degree-of-parallelism-confi)
 
-[Resource Governance for R Services](https://msdn.microsoft.com/en-us/library/mt703708.aspx)
+[Resource Governance for R Services](https://docs.microsoft.com/en-us/sql/advanced-analytics/administration/resource-governance)
 
-[How to: Configure SQL Server to Use Soft-NUMA](https://technet.microsoft.com/en-us/library/ms345357(v=sql.105).aspx)
+[How to: Configure SQL Server to Use Soft-NUMA](https://docs.microsoft.com/en-us/previous-versions/sql/sql-server-2008-r2/ms345357(v=sql.105))
 
-[Resource Governor](https://msdn.microsoft.com/en-us/library/bb933866.aspx)
+[Resource Governor](https://docs.microsoft.com/en-us/sql/relational-databases/resource-governor/resource-governor)
 
 [SQL SERVER – Simple Example to Configure Resource Governor – Introduction to Resource Governor](http://blog.sqlauthority.com/2012/06/04/sql-server-simple-example-to-configure-resource-governor-introduction-to-resource-governor/)
 
-[How To: Create a Resource Pool for R](https://msdn.microsoft.com/en-us/library/mt703706.aspx)
+[How To: Create a Resource Pool for R](https://docs.microsoft.com/en-us/sql/advanced-analytics/administration/how-to-create-a-resource-pool)

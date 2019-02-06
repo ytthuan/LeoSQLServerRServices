@@ -14,7 +14,7 @@
 ##INTRODUCTION
 ------------
 
-This template demonstrates how to build a pipeline that automatically provides weekly retail forecasts of the next 52 weeks for each store and each product using [SQL Server R Services.](https://msdn.microsoft.com/en-us/library/mt674876.aspx). 
+This template demonstrates how to build a pipeline that automatically provides weekly retail forecasts of the next 52 weeks for each store and each product using [SQL Server R Services.](https://docs.microsoft.com/en-us/sql/advanced-analytics/what-is-sql-server-machine-learning). 
    
 Two modeling solutions are provided for this template :
 
@@ -42,7 +42,7 @@ To run the scripts, you must prepare the following environment:
  * A database on the instance in which the login has been granted the permission to create and execute stored procedures
  
  * For more information about SQL Server 2016 and SQL Server R Services, please visit:
-   https://msdn.microsoft.com/en-us/library/mt604847.aspx
+   https://docs.microsoft.com/en-us/sql/advanced-analytics/what-s-new-in-sql-server-machine-learning-services
 
 ###WORKFLOW AUTOMATION
 -------------------

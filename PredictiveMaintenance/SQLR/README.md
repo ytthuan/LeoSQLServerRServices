@@ -14,7 +14,7 @@
 ##INTRODUCTION
 ------------
 
-This template demonstrates how to build and deploy predictive maintenance models to predict asset failures using [SQL Server R Services](https://msdn.microsoft.com/en-us/library/mt674876.aspx). 
+This template demonstrates how to build and deploy predictive maintenance models to predict asset failures using [SQL Server ML Services]https://docs.microsoft.com/en-us/sql/advanced-analytics/what-is-sql-server-machine-learning). 
    
 Three modeling solutions are provided in this template to accomplish the following tasks:
 
@@ -44,8 +44,8 @@ To run the scripts, you must prepare the following environment:
  * An instance of SQL Server 2016 (Enterprise or Developer edition) CTP 3 or later, with SQL Server R Services installed and configured
  * A SQL login and password. The SQL login must have permissions to execute R scripts
  * A database on the instance in which the login has been granted the permission to create and execute stored procedures
- * The "plyr" and "zoo" R packages are needed. To install packages into the R Services environment please read here: https://msdn.microsoft.com/en-us/library/mt591989.aspx
- * For more information about SQL Server 2016 and SQL Server R Services, please visit: https://msdn.microsoft.com/en-us/library/mt604847.aspx
+ * The "plyr" and "zoo" R packages are needed. To install packages into the R Services environment please read here: https://docs.microsoft.com/en-us/sql/advanced-analytics/r/install-additional-r-packages-on-sql-server
+ * For more information about SQL Server 2016 and SQL Server R Services, please visit: https://docs.microsoft.com/en-us/sql/advanced-analytics/what-s-new-in-sql-server-machine-learning-services
 
 ###WORKFLOW AUTOMATION
 -------------------

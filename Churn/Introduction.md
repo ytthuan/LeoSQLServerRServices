@@ -1,6 +1,6 @@
-#Customer Churn Prediction Template with SQL Server 2016 R Services
+#Customer Churn Prediction Template with SQL Server ML Services
 
-In this template, we demonstrate how to develop and deploy end-to-end customer churn prediction models with [SQL Server 2016 R Services](https://msdn.microsoft.com/en-us/library/mt674876.aspx). 
+In this template, we demonstrate how to develop and deploy end-to-end customer churn prediction models with [SQL Server ML Services]https://docs.microsoft.com/en-us/sql/advanced-analytics/what-is-sql-server-machine-learning). 
 
 This template demonstrates customer churn modeling in a retail store scenario, using customer demographic data and shopping activity data:
 <table style="width:85%">

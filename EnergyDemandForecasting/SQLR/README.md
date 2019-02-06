@@ -11,20 +11,20 @@
 * **Cleanup**
 
 ##INTRODUCTION
-This template demonstrates how to use [SQL Server R Services](https://msdn.microsoft.com/en-us/library/mt674876.aspx) to build an end-to-end, on-prem solution for electricity demand forecasting. For a cloud-based solution using Cortana Analytics Suite(CAS), please see [CAS Solution Template: Demand Forecasting for Energy](https://gallery.cortanaanalytics.com/SolutionTemplate/Demand-Forecasting-for-Energy-1).The solution template includes a real time data simulator, feature engineering, model retraining, forecasting, and visualization.
+This template demonstrates how to use [SQL Server ML Services](https://docs.microsoft.com/en-us/sql/advanced-analytics/what-is-sql-server-machine-learning) to build an end-to-end, on-prem solution for electricity demand forecasting. For a cloud-based solution using Cortana Analytics Suite(CAS), please see [CAS Solution Template: Demand Forecasting for Energy](https://gallery.cortanaanalytics.com/SolutionTemplate/Demand-Forecasting-for-Energy-1).The solution template includes a real time data simulator, feature engineering, model retraining, forecasting, and visualization.
 ###SYSTEM REQUIREMENTS
-* **SQL Server 2016 with R Services.**
+* **SQL Server with ML Services.**
 You need SQL Server 2016 RC1 or later to deploy this template. SQL Server 2016 RC2 or later is recommended as the installation process is significantly simplified compared to earlier versions. If you don’t have access to any SQL Server, you have the following options:
   * Install SQL Server 2016 on you own computer or server. You can use both Windows and SQL Server Authentication in this case. Windows Authentication is recommended as no additional firewall configuration is needed.
   * Follow instructions [here](https://azure.microsoft.com/en-us/documentation/articles/virtual-machines-provision-sql-server/)  to provision a SQL server virtual machine in Azure. You will need an Azure subscription to do this. You can only use SQL Server Authentication to access a remote server.  
  
-  If you are using SQL Server 2016 RC2, follow the post installation instructions [here](https://msdn.microsoft.com/en-us/library/mt696069.aspx) to set up SQL Server R Services. 
+  If you are using SQL Server 2016 RC2, follow the post installation instructions [here](https://docs.microsoft.com/en-us/sql/advanced-analytics/install/sql-r-services-windows-install) to set up SQL Server R Services. 
 
 * **Login requirements.**
 The login you use to access the SQL Server and database needs to have the following permissions. **NOTE**: If the login is a member of the **sysadmin** server role, it has met all the requirements. You can check this in the “Security” section of the server using SQL Server Management Studio or Visual Studio.
   * Permission to create database. The login needs to be a member of the **dbcreator** server role to create new database. 
   * Permissions to read data and run R scripts in the database. If you followed the post-installation configuration steps when setting up R Services, your login should already have these permissions. 
-  * Access to SQL Server Agent. SQL Server Agent is used to schedule jobs in this template. Members of the **SQLAgentUserRole**, **SQLAgentReaderRole**, and **SQLAgentOperatorRole** fixed database roles in msdb, and members of the **sysadmin** fixed server role have access to SQL Server Agent. A user that does not belong to any of these roles cannot use SQL Server Agent. For more information on the roles used by SQL Server Agent, see [Implement SQL Server Agent Security](https://msdn.microsoft.com/en-us/library/ms190926.aspx). 
+  * Access to SQL Server Agent. SQL Server Agent is used to schedule jobs in this template. Members of the **SQLAgentUserRole**, **SQLAgentReaderRole**, and **SQLAgentOperatorRole** fixed database roles in msdb, and members of the **sysadmin** fixed server role have access to SQL Server Agent. A user that does not belong to any of these roles cannot use SQL Server Agent. For more information on the roles used by SQL Server Agent, see [Implement SQL Server Agent Security](https://docs.microsoft.com/en-us/sql/ssms/agent/implement-sql-server-agent-security). 
 * **Local client requirements.**
 On the computer where you will run the deployment script, you need the following programs installed:
   * Windows PowerShell. Windows PowerShell can be downloaded from [here](https://www.microsoft.com/en-us/download/details.aspx?id=42554). 

@@ -1,6 +1,6 @@
 #Predictive Maintenance Template with SQL Server 2016 R Services
 
-In this template, we demonstrate how to develop and deploy end-to-end Predictive Maintenance solutions with [SQL Server 2016 R Services](https://msdn.microsoft.com/en-us/library/mt674876.aspx). 
+In this template, we demonstrate how to develop and deploy end-to-end Predictive Maintenance solutions with [SQL Server ML Services](https://docs.microsoft.com/en-us/sql/advanced-analytics/what-is-sql-server-machine-learning). 
 
 In this template, we solve the following three problems:
 

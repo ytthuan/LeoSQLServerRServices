@@ -1,6 +1,6 @@
 #Retail Forecasting Template with SQL Server 2016 R Services
 
-In this template, we demonstrate how to develop and deploy end-to-end Retail Forecasting solutions with [SQL Server 2016 R Services](https://msdn.microsoft.com/en-us/library/mt674876.aspx). 
+In this template, we demonstrate how to develop and deploy end-to-end Retail Forecasting solutions with [SQL Server 2016 R Services](https://docs.microsoft.com/en-us/sql/advanced-analytics/what-is-sql-server-machine-learning). 
 
 Accurate and timely forecast in retail business drives success. It is an essential enabler of supply and inventory planning, product pricing, promotion, and placement. This template will demonstrate how to build a retail forecasting solution with SQL and Microsoft R services using the sales data from the retail industry. The sample data has been anonymized and transformed before being used in this sample. 
 

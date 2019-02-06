@@ -1,7 +1,7 @@
-CUSTOMER CHURN TEMPLATE on MICROSOFT SQL SERVER R SERVICES
+CUSTOMER CHURN TEMPLATE on MICROSOFT SQL SERVER ML SERVICES
 ----------------------------------------------------------
 
-This template demonstrates how to build and deploy a customer churn prediction model in a retail scenario using [SQL Server R Services](https://msdn.microsoft.com/en-us/library/mt604845.aspx). For a full description of the template, visit the [template](http://gallery.cortanaanalytics.com/Collection/Retail-Customer-Churn-Prediction-Template-1) in Cortana Analytics gallery.
+This template demonstrates how to build and deploy a customer churn prediction model in a retail scenario using [SQL Server ML Services](https://docs.microsoft.com/en-us/sql/advanced-analytics/r/sql-server-r-services). For a full description of the template, visit the [template](http://gallery.cortanaanalytics.com/Collection/Retail-Customer-Churn-Prediction-Template-1) in Cortana Analytics gallery.
 
 
 REQUIREMENTS
@@ -9,12 +9,12 @@ REQUIREMENTS
 
 To run the scripts, you must prepare the following environment:
 
- * An instance of SQL Server 2016 CTP 3 or later, with SQL Server R Services installed and configured
+ * An instance of SQL Server 2016 CTP 3 or later, with SQL Server ML Services installed and configured
  * A SQL Server user and password. The SQL Server user must have permissions to execute R scripts
  * A database on the instance in which the user has been granted the permission to create and execute stored procedures
  
- * For more information about SQL Server 2016 and SQL Server R Services, please visit:
-   https://msdn.microsoft.com/en-us/library/mt604847.aspx
+ * For more information about SQL Server ML Services, please visit:
+   https://docs.microsoft.com/en-us/sql/advanced-analytics/what-s-new-in-sql-server-machine-learning-services
  
  
 WORKFLOW

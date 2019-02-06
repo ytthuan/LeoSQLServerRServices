@@ -9,9 +9,9 @@ In this template, we demonstrate how to develop a Predictive Maintenance solutio
 * Data visualization and multi-class classification model is done via R code running on SQL Server
 
 ##Implementation prerequisites: 
-* SQL Server 2016 with R Services: https://msdn.microsoft.com/en-us/library/mt696069.aspx 
+* SQL Server 2016 with R Services: https://docs.microsoft.com/en-us/sql/advanced-analytics/install/sql-r-services-windows-install
 
-* R IDE such as R Studio or R Tools for Visual Studio to access the data from the server: https://msdn.microsoft.com/en-us/microsoft-r/install-r-client-windows 
+* R IDE such as R Studio or R Tools for Visual Studio to access the data from the server: https://docs.microsoft.com/en-us/machine-learning-server/r-client/what-is-microsoft-r-client
 
 * Git Large File Storage: this is needed to download the large CSV files from Github: https://github.com/github/git-lfs, https://github.com/github/git-lfs/wiki/Installation
 
@@ -65,9 +65,9 @@ The prediction problem for this example scenario is to compute the probability t
 For predictive maintenance problems, a time-dependent splitting strategy is used to estimate performance which is done by validating and testing on examples that are later in time than the training examples. For a time-dependent split, a point in time is picked and model is trained on examples up to that point in time, and validated on the examples after that point assuming that the future data after the splitting point is not known. 
 
 ##Implementation process: 
-* Create your SQL Server, then enable [R services](https://msdn.microsoft.com/en-us/library/mt696069.aspx).
+* Create your SQL Server, then enable [ML services](https://docs.microsoft.com/en-us/sql/advanced-analytics/install/sql-r-services-windows-install).
 
-* Install any R IDE with [Microsoft R client](https://msdn.microsoft.com/en-us/microsoft-r/install-r-client-windows). Ensure to check your R code can access your SQL Server DB with the credentials.   
+* Install any R IDE with [Microsoft R client](https://docs.microsoft.com/en-us/machine-learning-server/r-client/what-is-microsoft-r-client). Ensure to check your R code can access your SQL Server DB with the credentials.   
 
 * In the SQL Server, create a database where you would like to load the datasets and perform feature engineering. Then run the SQL scripts in this order: 
 
