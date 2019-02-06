@@ -44,9 +44,8 @@ To run the scripts, you must prepare the following environment:
  * An instance of SQL Server 2016 (Enterprise or Developer edition) CTP 3 or later, with SQL Server R Services installed and configured
  * A SQL login and password. The SQL login must have permissions to execute R scripts
  * A database on the instance in which the login has been granted the permission to create and execute stored procedures
- 
- * For more information about SQL Server 2016 and SQL Server R Services, please visit:
-   https://msdn.microsoft.com/en-us/library/mt604847.aspx
+ * The "plyr" and "zoo" R packages are needed. To install packages into the R Services environment please read here: https://msdn.microsoft.com/en-us/library/mt591989.aspx
+ * For more information about SQL Server 2016 and SQL Server R Services, please visit: https://msdn.microsoft.com/en-us/library/mt604847.aspx
 
 ###WORKFLOW AUTOMATION
 -------------------
@@ -57,15 +56,15 @@ The following graph shows the overall work flow. The blue block represents each 
 
 The end-to-end workflow is fully automated by using a PowerShell script. To learn how to run the script, open a PowerShell command prompt, and type:
 
-	Get-Help SQLR-Predictive-Maintenance.ps1 
+	Get-Help .\SQLR-Predictive-Maintenance.ps1 
 
 To train and evaluate the models, you may run it as:
 
-	SQLR-Predictive-Maintenance.ps1 -server [SQL Server instance name] -dbname [database name] 
+	SQLR-Predictive-Maintenance.ps1 -ServerName [SQL Server instance name] -DBName [database name] 
 
 To score the production data, you  may specify the -Score option:
 
-	SQLR-Predictive-Maintenance.ps1 -server [SQL Server instance name] -dbname [database name] -Score
+	SQLR-Predictive-Maintenance.ps1 -ServerName [SQL Server instance name] -DBName [database name] -Score
 
 The following chart shows the workflow. In the chart, the blue parallelogram represents the action to take. Before each step, the user will have the choice to continue, skip or exit. 
 
