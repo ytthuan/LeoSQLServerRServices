@@ -185,6 +185,7 @@ rxDataStep(inData = inDataSource,
 ## Create features from the raw data by computing the rolling means
 ## Only the last cycle of each test engine is selected for prediction
 ####################################################################################################
+library(zoo)
 create_features <- function(data) {
   create_rolling_stats <- function(data) {
     data <- data[, sensor]
