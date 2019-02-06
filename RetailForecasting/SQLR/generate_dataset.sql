@@ -119,3 +119,11 @@ rxDataStep(inData = test_data,
 ## Cleanup
 ####################################################################################################
 rm(list = ls())'
+, @input_data_1 = @inquery
+, @params = N'@connection_string varchar(300), @test_length int'
+, @connection_string = @connectionString  
+, @test_length = @testLength                     
+END
+
+;
+GO
