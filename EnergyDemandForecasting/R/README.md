@@ -1,3 +1,4 @@
+Energy demand forecasting is an important capability for network-related services such as utilities and energy. Demand forecasting allows for network optimization and reduction of outages due to peak load.
 This directory contains R (Microsoft ML Server) codes for Energy Demand Forecasting Template with SQL Server ML Services.  
 The script main.R can be run from an R IDE, which will go through each step of the model development process of this template.  
 The following scripts are included:

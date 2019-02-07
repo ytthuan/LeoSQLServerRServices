@@ -1,5 +1,6 @@
 # Customer Churn Prediction Template with SQL Server ML Services
-
+Understanding which customers run the risk of churning it paramount in many industries, including retail and finance.
+Being able to predict when a customer is likely to churn helps retain them, by for example allowing for tailored interaction with the customer.
 In this template, we demonstrate how to develop and deploy end-to-end customer churn prediction models with [SQL Server ML Services](https://docs.microsoft.com/en-us/sql/advanced-analytics/what-is-sql-server-machine-learning). 
 
 This template demonstrates customer churn modeling in a retail store scenario, using customer demographic data and shopping activity data:

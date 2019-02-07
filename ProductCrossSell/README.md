@@ -1,6 +1,6 @@
 # Retail Customer Cross-sell Template with SQL Server Machine Learning ML Services
 
-In this template, we demonstrate how to develop and deploy end-to-end customer cross-sell prediction models with SQL Server Machine Learning Services.
+In this template, we demonstrate how to develop and deploy end-to-end customer cross-sell prediction models with SQL Server Machine Learning Services, most applicable to retail, services and finance industries.
 
 This template demonstrates customer cross-sell modeling in a retail scenario, using customer purchase history data:
 

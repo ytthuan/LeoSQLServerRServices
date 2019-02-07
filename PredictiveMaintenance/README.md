@@ -1,6 +1,6 @@
 # Predictive Maintenance Template with SQL Server ML Services
 
-In this template, we demonstrate how to develop and deploy end-to-end Predictive Maintenance solutions with [SQL Server ML Services](https://docs.microsoft.com/en-us/sql/advanced-analytics/what-is-sql-server-machine-learning). 
+In this template, we demonstrate how to develop and deploy end-to-end Predictive Maintenance solutions with [SQL Server ML Services](https://docs.microsoft.com/en-us/sql/advanced-analytics/what-is-sql-server-machine-learning). Predict machine failures before they happen, to minimize down time, reduce costs and increase productivity. This is an important scenario for manufacturing. This template is comparable to the other [Predictive Maintenance template](https://github.com/Microsoft/SQL-Server-R-Services-Samples/blob/master/PredictiveMaintenanceModelingGuide). The problem is approached differently.|
 
 In this template, we solve the following three problems:
 

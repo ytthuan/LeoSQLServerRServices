@@ -1,6 +1,6 @@
 # Galaxies classification with Deep Learning from Microsoft ML using SQL Server ML Services
-
-This sample provides the supporting SQL and R scripts for the blog post [How six lines of code + SQL Server can bring Deep Learning to ANY App](https://blogs.technet.microsoft.com/dataplatforminsider/2017/01/05/how-six-lines-of-code-sql-server-can-bring-deep-learning-to-any-app/).
+This samples shows how to use deep learning and image data to classify galaxies. The scenario is specific to research but can be generalized to image classification for many other industries.
+It provides the supporting SQL and R scripts for the blog post [How six lines of code + SQL Server can bring Deep Learning to ANY App](https://blogs.technet.microsoft.com/dataplatforminsider/2017/01/05/how-six-lines-of-code-sql-server-can-bring-deep-learning-to-any-app/).
 
 **Data**: [Galaxy Zoo](https://www.galaxyzoo.org/) project was used as source of labeled training data.
 

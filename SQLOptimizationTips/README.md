@@ -1,8 +1,8 @@
 # Resume matching: SQL Optimization Tips and Tricks for Analytics Services
 
 ## Introduction
-
-In SQL Server 2016, a new function, which what was called R services, has been added. Later it was renamed to ML Services. SQL Server ML Services provides a platform for operationalize R and Python scripts using T-SQL to develop and deploy intelligent applications. This Markdown file will describe the design and key optimization techniques for a resume-matching scenario that demonstrates how we can find the best candidates for a job opening among millions of resumes within a few seconds.
+This template focuses on optimizing the performance of machine learning solutions integrated with SQL Server by demonstrating how we can find the best candidates for a job opening among millions of resumes within a few seconds. 
+In SQL Server 2016, a new function, which what was called R services, has been added. Later it was renamed to ML Services. SQL Server ML Services provides a platform for operationalize R and Python scripts using T-SQL to develop and deploy intelligent applications. This Markdown file will describe the design and key optimization techniques for this scenario.
 
 ## Use Case
 

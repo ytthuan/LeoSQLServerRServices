@@ -1,5 +1,5 @@
 # Retail Forecasting Template with SQL Server ML Services
-
+Predicting the product sales for a retail store helps reduce warehousing cost and save time.
 In this template, we demonstrate how to develop and deploy end-to-end Retail Forecasting solutions with [SQL Server ML Services](https://docs.microsoft.com/en-us/sql/advanced-analytics/what-is-sql-server-machine-learning). 
 
 Accurate and timely forecast in retail business drives success. It is an essential enabler of supply and inventory planning, product pricing, promotion, and placement. This template will demonstrate how to build a retail forecasting solution with SQL and Microsoft ML services using the sales data from the retail industry. The sample data has been anonymized and transformed before being used in this sample. 

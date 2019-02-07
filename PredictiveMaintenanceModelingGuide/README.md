@@ -1,4 +1,6 @@
 # SQL ML Services: Predictive Maintenance Modeling Guide
+Predicting machine failures before they happen - an important scenario for manufacturing. This template is comparable to the other [Predictive Maintenance template](https://github.com/Microsoft/SQL-Server-R-Services-Samples/blob/master/PredictiveMaintenance). The problem is approached differently.
+
 In this template, we demonstrate how to develop a Predictive Maintenance solution with SQL Server ML Services where the process is aligned with the existing R Notebook published in the [Cortana Intelligence Gallery](https://gallery.cortanaintelligence.com/Notebook/Predictive-Maintenance-Modelling-Guide-R-Notebook-1) but works with a larger dataset. 
 
 ##In this template:

@@ -26,22 +26,22 @@ The available templates are listed below.
 
 
 
-| Template | Description |
+| Template | Documentation |
 | -------- | -------- |
-|[Campaign Optimization](https://github.com/Microsoft/r-server-campaign-optimization)|Predict when and how to contact potential customers.|
-|[Customer Churn](Churn)|Being able to predict when a customer is likely to churn helps retain them.|
-|[Energy Demand Forecasting](EnergyDemandForecasting)|Forecast electricity demands for multiple regions.|
-|[Fraud Detection](https://github.com/Microsoft/r-server-fraud-detection) |Predict if an online purchase transaction is fraudulent.|
-|[Galaxy Classification](Galaxies)|This template shows how to use deep learning and image data to classify galaxies.|
-|[Length of Stay](https://github.com/Microsoft/r-server-hospital-length-of-stay)|Predicting patients length of stay.|
-|[Loan Chargeoff Prediction](https://github.com/Microsoft/r-server-loan-chargeoff)|Predicting probability of loans getting charged off.|
-|[Loan Credit Risk](https://github.com/Microsoft/r-server-loan-credit-risk)|Predict risk of customers defaulting on loans.|
-|[Predictive Maintenance (1)](PredictiveMaintenance)|Predict machine failures before they happen, to minimize down time, reduce costs and increase productivity. This template is comparable to the other Predictive Maintenance template. The problem is approached differently.|
-|[Predictive Maintenance (2)](PredictiveMaintenanceModelingGuide)|Predicting machine failures before they happen. This template is comparable to the other Predictive Maintenance template. The problem is approached differently.|
-|[Product Cross Sell](ProductCrossSell)|Demonstrates how to develop and deploy end-to-end customer cross-sell prediction models.|
-|[Resume Matching](SQLOptimizationTips)|This template focuses on optimizing the performance of machine learning solutions integrated with SQL Server by demonstrating how we can find the best candidates for a job opening among millions of resumes within a few seconds.| 
-|[Retail Forecasting](RetailForecasting)|Predicting the product sales for a retail store helps reduce warehousing cost and save time.|
-|[Text Classification](https://github.com/Microsoft/ml-server-text-classification)|Classify text (such as news messages) into groups by subject.|
+|[Campaign Optimization](https://github.com/Microsoft/r-server-campaign-optimization)|[Website](https://microsoft.github.io/r-server-campaign-optimization/)|
+|[Customer Churn](Churn)|[Repository](Churn)|
+|[Energy Demand Forecasting](EnergyDemandForecasting)|[Repository](EnergyDemandForecasting)|
+|[Fraud Detection](https://github.com/Microsoft/r-server-fraud-detection) |[Website](https://microsoft.github.io/r-server-fraud-detection/)|
+|[Galaxy Classification](Galaxies)|[Repository](https://github.com/Microsoft/SQL-Server-R-Services-Samples/blob/master/Galaxies)|
+|[Length of Stay](https://github.com/Microsoft/r-server-hospital-length-of-stay)|[Website](https://microsoft.github.io/r-server-hospital-length-of-stay/)|
+|[Loan Chargeoff Prediction](https://github.com/Microsoft/r-server-loan-chargeoff)|[Website](https://microsoft.github.io//r-server-loan-chargeoff/)|
+|[Loan Credit Risk](https://github.com/Microsoft/r-server-loan-credit-risk)|[Website](https://microsoft.github.io/r-server-loan-credit-risk/)|
+|[Predictive Maintenance (1)](PredictiveMaintenance)|[Repository](PredictiveMaintenace)|
+|[Predictive Maintenance (2)](PredictiveMaintenanceModelingGuide)|[Repository](PredictiveMaintenanceModelingGuide)|
+|[Product Cross Sell](ProductCrossSell)|[Repository](ProductCrossSell)|
+|[Resume Matching](SQLOptimizationTips)|[Repository](SQLOptimizationTips)|
+|[Retail Forecasting](RetailForecasting)|[Repository](RetailForecasting)|
+|[Text Classification](https://github.com/Microsoft/ml-server-text-classification)|[Website](https://microsoft.github.io/ml-server-text-classification/)|
 
 ### Templates with SQL Server ML Services
 In these templates, we show the two version of implementations:
