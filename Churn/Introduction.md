@@ -20,7 +20,7 @@ This template demonstrates customer churn modeling in a retail store scenario, u
 
 This template is the on-prem equivalent of the [template](https://gallery.cortanaanalytics.com/Collection/Predictive-Maintenance-Template-3) in Cortana Analytics gallery.
 
-This templates demonstrate how to use SQL stored procedures to do model development and operationalization. The data processing and feature engineering steps are implemented using pure SQL, while the model training, evaluation, and prediction scoring are done using SQL procedures calling R (Microsoft R Server) code, the capability provided by SQL Server R Services. These procedures can be run within SQL environment (such as SQL Server Management Studio) or called by applications to make predictions. A powershell script is provided to run the steps end-to-end. 
+This templates demonstrate how to use SQL stored procedures to do model development and operationalization. The data processing and feature engineering steps are implemented using pure SQL, while the model training, evaluation, and prediction scoring are done using SQL procedures calling R (Microsoft ML Server) code, the capability provided by SQL Server ML Services. These procedures can be run within SQL environment (such as SQL Server Management Studio) or called by applications to make predictions. A powershell script is provided to run the steps end-to-end. 
 
 The following is the directory structure for this template:
 

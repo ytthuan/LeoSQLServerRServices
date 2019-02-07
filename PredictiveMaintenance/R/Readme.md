@@ -1,4 +1,4 @@
-This is the R (Microsoft R Server) code for Predictive Maintenance template using SQL Server R Services. 
+This is the R (Microsoft ML Server) code for Predictive Maintenance template using SQL Server R Services. 
 
 The template solves the following problems:
 

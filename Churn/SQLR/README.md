@@ -20,7 +20,7 @@ To run the scripts, you must prepare the following environment:
 WORKFLOW
 -------------------
 
-The template demonstrates the following steps in building the customer churn model with SQL Server R Services:
+The template demonstrates the following steps in building the customer churn model with SQL Server ML Services:
 
 * Data uploading
 * Data processing (tagging)
@@ -84,14 +84,14 @@ Using the `bcp` utility, the script retrieves the users and activities files fro
   </tr>
   </tr>
     <td>ChurnModelRx</td>
-    <td>Churn model trained using Microsoft R Server</td>
+    <td>Churn model trained using Microsoft ML Server</td>
   </tr>
     <td>ChurnPredictR</td>
     <td>Prediction results based on open-source R model</td>
   </tr>
   </tr>
     <td>ChurnPredictRx</td>
-    <td>Prediction results based on Microsoft R Server model</td>
+    <td>Prediction results based on Microsoft ML Server model</td>
 </table>
 
 
@@ -133,14 +133,14 @@ In this step, `TrainModelR.sql` or `TrainModelRx.sql` are invoked to train the m
   </tr>
   <tr>
     <td>TrainModelRx.sql</td>
-    <td>Train model using Mcirosoft R Server algorithms and packages (RevScaleR)</td>
+    <td>Train model using Microsoft ML Server algorithms and packages (RevScaleR)</td>
   </tr>
 </table> 
 
 STEP 4: PREDICTION
 ----------------------------------
 
-In this step, `PredictR.sql` or `PredictRx.sql` are invoked to make predictions with the models trained in the previous steps on the test data (30% of total data) and performance metrics is evaluated. Similarly to previous step, `PredictR.sql` uses the model trained with open source R packages, and make predictions with open source R packages, whereas `PredictRx.sql` uses the model trained using the Microsoft R Server and predicts with the rx functions in RevScaleR package. 
+In this step, `PredictR.sql` or `PredictRx.sql` are invoked to make predictions with the models trained in the previous steps on the test data (30% of total data) and performance metrics is evaluated. Similarly to previous step, `PredictR.sql` uses the model trained with open source R packages, and make predictions with open source R packages, whereas `PredictRx.sql` uses the model trained using the Microsoft ML Server and predicts with the rx functions in RevScaleR package. 
 
 The results are stored in a table with the following columns:
 

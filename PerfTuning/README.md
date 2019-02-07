@@ -11,7 +11,7 @@ The directory contents are as follows:
 **Data**
 This folder contains the data files needed before running the scripts. Due to size limit in Github, the files were not uploaded to Git. You need to download them from the following links and store them under Data folder. You should also decompress airline-cleaned-10M.7z file before running the scripts.
 
-> - **airline.xdf** (Available at https://sqlrperftuning.blob.core.windows.net/perftuningdb/airline10M.xdf) <p>Contains 10M rows (compressed) of data from airline database using Microsoft R Server xdf format.</p> <br/>
+> - **airline.xdf** (Available at https://sqlrperftuning.blob.core.windows.net/perftuningdb/airline10M.xdf) <p>Contains 10M rows (compressed) of data from airline database using Microsoft ML Server xdf format.</p> <br/>
 
 > - **airline-cleaned-10M.7z** (Available at https://sqlrperftuning.blob.core.windows.net/perftuningdb/airline-cleaned-10M.7z) <p>A 7zip compressed csv file that has 10M rows of cleaned up airline data. Used for creating airline columnar table in the database. Decompress before running scripts.</p>
 

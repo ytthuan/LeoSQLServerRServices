@@ -106,7 +106,7 @@ Table name|Description
 ----------|-----------
 InputAllFeatures|Features generated from historical demand data and temperature data for model training
 ###STEP 3: TRAIN AND PERSIST MODEL
-The stored procedure usp_trainModel gets features from table InputAllFeatures and trains a Random Forest Regression model using the high performance analytics algorithm rxDForest in Microsoft R Server (MRS). The stored procedure usp_persistModel calls usp_trainModel and saves the trained model to table Model. 
+The stored procedure usp_trainModel gets features from table InputAllFeatures and trains a Random Forest Regression model using the high performance analytics algorithm rxDForest in Microsoft ML Server (MRS). The stored procedure usp_persistModel calls usp_trainModel and saves the trained model to table Model. 
 
 **Input table**: InputAllFeatures  
 **Stored procedures**:

@@ -14,7 +14,7 @@ A key challenge in this use case is how to convert unstructured text feature int
 
 ## Hardware Specifications
 
-The hardware used in this tutorial is '**SQL Server 2016 SP1 Enterprise on Windows Server 2016**' on Azure. This edition has been pre-configured with Microsoft R Server (in-database) installation. Microsoft R Server provides the option to develop high performance R solutions on Windows while connecting to the database or data source of your choice. The detailed hardware configuration is show as follows. Please follow [this instruction](https://docs.microsoft.com/en-us/azure/virtual-machines/windows/sql/virtual-machines-windows-portal-sql-server-provision) on how to provision a SQL Server virtual machine in the Azure Portal.
+The hardware used in this tutorial is '**SQL Server 2016 SP1 Enterprise on Windows Server 2016**' on Azure. This edition has been pre-configured with Microsoft ML Server (in-database) installation. Microsoft ML Server provides the option to develop high performance R solutions on Windows while connecting to the database or data source of your choice. The detailed hardware configuration is show as follows. Please follow [this instruction](https://docs.microsoft.com/en-us/azure/virtual-machines/windows/sql/virtual-machines-windows-portal-sql-server-provision) on how to provision a SQL Server virtual machine in the Azure Portal.
 
 | Attribute  | Description |
 |------------|-------------|

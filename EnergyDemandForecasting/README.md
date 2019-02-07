@@ -11,7 +11,7 @@ Below is the directory structure for this template:
 
 * **SQLR**:    SQL stored procedures for data simulation, data preprocessing, feature engineering, model training and scoring. The stored procedures are run on a SQL server.
 * **Data**:    Sample data for running R scripts.
-* **R**:	      R development code (Microsoft R Server). It runs in R IDE, with computation being done in-database (by setting compute context to SQL Server).  
+* **R**:	      R development code (Microsoft ML Server). It runs in R IDE, with computation being done in-database (by setting compute context to SQL Server).  
 
 See Readme files in each directory for detailed instructions.
 
