@@ -2,7 +2,8 @@
 
 > Discover more examples at [Microsoft Machine Learning Server](https://github.com/Microsoft/ML-Server)
 
-In these examples, we will demonstrate how to develop and deploy end-to-end advanced analytics solutions with [SQL Server  ML Services](https://docs.microsoft.com/en-us/sql/advanced-analytics/what-is-sql-server-machine-learning). 
+In these examples, we will demonstrate how to develop and deploy end-to-end advanced analytics solutions with [SQL Server  ML Services](https://docs.microsoft.com/en-us/sql/advanced-analytics/what-is-sql-server-machine-learning). The samples provided here are created in R.
+Samples in Python are available in [the ML Server Python Samples repository](https://github.com/Microsoft/ML-Server-Python-Samples).
 
 ## About SQL Server ML Services
 
