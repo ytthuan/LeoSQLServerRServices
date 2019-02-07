@@ -31,7 +31,7 @@ The available templates are listed below.
 |[Campaign Optimization](https://github.com/Microsoft/r-server-campaign-optimization)|Retail<br/>Finance<br/>Services|Predict when and how to contact potential customers.|
 |[Customer Churn](Churn)|Retail<br/>Finance<br/>Services|Being able to predict when a customer is likely to churn helps retain them.|
 |[Energy Demand Forecasting](EnergyDemandForecasting)|Energy<br/>Utilities| Forecast electricity demands for multiple regions.|
-|[Fraud Detection]https://github.com/(Microsoft/r-server-fraud-detection)|Retail<br/>Finance<br/>Services|Predict if an online purchase transaction is fraudulent.|
+|[Fraud Detection](https://github.com/(Microsoft/r-server-fraud-detection)|Retail<br/>Finance<br/>Services|Predict if an online purchase transaction is fraudulent.|
 |[Galaxy Classification](Galaxies)|Research|This template shows how to use deep learning and image data to classify galaxies.|
 |[Length of Stay](https://github.com/Microsoft/r-server-hospital-length-of-stay)|Healthcare|Predicting patients length of stay.|
 |[Loan Chargeoff Prediction](https://github.com/Microsoft//r-server-loan-chargeoff)|Finance|Predicting probability of loans getting charged off.|
