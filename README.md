@@ -34,7 +34,7 @@ The available templates are listed below.
 |[Fraud Detection](https://github.com/(Microsoft/r-server-fraud-detection)|Retail<br/>Finance<br/>Services|Predict if an online purchase transaction is fraudulent.|
 |[Galaxy Classification](Galaxies)|Research|This template shows how to use deep learning and image data to classify galaxies.|
 |[Length of Stay](https://github.com/Microsoft/r-server-hospital-length-of-stay)|Healthcare|Predicting patients length of stay.|
-|[Loan Chargeoff Prediction](https://github.com/Microsoft//r-server-loan-chargeoff)|Finance|Predicting probability of loans getting charged off.|
+|[Loan Chargeoff Prediction](https://github.com/Microsoft/r-server-loan-chargeoff)|Finance|Predicting probability of loans getting charged off.|
 |[Loan Credit Risk](https://github.com/Microsoft/r-server-loan-credit-risk)|Finance|Predict risk of customers defaulting on loans.|
 |[Predictive Maintenance (1)](PredictiveMaintenance)|Manufacturing|Predict machine failures before they happen, to minimize down time, reduce costs and increase productivity. This template is comparable to the other Predictive Maintenance template. The problem is approached differently.|
 |[Predictive Maintenance (2)](PredictiveMaintenanceModelingGuide)|Manufacturing|Predicting machine failures before they happen. This template is comparable to the other Predictive Maintenance template. The problem is approached differently.|
