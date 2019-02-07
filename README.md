@@ -27,7 +27,7 @@ The available templates are listed below.
 
 | Template | Industry | Description |
 | -------- | ----------- | -------- |
-|[Campaign Management](CampaignManagement/readme.md)|Retail<br/>Finance<br/>Services|Predict when adn how to contact potential customers.|
+|[Campaign Management](CampaignManagement)|Retail<br/>Finance<br/>Services|Predict when adn how to contact potential customers.|
 |[Customer Churn](Churn/Introduction.md)|Retail<br/>Finance<br/>Services|Being able to predict when a customer is likely to churn helps retain them.|
 |[Energy Demand Forecasting](EnergyDemandForecasting/README.md)|Energy<br/>Utilities| Forecast electricity demands for multiple regions.|
 |[Fraud Detection](FraudDetection/readme.md)|Retail<br/>Finance<br/>Services|Predict if an online purchase transaction is fraudulent.|
