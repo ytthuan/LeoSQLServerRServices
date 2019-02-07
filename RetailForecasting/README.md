@@ -1,8 +1,8 @@
-#Retail Forecasting Template with SQL Server 2016 R Services
+# Retail Forecasting Template with SQL Server ML Services
 
-In this template, we demonstrate how to develop and deploy end-to-end Retail Forecasting solutions with [SQL Server 2016 R Services](https://docs.microsoft.com/en-us/sql/advanced-analytics/what-is-sql-server-machine-learning). 
+In this template, we demonstrate how to develop and deploy end-to-end Retail Forecasting solutions with [SQL Server ML Services](https://docs.microsoft.com/en-us/sql/advanced-analytics/what-is-sql-server-machine-learning). 
 
-Accurate and timely forecast in retail business drives success. It is an essential enabler of supply and inventory planning, product pricing, promotion, and placement. This template will demonstrate how to build a retail forecasting solution with SQL and Microsoft R services using the sales data from the retail industry. The sample data has been anonymized and transformed before being used in this sample. 
+Accurate and timely forecast in retail business drives success. It is an essential enabler of supply and inventory planning, product pricing, promotion, and placement. This template will demonstrate how to build a retail forecasting solution with SQL and Microsoft ML services using the sales data from the retail industry. The sample data has been anonymized and transformed before being used in this sample. 
 
 The input data schema is as following:
 
@@ -10,7 +10,7 @@ The input data schema is as following:
 
 For a full description of the template, please refer to the [template](https://gallery.cortanaintelligence.com/Experiment/Retail-Forecasting-Step-1-of-6-data-preprocessing-5) in Cortana Analytics gallery.
 
-In this template with SQL Server R Services, we show two version of implementation:
+In this template with SQL Server ML Services, we show two version of implementation:
  
 - **Model Development with Microsoft ML Server in R IDE**. Run the code in R IDE (e.g., RStudio, R Tools for Visual Studio) with data in SQL Server, and execute the computation in SQL Server.
 

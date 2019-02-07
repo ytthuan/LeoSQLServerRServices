@@ -34,7 +34,7 @@ The solutions are demonstrated using an aircraft engine data, with the following
 
 For a full description of the template, please refer to the [template](https://gallery.cortanaanalytics.com/Collection/Predictive-Maintenance-Template-3) in Cortana Analytics gallery.
 
-In this template with SQL Server R Services, we show two version of implementation:
+In this template with SQL Server ML Services, we show two version of implementation:
  
 - **Model Development with Microsoft ML Server in R IDE**. Run the code in R IDE (e.g., RStudio, R Tools for Visual Studio) with data in SQL Server, and execute the computation in SQL Server.
 

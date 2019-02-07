@@ -4,7 +4,7 @@ Script to trian and test thecustomer churn template with SQL + MRS
 
 .DESCRIPTION
 This script will show the E2E work flow of customer churn machine learning
-templates with Microsoft SQL 2016 and Microsoft R services. 
+templates with Microsoft SQL 2016 or later and Microsoft ML services. 
 
 Switch parameter ResetParmOnly allows you to reset the SQL database name.
 

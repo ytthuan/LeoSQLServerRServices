@@ -4,7 +4,7 @@ Script to trian, test and evaluate the retail forecasting template with SQL + MR
 
 .DESCRIPTION
 This script will show the E2E work flow of retail forecasting machine learning
-templates with Microsoft SQL 2016 and Microsoft R services. 
+templates with Microsoft SQL ML services. 
 
 For the detailed description, please read README.md.
 #>

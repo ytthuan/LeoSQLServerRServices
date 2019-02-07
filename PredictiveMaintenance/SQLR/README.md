@@ -1,4 +1,4 @@
-#Predictive Maintenance Template with SQL Server 2016 R Services 
+#Predictive Maintenance Template with SQL Server ML Services 
 ------------------
    
  * **Introduction**
@@ -41,11 +41,11 @@ The SQL procedures can be executed in SQL Server environment (such as **SQL Serv
 
 To run the scripts, you must prepare the following environment:
 
- * An instance of SQL Server 2016 (Enterprise or Developer edition) CTP 3 or later, with SQL Server R Services installed and configured
+ * An instance of SQL Server 2016 (Enterprise or Developer edition) CTP 3 or later, with SQL Server ML Services installed and configured
  * A SQL login and password. The SQL login must have permissions to execute R scripts
  * A database on the instance in which the login has been granted the permission to create and execute stored procedures
- * The "plyr" and "zoo" R packages are needed. To install packages into the R Services environment please read here: https://docs.microsoft.com/en-us/sql/advanced-analytics/r/install-additional-r-packages-on-sql-server
- * For more information about SQL Server 2016 and SQL Server R Services, please visit: https://docs.microsoft.com/en-us/sql/advanced-analytics/what-s-new-in-sql-server-machine-learning-services
+ * The "plyr" and "zoo" R packages are needed. To install packages into the ML Services environment please read here: https://docs.microsoft.com/en-us/sql/advanced-analytics/r/install-additional-r-packages-on-sql-server
+ * For more information about SQL Server ML Services, please visit: https://docs.microsoft.com/en-us/sql/advanced-analytics/what-s-new-in-sql-server-machine-learning-services
 
 ###WORKFLOW AUTOMATION
 -------------------

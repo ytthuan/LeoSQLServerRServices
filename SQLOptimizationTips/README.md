@@ -1,8 +1,8 @@
-# SQL Optimization Tips and Tricks for Analytics Services
+# Resume matching: SQL Optimization Tips and Tricks for Analytics Services
 
 ## Introduction
 
-In SQL Server 2016, a new function, which is called R services, has been added. SQL Server 2016 R Services provides a platform for operationalize R scripts using T-SQL to develop and deploy intelligent applications. This Markdown file will describe the design and key optimization techniques for a resume-matching scenario that demonstrates how we can find the best candidates for a job opening among millions of resumes within a few seconds.
+In SQL Server 2016, a new function, which what was called R services, has been added. Later it was renamed to ML Services. SQL Server ML Services provides a platform for operationalize R and Python scripts using T-SQL to develop and deploy intelligent applications. This Markdown file will describe the design and key optimization techniques for a resume-matching scenario that demonstrates how we can find the best candidates for a job opening among millions of resumes within a few seconds.
 
 ## Use Case
 
@@ -38,9 +38,9 @@ Three synthetic datasets were generated for the purpose of demonstrating the sce
 
 ## Enable to run R script within SQL query
 
-In order to run R script within SQL query, we first need to enable this functionality. You can enable the R Services when you are provisioning the VM. If you forgot to do so, we are showing the detailed steps to enable SQL Server to run R code.
+In order to run R script within SQL query, we first need to enable this functionality. You can enable the ML Services when you are provisioning the VM. If you forgot to do so, we are showing the detailed steps to enable SQL Server to run R code.
 
-* **Step 1:** Run the following SQL query to explicitly enable the R Services feature on SQL Server; otherwise, it will not be possible to invoke R scripts even if the feature has been installed by setup.
+* **Step 1:** Run the following SQL query to explicitly enable the ML Services feature on SQL Server; otherwise, it will not be possible to invoke R scripts even if the feature has been installed by setup.
     ```sql
     Exec sp_configure 'external scripts enabled', 1
     Reconfigure with override
@@ -81,7 +81,7 @@ During setup of the SQL Server, 20 new Windows user accounts are created for the
 
 ## Implementation
 
-In this section, we will describe in great detail of the implementation on a SQL Server 2016 with R Services to handle the resume matching problem. The implementation includes the optimizations that have been applied on this specific machine, R code to train a matching model, to use the matching model, and a PowerShell script to launch multiple batch scoring concurrently. All those components are organized in the format of a few SQL scripts. Those scripts are used to configure the SQL server, optimize the server for this data science scenario, train the prediction model and score for each project (job). All those scripts are placed under the "***SQLR***" folder.
+In this section, we will describe in great detail of the implementation on a SQL Server ML Services to handle the resume matching problem. The implementation includes the optimizations that have been applied on this specific machine, R code to train a matching model, to use the matching model, and a PowerShell script to launch multiple batch scoring concurrently. All those components are organized in the format of a few SQL scripts. Those scripts are used to configure the SQL server, optimize the server for this data science scenario, train the prediction model and score for each project (job). All those scripts are placed under the "***SQLR***" folder.
 
 We will describe the implementation step by step and show the SQL queries as well.
 
@@ -705,7 +705,7 @@ A prediction model named "_rxBTrees_" will be saved in table "_dbo.Classificatio
 
 The trained model can now be used to find the best candidates given a now job. The input data for the model will be a project (job) ID, and the model will generate the features for all resume-job pairs and use the trained prediction model for scoring.
 
-One of the primary benefits of SQL Server is its ability to handle a very large volume of rows in parallel. We first split the matching into a few tasks and each workload group will process one task. Furthermore, SQL Server with R Services can query the database within the R code to perform selection, joining and aggregations in parallel as well. We also created a saved procedure for prediction. The detail of the query please refer to file "***step5_score_for_matching.sql***".
+One of the primary benefits of SQL Server is its ability to handle a very large volume of rows in parallel. We first split the matching into a few tasks and each workload group will process one task. Furthermore, SQL Server with ML Services can query the database within the R code to perform selection, joining and aggregations in parallel as well. We also created a saved procedure for prediction. The detail of the query please refer to file "***step5_score_for_matching.sql***".
 
 ```sql
 USE ResumeMatching
@@ -890,19 +890,19 @@ The first select query will show you the total duration for scoring 1.1 million 
 
 ## Conclusion
 
-SQL Server 2016 with R Service provides a scalable solution to handle the resume matching use case. In this tutorial, we used in-memory table, soft-NUMA, resource pool, and resource governance techniques to optimize the computation on SQL server. By applying those optimization techniques, we have achieved to score **1.1 million** rows of data (with 100 features) within **8.5 seconds** on a 20 cores machine.
+SQL Server ML Services provides a scalable solution to handle the resume matching use case. In this tutorial, we used in-memory table, soft-NUMA, resource pool, and resource governance techniques to optimize the computation on SQL server. By applying those optimization techniques, we have achieved to score **1.1 million** rows of data (with 100 features) within **8.5 seconds** on a 20 cores machine.
 
 ## Useful References
 
 [Configure and Manage Advanced Analytics Extensions](https://docs.microsoft.com/en-us/sql/advanced-analytics/r/managing-and-monitoring-r-solutions)
 
-[Set up SQL Server R Services (In-Database)](https://docs.microsoft.com/en-us/sql/advanced-analytics/install/sql-r-services-windows-install)
+[Set up SQL Server ML Services (In-Database)](https://docs.microsoft.com/en-us/sql/advanced-analytics/install/sql-r-services-windows-install)
 
-[Use sqlBindR.exe to Upgrade an Instance of R Services](https://docs.microsoft.com/en-us/sql/advanced-analytics/r/use-sqlbindr-exe-to-upgrade-an-instance-of-sql-server)
+[Use sqlBindR.exe to Upgrade an Instance of ML Services](https://docs.microsoft.com/en-us/sql/advanced-analytics/r/use-sqlbindr-exe-to-upgrade-an-instance-of-sql-server)
 
 [Recommendations and guidelines for the "max degree of parallelism" configuration option in SQL Server](https://support.microsoft.com/en-us/help/2806535/recommendations-and-guidelines-for-the-max-degree-of-parallelism-confi)
 
-[Resource Governance for R Services](https://docs.microsoft.com/en-us/sql/advanced-analytics/administration/resource-governance)
+[Resource Governance for ML Services](https://docs.microsoft.com/en-us/sql/advanced-analytics/administration/resource-governance)
 
 [How to: Configure SQL Server to Use Soft-NUMA](https://docs.microsoft.com/en-us/previous-versions/sql/sql-server-2008-r2/ms345357(v=sql.105))
 

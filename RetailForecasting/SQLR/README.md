@@ -1,4 +1,4 @@
-#Retail Forecasting Template with SQL Server 2016 R Services 
+#Retail Forecasting Template with SQL Server ML Services 
 ------------------
    
  * **Introduction**
@@ -14,7 +14,7 @@
 ##INTRODUCTION
 ------------
 
-This template demonstrates how to build a pipeline that automatically provides weekly retail forecasts of the next 52 weeks for each store and each product using [SQL Server R Services.](https://docs.microsoft.com/en-us/sql/advanced-analytics/what-is-sql-server-machine-learning). 
+This template demonstrates how to build a pipeline that automatically provides weekly retail forecasts of the next 52 weeks for each store and each product using [SQL Server ML Services.](https://docs.microsoft.com/en-us/sql/advanced-analytics/what-is-sql-server-machine-learning). 
    
 Two modeling solutions are provided for this template :
 
@@ -37,11 +37,11 @@ The SQL procedures can be executed in SQL Server environment (such as **SQL Serv
 
 To run the scripts, you must prepare the following environment:
 
- * An instance of SQL Server 2016 CTP 3 or later, with SQL Server R Services installed and configured
+ * An instance of SQL Server 2016 CTP 3 or later, with SQL Server ML Services installed and configured
  * A SQL login and password. The SQL login must have permissions to execute R scripts
  * A database on the instance in which the login has been granted the permission to create and execute stored procedures
  
- * For more information about SQL Server 2016 and SQL Server R Services, please visit:
+ * For more information about SQL Server ML Services, please visit:
    https://docs.microsoft.com/en-us/sql/advanced-analytics/what-s-new-in-sql-server-machine-learning-services
 
 ###WORKFLOW AUTOMATION

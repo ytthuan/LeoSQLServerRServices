@@ -1,10 +1,10 @@
-# SQL Server R Services - Performance Test Samples
+# SQL Server ML Services - Performance Test Samples
 
 The sample runtest.R script provided in this repository demonstrates the benefits of following various tips for improving performance of R script running in SQL compute context.
 
 The test script helps to evaluate the performance gains that can be reailized when following the various tips outlined in the <a href="https://docs.microsoft.com/en-us/sql/advanced-analytics/r/sql-server-r-services-performance-tuning">SQL Server ML Services Performance Tuning document</a>. 
 
-To run these tests, the user needs access to SQL Server 2016 with R services enabled. The user is also assumed to be familiar with some basic concepts of using SQL Server R Services.
+To run these tests, the user needs access to SQL Server with ML Services enabled. The user is also assumed to be familiar with some basic concepts of using SQL Server ML Services.
 
 The directory contents are as follows:
 
@@ -41,7 +41,7 @@ To create the database, download the 2 files from the links below into some fold
 > https://sqlrperftuning.blob.core.windows.net/perftuningdb/PerfTuning2.bak
 
 **Steps**
-> - Ensure that you have access to SQL Server 2016 with R Service enabled. You should also have permission to create or access the PerfTuning database.
+> - Ensure that you have access to SQL Server with ML Services enabled. You should also have permission to create or access the PerfTuning database.
 > - Create the PerfTuning database and add tables using the attached R and SQL scripts. You can either run createall.cmd or run the other db and table creating scripts one by one. To expedite, you can skip running the scripts by downloading the database using links above and restoring.
 > - Install the dependant RODBC package, if not installed. Ensure that it is installed in the right library where Microsoft RevoScaleR package was installed. (If you ran creatall.cmd, it will install this package. Update the file if lib path needs to be specified)
 > - Update the runtests.R file to match your connection string and data directories.

@@ -1,4 +1,4 @@
-This is the R (Microsoft ML Server) code for Retail Forecasting template using SQL Server R Services. 
+This is the R (Microsoft ML Server) code for Retail Forecasting template using SQL Server ML Services. 
 
 Two modeling solutions are provided for this template :
 

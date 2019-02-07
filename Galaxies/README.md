@@ -1,6 +1,6 @@
-# Galaxies classification with Deep Learning from Mirosoft ML using SQL Server R Services
+# Galaxies classification with Deep Learning from Microsoft ML using SQL Server ML Services
 
-This sample provides the supporting SQL and R scripts for the blogpost [How six lines of code + SQL Server can bring Deep Learning to ANY App](https://blogs.technet.microsoft.com/dataplatforminsider/2017/01/05/how-six-lines-of-code-sql-server-can-bring-deep-learning-to-any-app/).
+This sample provides the supporting SQL and R scripts for the blog post [How six lines of code + SQL Server can bring Deep Learning to ANY App](https://blogs.technet.microsoft.com/dataplatforminsider/2017/01/05/how-six-lines-of-code-sql-server-can-bring-deep-learning-to-any-app/).
 
 **Data**: [Galaxy Zoo](https://www.galaxyzoo.org/) project was used as source of labeled training data.
 

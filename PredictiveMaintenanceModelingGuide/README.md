@@ -1,5 +1,5 @@
-#SQL R Services: Predictive Maintenance Modeling Guide
-In this template, we demonstrate how to develop a Predictive Maintenance solution with SQL Server 2016 R Services where the process is aligned with the existing R Notebook published in the [Cortana Intelligence Gallery](https://gallery.cortanaintelligence.com/Notebook/Predictive-Maintenance-Modelling-Guide-R-Notebook-1) but works with a larger dataset. 
+# SQL ML Services: Predictive Maintenance Modeling Guide
+In this template, we demonstrate how to develop a Predictive Maintenance solution with SQL Server ML Services where the process is aligned with the existing R Notebook published in the [Cortana Intelligence Gallery](https://gallery.cortanaintelligence.com/Notebook/Predictive-Maintenance-Modelling-Guide-R-Notebook-1) but works with a larger dataset. 
 
 ##In this template:
 * There are 5 data sources namely: telemetry, errors, maintenance, machines, failures
@@ -9,7 +9,7 @@ In this template, we demonstrate how to develop a Predictive Maintenance solutio
 * Data visualization and multi-class classification model is done via R code running on SQL Server
 
 ##Implementation prerequisites: 
-* SQL Server 2016 with R Services: https://docs.microsoft.com/en-us/sql/advanced-analytics/install/sql-r-services-windows-install
+* SQL Server with ML Services: https://docs.microsoft.com/en-us/sql/advanced-analytics/install/sql-r-services-windows-install
 
 * R IDE such as R Studio or R Tools for Visual Studio to access the data from the server: https://docs.microsoft.com/en-us/machine-learning-server/r-client/what-is-microsoft-r-client
 

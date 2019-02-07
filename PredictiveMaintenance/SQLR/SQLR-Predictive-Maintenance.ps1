@@ -4,7 +4,7 @@ Script to trian and test the preventive maintenance template with SQL + MRS
 
 .DESCRIPTION
 This script will show the E2E work flow of Preventive Maintenance machine learning
-templates with Microsoft SQL 2016 and Microsoft R services. 
+templates with Microsoft SQL and ML services. 
 
 Switch parameter Score allows you to score the production data with seleted model
 Switch parameter ResetParmOnly allows you to reset the SQL related credentials
