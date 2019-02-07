@@ -28,7 +28,7 @@ The available templates are listed below.
 
 | Template | Industry | Description |
 | -------- | ----------- | -------- |
-|[Campaign Management](Microsoft/r-server-campaign-optimization)|Retail<br/>Finance<br/>Services|Predict when and how to contact potential customers.|
+|[Campaign Optimization](Microsoft/r-server-campaign-optimization)|Retail<br/>Finance<br/>Services|Predict when and how to contact potential customers.|
 |[Customer Churn](Churn)|Retail<br/>Finance<br/>Services|Being able to predict when a customer is likely to churn helps retain them.|
 |[Energy Demand Forecasting](EnergyDemandForecasting)|Energy<br/>Utilities| Forecast electricity demands for multiple regions.|
 |[Fraud Detection](Microsoft/r-server-fraud-detection)|Retail<br/>Finance<br/>Services|Predict if an online purchase transaction is fraudulent.|
