@@ -1,4 +1,4 @@
-#Customer Churn Prediction Template with SQL Server ML Services
+# Customer Churn Prediction Template with SQL Server ML Services
 
 In this template, we demonstrate how to develop and deploy end-to-end customer churn prediction models with [SQL Server ML Services]https://docs.microsoft.com/en-us/sql/advanced-analytics/what-is-sql-server-machine-learning). 
 
