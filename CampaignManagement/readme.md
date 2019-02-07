@@ -1,2 +1,0 @@
-# Campaign Management
-This solution has moved to [Microsoft/r-server-campaign-optimization](https://github.com/Microsoft/r-server-campaign-optimization).
