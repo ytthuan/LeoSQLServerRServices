@@ -28,15 +28,15 @@ The available templates are listed below.
 | Template | Industry | Description |
 | -------- | ----------- | -------- |
 |[Campaign Management](CampaignManagement)|Retail<br/>Finance<br/>Services|Predict when adn how to contact potential customers.|
-|[Customer Churn](Churn/Introduction.md)|Retail<br/>Finance<br/>Services|Being able to predict when a customer is likely to churn helps retain them.|
-|[Energy Demand Forecasting](EnergyDemandForecasting/README.md)|Energy<br/>Utilities| Forecast electricity demands for multiple regions.|
-|[Fraud Detection](FraudDetection/readme.md)|Retail<br/>Finance<br/>Services|Predict if an online purchase transaction is fraudulent.|
-|[Galaxy Classification](Galaxies/README.md)|Research|This template shows how to use deep learning and image data to classify galaxies.|
-|[Predictive Maintenance (1)](PredictiveMaintenance/Introduction.md)|Manufacturing|Predict machine failures before they happen, to minimize down time, reduce costs and increase productivity. This template is comparable to the other Predictive Maintenance template. The problem is approached differently.|
-|[Predictive Maintenance (2)](PredictiveMaintenanceModelingGuide/README.md)|Manufacturing|Predicting machine failures before they happen. This template is comparable to the other Predictive Maintenance template. The problem is approached differently.|
-|[Product Cross Sell](ProductCrossSell/Instructions.md)|Retail<br/>Finance<br/>Services|Demonstrates how to develop and deploy end-to-end customer cross-sell prediction models.|
-|[Resume Matching](SQLOptimizationTips/README.md)|Recruiting|This template focuses on optimizing the performance of machine learning solutions integrated with SQL Server by demonstrating how we can find the best candidates for a job opening among millions of resumes within a few seconds.| 
-|[Retail Forecasting](RetailForecasting/README.md)|Retail|Predicting the product sales for a retail store helps reduce warehousing cost and save time.|
+|[Customer Churn](Churn)|Retail<br/>Finance<br/>Services|Being able to predict when a customer is likely to churn helps retain them.|
+|[Energy Demand Forecasting](EnergyDemandForecasting)|Energy<br/>Utilities| Forecast electricity demands for multiple regions.|
+|[Fraud Detection](FraudDetection)|Retail<br/>Finance<br/>Services|Predict if an online purchase transaction is fraudulent.|
+|[Galaxy Classification](Galaxies)|Research|This template shows how to use deep learning and image data to classify galaxies.|
+|[Predictive Maintenance (1)](PredictiveMaintenance)|Manufacturing|Predict machine failures before they happen, to minimize down time, reduce costs and increase productivity. This template is comparable to the other Predictive Maintenance template. The problem is approached differently.|
+|[Predictive Maintenance (2)](PredictiveMaintenanceModelingGuide)|Manufacturing|Predicting machine failures before they happen. This template is comparable to the other Predictive Maintenance template. The problem is approached differently.|
+|[Product Cross Sell](ProductCrossSell)|Retail<br/>Finance<br/>Services|Demonstrates how to develop and deploy end-to-end customer cross-sell prediction models.|
+|[Resume Matching](SQLOptimizationTips)|Recruiting|This template focuses on optimizing the performance of machine learning solutions integrated with SQL Server by demonstrating how we can find the best candidates for a job opening among millions of resumes within a few seconds.| 
+|[Retail Forecasting](RetailForecasting)|Retail|Predicting the product sales for a retail store helps reduce warehousing cost and save time.|
 
 ### Templates with SQL Server ML Services
 In these templates, we show the two version of implementations:
