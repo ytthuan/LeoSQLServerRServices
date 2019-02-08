@@ -11,7 +11,7 @@
 * **Cleanup**
 
 ##INTRODUCTION
-This template demonstrates how to use [SQL Server ML Services](https://docs.microsoft.com/en-us/sql/advanced-analytics/what-is-sql-server-machine-learning) to build an end-to-end, on-prem solution for electricity demand forecasting. For a cloud-based solution using Cortana Analytics Suite(CAS), please see [CAS Solution Template: Demand Forecasting for Energy](https://gallery.cortanaanalytics.com/SolutionTemplate/Demand-Forecasting-for-Energy-1).The solution template includes a real time data simulator, feature engineering, model retraining, forecasting, and visualization.
+This template demonstrates how to use [SQL Server ML Services](https://docs.microsoft.com/en-us/sql/advanced-analytics/what-is-sql-server-machine-learning) to build an end-to-end, on-prem solution for electricity demand forecasting. The solution template includes a real time data simulator, feature engineering, model retraining, forecasting, and visualization.
 ###SYSTEM REQUIREMENTS
 * **SQL Server with ML Services.**
 You need SQL Server 2016 RC1 or later to deploy this template. SQL Server 2016 RC2 or later is recommended as the installation process is significantly simplified compared to earlier versions. If you don’t have access to any SQL Server, you have the following options:

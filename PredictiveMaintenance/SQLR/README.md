@@ -30,8 +30,6 @@ in the asset's sensor measurements. By examining the asset's sensor values over 
 between the sensor values and changes in sensor values to the historical failures in order to predict failures in the future. We suggest examining 
 the data format and going through all three steps of the template before replacing the data with your own.
 
-This template is the on-prem equivalent of the implementation in Azure Machine Learning studio [here](https://gallery.cortanaanalytics.com/Collection/Predictive-Maintenance-Template-3), where more modeling details can be found.
-
 The template is divided into three separate steps, and each step is implemented in **SQL Stored Procedures**. The R development code was directly wrapped within stored procedures. 
 
 The SQL procedures can be executed in SQL Server environment (such as **SQL Server Management Studio**) and invoked by any applications. We demonstrated the end-to-end execution using a **PowerShell** script.

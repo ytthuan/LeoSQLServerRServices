@@ -26,8 +26,6 @@ Two modeling solutions are provided for this template :
 	* Boosted Decision Tree Regression
 	* Random Forest Regression
 
-This template is the on-prem equivalent of the implementation in Azure Machine Learning studio [here](https://gallery.cortanaintelligence.com/Experiment/Retail-Forecasting-Step-1-of-6-data-preprocessing-5), where more modeling details can be found.
-
 The template is divided into five separate steps, and each step is implemented in **SQL Stored Procedures**. The R development code was directly wrapped within stored procedures. 
 
 The SQL procedures can be executed in SQL Server environment (such as **SQL Server Management Studio**) and invoked by any applications. We demonstrated the end-to-end execution using a **PowerShell** script.

@@ -1,7 +1,7 @@
 CUSTOMER CHURN TEMPLATE on MICROSOFT SQL SERVER ML SERVICES
 ----------------------------------------------------------
 
-This template demonstrates how to build and deploy a customer churn prediction model in a retail scenario using [SQL Server ML Services](https://docs.microsoft.com/en-us/sql/advanced-analytics/r/sql-server-r-services). For a full description of the template, visit the [template](http://gallery.cortanaanalytics.com/Collection/Retail-Customer-Churn-Prediction-Template-1) in Cortana Analytics gallery.
+This template demonstrates how to build and deploy a customer churn prediction model in a retail scenario using [SQL Server ML Services](https://docs.microsoft.com/en-us/sql/advanced-analytics/r/sql-server-r-services). Predicting customer churn is an important problem for banking, telecommunications, retail and many others customer related industries. Microsoft is providing this template to help retail companies predict customer churns. This template focuses on binary churn prediction, i.e. classifying the users as churners or non-churners.
 
 
 REQUIREMENTS
@@ -44,8 +44,29 @@ The template requires two datasets as input:
 * User demographics info
 * User shopping activities. 
 
-We have provided sample datasets with this template, which can also be downloaded from [here](http://azuremlsamples.azureml.net/templatedata/RetailChurn_ActivityInfoData.csv) and [here](http://azuremlsamples.azureml.net/templatedata/RetailChurn_UserInfoData.csv).
-The data schema for these files are described [here](http://gallery.cortanaanalytics.com/Experiment/Retail-Churn-Template-Step-1-of-4-tagging-data-1).
+Any data following the schema of the User Information Data set and the Activity Data set can be used with the churn template. Furthermore, this churn Template is generalized to handle different churn definitions on the granularity of number of days as input. 
+Schema of User Information Data is shown in the following table
+|Index|Data Fields|Type|Description|Required|
+|-|-|-|-|-|
+|1|UserId|String|Unique User Id|X|
+|2|Age|String|Age of the User.||
+|3|Address|String|Address of the User.||
+|4|Gender|String|Gender of the User.||
+|5|UserType|String|Type of the User.||
+
+Similarly, schema of Activity Data is shown in the following table
+|Index|Data Fields|Type|Description|Required|
+|-|-|-|-|-|
+|1|TransactionId|String|Unique Transaction Id|X|
+|2|Timestamp|String|Timestamp of the transaction specified in the format yyyy/mm/dd hh:mm|X|
+|3|UserId|String|Id of the User making the transaction|X|
+|4|ItemId|String|Id of the Item being purchased|X|
+|5|Quantity|Int|Number of Items purchased by the User|X|
+|6|Value|Double|Value of the complete transaction|X|
+|7|Location|String|Location at which transaction was made||
+|8|ProductCategory|String|Type of Item being purchased||
+
+Some of the fields like Gender and UserType are having "Unknown" value because they were not available in this data set. This template is designed to be generalized so it works regardless of the availability of the optional fields. Furthermore, this template depends on the definition of the Churn which has to be provided by the user as shown in the following figure
 
 In this step, the user is first asked to enter the following information:
 
@@ -115,7 +136,7 @@ In the second step, `CreateFeatures.sql` and `CreateTag.sql` are invoked to crea
   </tr>
 </table> 
 
- (labeling users as churner or non-churners). The output of these two scripts is stored in these tables: `Features` and `Tags`. For more details on feature engineering, visit this [link](http://gallery.cortanaanalytics.com/Collection/Retail-Customer-Churn-Prediction-Template-1).
+ (labeling users as churner or non-churners). The output of these two scripts is stored in these tables: `Features` and `Tags`. The tagged input data to this experiment consists of some fields (numeric fields) for which we may be interested in total sum ( for example: Quantity, Value etc) while for some others (textual/string fields) we may be interested in counting the number of unique entries ( for example, Location, Address, Product Category). This observation is the basis of the Feature Generation process that we have developed. For textual fields we are interested in calculating the number of unique values for each of the user while for the numeric features we are interested in calculating the total aggregate and standard deviation for each of the user. 
 
 STEP 3: MODEL TRAINING
 ------------------------------

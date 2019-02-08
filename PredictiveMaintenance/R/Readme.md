@@ -1,6 +1,6 @@
 # Predictive Maintenance
 This is the R (Microsoft ML Server) code for Predictive Maintenance template using SQL Server ML Services. 
-
+Predictive maintenance encompasses a variety of topics, including but not limited to: failure prediction, failure diagnosis (root cause analysis), failure detection, failure type classification, and recommendation of mitigation or maintenance actions after failure. This predictive maintenance template focuses on the techniques used to predict when an in-service machine will fail, so that maintenance can be planned in advance.
 The template solves the following problems:
 
 - Predict the Remaining Useful Life (RUL) of an asset, or Time to Failure (TTF). This is formulated as a **regression** problem.  
@@ -31,5 +31,3 @@ It consists of the following files:
     <td>Train and evaluate multiple multiclass classfication models /td>
   </tr>
 </table> 
-
-A detailed description of the template, implemented in Azure Machine Learning Studio can be found [here](https://gallery.cortanaanalytics.com/Collection/Predictive-Maintenance-Template-3).

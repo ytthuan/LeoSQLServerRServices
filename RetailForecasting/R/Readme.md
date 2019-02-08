@@ -38,5 +38,3 @@ It consists of the following files:
     <td>Evaluate the regression models</td>
   </tr>
 </table> 
-
-A detailed description of the template, implemented in Azure Machine Learning Studio can be found [here](https://gallery.cortanaintelligence.com/Experiment/Retail-Forecasting-Step-1-of-6-data-preprocessing-5).

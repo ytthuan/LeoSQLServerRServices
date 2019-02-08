@@ -8,8 +8,6 @@ The input data schema is as following:
 
 ![Input Data Schema][1] 
 
-For a full description of the template, please refer to the [template](https://gallery.cortanaintelligence.com/Experiment/Retail-Forecasting-Step-1-of-6-data-preprocessing-5) in Cortana Analytics gallery.
-
 In this template with SQL Server ML Services, we show two version of implementation:
  
 - **Model Development with Microsoft ML Server in R IDE**. Run the code in R IDE (e.g., RStudio, R Tools for Visual Studio) with data in SQL Server, and execute the computation in SQL Server.
