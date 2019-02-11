@@ -33,7 +33,8 @@ We provide a Windows Powershell script to demonstrate the end-to-end workflow. T
 
 	SQLR-Customer-Churn.ps1  -ServerName <String> -DBName <String> [-ChurnPeriodVal <Int32>] [-ChurnThresholdVal <Int32>] [<CommonParameters>]
 
-The PowerShell script invokes a number of SQL scripts through the steps described below. Each step can be also skipped if not needed. The PowerShell script is mainly provided as a convenient way for the user to deploy the template. An experienced user may directly run, modify or integrate the provided SQL scripts in SQL Server Client application (e.g., SQL Server Management Studio).    
+The PowerShell script invokes a number of SQL scripts through the steps described below. Each step can be also skipped if not needed. The PowerShell script is mainly provided as a convenient way for the user to deploy the template. An experienced user may directly run, modify or integrate the provided SQL scripts in SQL Server Client application (e.g., SQL Server Management Studio).
+An automated script, designed to run without user interaction is provided in `CustomerChurnSetup.ps1`.
 
    
 STEP 1: DATA PREPARATION

@@ -20,3 +20,4 @@ See Readme files in each directory for detailed instructions.
 
 **NOTE:** Please don't use "Download ZIP" to get this repository, as it will change the line endings in the data file. Use "git clone" to get a local copy of this repository. 
 
+See [SQLR Folder](SQLR) for more info about the solution files, scripts, data structure and the tables created.

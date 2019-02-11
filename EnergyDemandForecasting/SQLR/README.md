@@ -10,9 +10,9 @@
 * **Visualization**
 * **Cleanup**
 
-##INTRODUCTION
+## INTRODUCTION
 This template demonstrates how to use [SQL Server ML Services](https://docs.microsoft.com/en-us/sql/advanced-analytics/what-is-sql-server-machine-learning) to build an end-to-end, on-prem solution for electricity demand forecasting. The solution template includes a real time data simulator, feature engineering, model retraining, forecasting, and visualization.
-###SYSTEM REQUIREMENTS
+### SYSTEM REQUIREMENTS
 * **SQL Server with ML Services.**
 You need SQL Server 2016 RC1 or later to deploy this template. SQL Server 2016 RC2 or later is recommended as the installation process is significantly simplified compared to earlier versions. If you don’t have access to any SQL Server, you have the following options:
   * Install SQL Server 2016 on you own computer or server. You can use both Windows and SQL Server Authentication in this case. Windows Authentication is recommended as no additional firewall configuration is needed.
@@ -31,8 +31,8 @@ On the computer where you will run the deployment script, you need the following
   * SQL Command Line Utilities. If you have SQL Server Management Studio installed, you already have SQL Command Line Utilities. Otherwise, it can be downloaded from [here](https://www.microsoft.com/en-us/download/details.aspx?id=36433). 
   * PowerBI Desktop. PowerBI Desktop can be downloaded from [here](https://powerbi.microsoft.com/en-us/desktop/)
 
-###WORKFLOW AUTOMATION
-The PowerShell script *setup.ps1* is used to deploy the template. Follow the deployment instructions below or the file *TemplateDeploymentInstructions.pdf* to deploy the template. The deployment process takes about 30 minutes if you meet all the system requirements before deployment.
+### WORKFLOW AUTOMATION
+The PowerShell script *SQLR-Energy-Demand-Forecasting.ps1* is used to deploy the template. Follow the deployment instructions below to deploy the template. The deployment process takes about 30 minutes if you meet all the system requirements before deployment.
 
 Briefly, the PowerShell script will first ask for which server and database you want to deploy the template and what is the login credential to access the server and database. Then the script will call the SQL files in this template to bulk load data to the specified database, create tables, stored procedures, and SQL Server Agent jobs used in the template. The jobs are scheduled to run every hour/15 minutes to generate simulated data, retrain the model and generate new forecasting. The figure below shows the end-to-end workflow
 ![fig_pbidashboard][10]
@@ -51,13 +51,13 @@ Job name | Description | Frequency
 The stored procedure usp_delete_job can be used to delete the scheduled jobs if you are done with testing the template.
 
 Tables and stored procedures created will be explained separately in details in each step they are used. 
-##Deployment Instructions
+## Deployment Instructions
 We recommend using an empty database to deploy this template, otherwise the same tables and other same database objects in this template will be wiped off. You don’t have to create a database first. The deployment script will create one if no database matches the database name you entered in the deployment process.
  * Open Windows Powershell and navigate to the “SQLR” directory using the following command:  
    **cd [directory]**  
    **NOTE: Make sure there is NO dash in your file directory.**   
  * Run the following command to start the deployment process:  
-   **.\setup.ps1**  
+   **.\SQLR-Energy-Demand-Forecasting.ps1**  
    If you are using Windows Authentication, you will be asked for the server name and database name. If you are using SQL Server Authentication, you will be asked for the server name, database name, login user name, and password. Include the port number in the server name when applicable, e.g. testserver, 1433. The deployment will take a few minutes. 
  * Verify new forecast is generated in the database (OPTIONAL)  
    The training and forecasting runs every 15 minutes and retraining and forecasting takes a few minutes. You should see forecasting results populated to the DemandForecast table in your database within 20~30 minutes after deployment.   
@@ -68,7 +68,7 @@ For example:
 You can also use Visual Studio or SQL Server Management Studio to examine the tables, stored procedures, and scheduled jobs in more details. 
 
 **Details of each step of the forecasting process are explained below.** 
-###STEP 1: DATA GENERATION
+### STEP 1: DATA GENERATION
 * The PowerShell script first uses bcp to bulk load DemandHistory15Minutes.txt into table DemandSeed and TemperatureHistoryHourly.txt into table TemperatureSeed. 
 * The stored procedure usp_GenerateHistoricalData then loads the seed data into tables DemandReal and TemperatureReal as historical data. 
 * The stored procedure usp_Data_Simulator_Demand is invoked every 15 minutes and usp_Data_Simulator_Temperature is invoked every hour to generate on-going data which are also saved into DemandReal and TemperatureReal.
@@ -93,7 +93,7 @@ TemperatureSeed|Seed data for generating simulated temperature data in Temperatu
 DemandReal|Simulated demand data, including one year of historical data and newly generated on-going data after template deployment
 TemperatureReal|Simulated temperature data, including one year of historical data and newly generated forecasted temperature data for the next 6 hours. 
 
-###STEP 2: PREPROCESSING AND FEATURE ENGINEERING
+### STEP 2: PREPROCESSING AND FEATURE ENGINEERING
 The stored procedure usp_featureEngineering fills NA values in the historical data and computes features including month of year, hour of day, weekday/weekend, linear trend, Fourier components, lag, etc. For a given region and time, it updates the table InputAllFeatures with the features computed from the latest demand data from DemandRealand temperature data from table TemperatureReal. 
 
 **Input tables**:  
@@ -105,7 +105,7 @@ TemperatureReal
 Table name|Description
 ----------|-----------
 InputAllFeatures|Features generated from historical demand data and temperature data for model training
-###STEP 3: TRAIN AND PERSIST MODEL
+### STEP 3: TRAIN AND PERSIST MODEL
 The stored procedure usp_trainModel gets features from table InputAllFeatures and trains a Random Forest Regression model using the high performance analytics algorithm rxDForest in Microsoft ML Server (MRS). The stored procedure usp_persistModel calls usp_trainModel and saves the trained model to table Model. 
 
 **Input table**: InputAllFeatures  
@@ -121,7 +121,7 @@ usp_persistModel|Call usp_trainModel and save the trained models
 Table name|Description
 ----------|-----------
 Model|Models trained for different regions and time points
-###STEP 4: SCORE MODEL
+### STEP 4: SCORE MODEL
 The stored procedure usp_predictDemand selects the trained model for a given region and time from table Model and generates forecasted demand for the next 6 hours with a 15-minutes interval. 
 
 **Input tables**:  
@@ -139,7 +139,7 @@ usp_energyDemandForecastMain|Call usp_featureEngineering, usp_persistModel, usp_
 Table name|Description
 ----------|-----------
 DemandForecast|Forecasted demand for the next 6 hours with a 15 minutes interval
-###Other tables and stored procedures
+### Other tables and stored procedures
 
 **Tables**
 
@@ -155,7 +155,7 @@ Procedure name|Description
 usp_create_job|Create SQL Server Agent jobs for data simulation and forecasting
 usp_delete_job|Delete SQL Server Agent jobs
 
-##VISUALIZATION
+## VISUALIZATION
 A PowerBI dashboard template is provided to visualize the simulated actual demand, forecasted demand and forecasting accuracy. Follow the following steps to produce your own dashboard.
  * Open the file “EnergyDemandForecast” in the “PowerBI” folder. The dashboard will be empty and contain some errors when you first open it. If it asked you to enter credentials to access the database used to create this template as shown below, click “cancel”.
 ![PowerBI dashboard open][1]
@@ -186,7 +186,7 @@ You should see a PowerBI dashboard looks like the figure below. At first, you on
 [8]:fig_pbiapplychanges.png
 [9]:fig_pbidashboard.png
 [10]:fig_workflow.png
-##Cleanup
+## Cleanup
 If you are done with testing the template and want to delete the scheduled jobs, run the following PowerShell command.  
 **Sqlcmd -S [server name] -U [user name] -P [password] -Q "Use [database name]; EXEC usp_delete_job @dbname = '[database name]';"**  
 For example:  

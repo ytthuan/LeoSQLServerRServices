@@ -8,20 +8,10 @@ In this template, we demonstrate how to develop and deploy end-to-end customer c
 
 
 This template demonstrates customer churn modeling in a retail store scenario, using customer demographic data and shopping activity data:
-<table style="width:85%">
-  <tr>
-    <th>File</th>
-    <th>Description</th>
-  </tr>
-  <tr>
-    <td>.\Data\Users.csv</td>
-    <td>Customer demographic data</td>
-  </tr>
-  <tr>
-    <td>.\Data\Activities.csv</td>
-    <td>User shopping activity data</td>
-  </tr>
-</table>
+|File|Description|
+|-|-|
+|.\Data\Users.csv|Customer demographic data|
+|.\Data\Activities.csv|User shopping activity data|
 
 This templates demonstrate how to use SQL stored procedures to do model development and operationalization. The data processing and feature engineering steps are implemented using pure SQL, while the model training, evaluation, and prediction scoring are done using SQL procedures calling R (Microsoft ML Server) code, the capability provided by SQL Server ML Services. These procedures can be run within SQL environment (such as SQL Server Management Studio) or called by applications to make predictions. A powershell script is provided to run the steps end-to-end. 
 
@@ -30,4 +20,4 @@ The following is the directory structure for this template:
 * **Data**    This contains the provided sample data.
 * **SQLR**    This contains the Stored SQL procedures from data processing to model deployment. It runs in SQL environment. A Powershell script is provided to invoke the modeling steps end-to-end.  See Readme files in each directory for detailed instructions.
 
-See <a href="https://github.com/Microsoft/SQL-Server-R-Services-Samples/tree/master/Churn/SQLR">SQLR folder</a> for more info about the solution files, scripts, data structure and the tables created.
+See [SQLR Folder](SQLR) for more info about the solution files, scripts, data structure and the tables created.
