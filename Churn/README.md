@@ -4,7 +4,7 @@ Being able to predict when a customer is likely to churn helps retain them, by f
 In this template, we demonstrate how to develop and deploy end-to-end customer churn prediction models with [SQL Server ML Services](https://docs.microsoft.com/en-us/sql/advanced-analytics/what-is-sql-server-machine-learning). 
 
 ### Deploy to Azure on SQL Server
-[![Deploy to Azure (SQL Server)](https://raw.githubusercontent.com/Azure/Azure-CortanaIntelligence-SolutionAuthoringWorkspace/master/docs/images/DeployToAzure.PNG)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FMicrosoft%2FSQL-Server-R-Services-Samples%2Ftree%2F/master%2FChurn%2F/ArmTemplates%2Fcampaign_arm.json)
+[![Deploy to Azure (SQL Server)](https://raw.githubusercontent.com/Azure/Azure-CortanaIntelligence-SolutionAuthoringWorkspace/master/docs/images/DeployToAzure.PNG)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FMicrosoft%2FSQL-Server-R-Services-Samples%2Fmaster%2FChurn%2FArmTemplates%2Fchurn_arm.json)
 
 
 This template demonstrates customer churn modeling in a retail store scenario, using customer demographic data and shopping activity data:
