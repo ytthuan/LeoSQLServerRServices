@@ -65,7 +65,7 @@
         "properties": {
         "mode": "incremental",
         "templateLink": {
-            "uri":"https://raw.githubusercontent.com/Microsoft/SQL-Server-R-Services-Samples/tree/master/Churn/master/ArmTemplates/dsvm_arm.json",
+            "uri":"https://raw.githubusercontent.com/Microsoft/SQL-Server-R-Services-Samples/master/Churn/ArmTemplates/dsvm_arm.json",
             "contentVersion":"1.0.0.0"
                 },
         "parameters": {
@@ -86,7 +86,7 @@
         "properties": {
         "mode": "incremental",
         "templateLink": {
-            "uri":"https://raw.githubusercontent.com/Microsoft/SQL-Server-R-Services-Samples/tree/master/Churn/master/ArmTemplates/configure_arm.json",
+            "uri":"https://raw.githubusercontent.com/Microsoft/SQL-Server-R-Services-Samples/master/Churn/ArmTemplates/configure_arm.json",
             "contentVersion":"1.0.0.0"
                 },
         "parameters": {
