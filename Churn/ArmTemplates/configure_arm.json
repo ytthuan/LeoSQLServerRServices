@@ -37,7 +37,7 @@
         "autoUpgradeMinorVersion": false,
         "settings": {
           "fileUris": [
-            "https://raw.githubusercontent.com/Microsoft/SQL-Server-R-Services-Samples/tree/master/Churn/master/SQLR/CustomerChurnSetup.ps1"
+            "https://raw.githubusercontent.com/Microsoft/SQL-Server-R-Services-Samples/master/Churn/SQLR/CustomerChurnSetup.ps1"
           ],
           "commandToExecute": "[concat('powershell.exe -ExecutionPolicy Unrestricted -File CustomerChurnSetup.ps1 -serverName ',  parameters('vmName') ,' -username ',parameters('adminUsername'),' -password ',parameters('adminPassword'))]"
         }
