@@ -3,6 +3,10 @@ Understanding which customers run the risk of churning it paramount in many indu
 Being able to predict when a customer is likely to churn helps retain them, by for example allowing for tailored interaction with the customer.
 In this template, we demonstrate how to develop and deploy end-to-end customer churn prediction models with [SQL Server ML Services](https://docs.microsoft.com/en-us/sql/advanced-analytics/what-is-sql-server-machine-learning). 
 
+### Deploy to Azure on SQL Server
+[![Deploy to Azure (SQL Server)](https://raw.githubusercontent.com/Azure/Azure-CortanaIntelligence-SolutionAuthoringWorkspace/master/docs/images/DeployToAzure.PNG)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FMicrosoft%2FSQL-Server-R-Services-Samples%2Ftree%2F/master%2FChurn%2F/ArmTemplates%2Fcampaign_arm.json)
+
+
 This template demonstrates customer churn modeling in a retail store scenario, using customer demographic data and shopping activity data:
 <table style="width:85%">
   <tr>
@@ -26,5 +30,4 @@ The following is the directory structure for this template:
 * **Data**    This contains the provided sample data.
 * **SQLR**    This contains the Stored SQL procedures from data processing to model deployment. It runs in SQL environment. A Powershell script is provided to invoke the modeling steps end-to-end.  See Readme files in each directory for detailed instructions.
 
-### Deploy to Azure on SQL Server
-[![Deploy to Azure (SQL Server)](https://raw.githubusercontent.com/Azure/Azure-CortanaIntelligence-SolutionAuthoringWorkspace/master/docs/images/DeployToAzure.PNG)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FMicrosoft%2FSQL-Server-R-Services-Samples%2Ftree%2F/master%2FChurn%2F/ArmTemplates%2Fcampaign_arm.json)
+See <a href="https://github.com/Microsoft/SQL-Server-R-Services-Samples/tree/master/Churn/SQLR">SQLR folder</a> for more info about the solution files, scripts, data structure and the tables created.

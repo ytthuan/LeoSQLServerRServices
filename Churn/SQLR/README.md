@@ -46,6 +46,7 @@ The template requires two datasets as input:
 
 Any data following the schema of the User Information Data set and the Activity Data set can be used with the churn template. Furthermore, this churn Template is generalized to handle different churn definitions on the granularity of number of days as input. 
 Schema of User Information Data is shown in the following table
+
 |Index|Data Fields|Type|Description|Required|
 |-|-|-|-|-|
 |1|UserId|String|Unique User Id|X|
@@ -84,36 +85,15 @@ Model Parameters:
  
 Using the `bcp` utility, the script retrieves the users and activities files from the URL address and uploads them into the server. It then invokes `CreateDBTables.sql` to create the database with the following tables: 
 
-<table style="width:85%">
-  <tr>
-    <th>Table</th>
-    <th>Purpose</th>
-  </tr>
-  <tr>
-    <td>Activities</td>
-    <td>Customer activities</td>
-  </tr>
-  <tr>
-    <td>Users</td>
-    <td>Customer profiles</td>
-  </tr>
-    <td>ChurnVars</td>
-    <td>Churn period and threshold</td>
-  </tr>
-    <td>ChurnModelR</td>
-    <td>Churn model trained using open-source R</td>
-  </tr>
-  </tr>
-    <td>ChurnModelRx</td>
-    <td>Churn model trained using Microsoft ML Server</td>
-  </tr>
-    <td>ChurnPredictR</td>
-    <td>Prediction results based on open-source R model</td>
-  </tr>
-  </tr>
-    <td>ChurnPredictRx</td>
-    <td>Prediction results based on Microsoft ML Server model</td>
-</table>
+|Table|Purpose|
+|-|-|
+|Activities|Customer activities|
+|Users|Customer profiles|
+|ChurnVars|Churn period and threshold|
+|ChurnModelR|Churn model trained using open-source R|
+|ChurnModelRx|Churn model trained using Microsoft ML Server|
+|ChurnPredictR|Prediction results based on open-source R|
+|ChurnPredictRx|Prediction results based on Microsoft ML Server model|
 
 
 STEP 2: DATA LABELING and FEATURE ENGINEERING
@@ -121,20 +101,11 @@ STEP 2: DATA LABELING and FEATURE ENGINEERING
 
 In the second step, `CreateFeatures.sql` and `CreateTag.sql` are invoked to create features,  and tags.
 
-<table style="width:85%">
-  <tr>
-    <th>Script</th>
-    <th>Description</th>
-  </tr>
-  <tr>
-    <td>CreateFeatures.sql</td>
-    <td>Generate features: For textual fields (e.g., location, product category), calculate the number of unique values for each of the user; for the numeric fields (e.g., quantity, value), calculate the total aggregate and standard deviation for each of the user</td>
-  </tr>
-  <tr>
-    <td>CreateTag.sql</td>
-    <td>Label the users as churners or non-churners based churn period and churn threshold</td>
-  </tr>
-</table> 
+|Script|Description|
+|-|-|
+|CreateFeatures|Generate features: For textual fields (e.g., location, product category), calculate the number of unique values for each of the user; for the numeric fields (e.g., quantity, value), calculate the total aggregate and standard deviation for each of the user|
+|CreateTag.sql|Label the users as churners or non-churners based churn period and churn threshold.|
+
 
  (labeling users as churner or non-churners). The output of these two scripts is stored in these tables: `Features` and `Tags`. The tagged input data to this experiment consists of some fields (numeric fields) for which we may be interested in total sum ( for example: Quantity, Value etc) while for some others (textual/string fields) we may be interested in counting the number of unique entries ( for example, Location, Address, Product Category). This observation is the basis of the Feature Generation process that we have developed. For textual fields we are interested in calculating the number of unique values for each of the user while for the numeric features we are interested in calculating the total aggregate and standard deviation for each of the user. 
 
@@ -143,20 +114,10 @@ STEP 3: MODEL TRAINING
 
 In this step, `TrainModelR.sql` or `TrainModelRx.sql` are invoked to train the models on 70% of the data. The trained models are stored in `ChurnModelR` and `ChurnModelRx` tables.
 
-<table style="width:85%">
-  <tr>
-    <th>Script</th>
-    <th>Description</th>
-  </tr>
-  <tr>
-    <td>TrainModelR.sql</td>
-    <td>Train model using open source R algorithms and packages </td>
-  </tr>
-  <tr>
-    <td>TrainModelRx.sql</td>
-    <td>Train model using Microsoft ML Server algorithms and packages (RevScaleR)</td>
-  </tr>
-</table> 
+|Script|Description|
+|-|-|
+|TrainModelR.sql|Train model using open source R algorithms and packages|
+|TrainModelRx.sql|Train model using Microsoft ML Server algorithms and packages (RevScaleR)|
 
 STEP 4: PREDICTION
 ----------------------------------
@@ -164,24 +125,9 @@ STEP 4: PREDICTION
 In this step, `PredictR.sql` or `PredictRx.sql` are invoked to make predictions with the models trained in the previous steps on the test data (30% of total data) and performance metrics is evaluated. Similarly to previous step, `PredictR.sql` uses the model trained with open source R packages, and make predictions with open source R packages, whereas `PredictRx.sql` uses the model trained using the Microsoft ML Server and predicts with the rx functions in RevScaleR package. 
 
 The results are stored in a table with the following columns:
-
-<table style="width:85%">
-  <tr>
-    <th>Column</th>
-    <th>Description</th>
-  </tr>
-  <tr>
-    <td>UserId</td>
-    <td>User Id</td>
-  <tr>
-    <td>Tag</td>
-    <td>True customer status (churner or non-churner)</td>
-  
-  </tr>
-    <td>Score</td>
-    <td>Model score</td>
-  </tr>
-    <td>Auc</td>
-    <td>Model AUC on test dataset (identical for all columns)</td>
-  </tr>
-</table>
+|Column|Description|
+|-|-|
+|UserId|User Id|
+|Tag|True customer status (churner or non-churner)|
+|Score|Model score|
+|Auc|Model AUC on test data set (identical for all columns)|
