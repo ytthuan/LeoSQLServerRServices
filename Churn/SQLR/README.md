@@ -45,7 +45,7 @@ The template requires two datasets as input:
 * User shopping activities. 
 
 Any data following the schema of the User Information Data set and the Activity Data set can be used with the churn template. Furthermore, this churn Template is generalized to handle different churn definitions on the granularity of number of days as input. 
-Schema of User Information Data is shown in the following table
+Schema of User Information Data is shown in the following table:
 
 |Index|Data Fields|Type|Description|Required|
 |-|-|-|-|-|
@@ -55,7 +55,8 @@ Schema of User Information Data is shown in the following table
 |4|Gender|String|Gender of the User.||
 |5|UserType|String|Type of the User.||
 
-Similarly, schema of Activity Data is shown in the following table
+Similarly, schema of Activity Data is shown in the following table:
+
 |Index|Data Fields|Type|Description|Required|
 |-|-|-|-|-|
 |1|TransactionId|String|Unique Transaction Id|X|
@@ -125,6 +126,7 @@ STEP 4: PREDICTION
 In this step, `PredictR.sql` or `PredictRx.sql` are invoked to make predictions with the models trained in the previous steps on the test data (30% of total data) and performance metrics is evaluated. Similarly to previous step, `PredictR.sql` uses the model trained with open source R packages, and make predictions with open source R packages, whereas `PredictRx.sql` uses the model trained using the Microsoft ML Server and predicts with the rx functions in RevScaleR package. 
 
 The results are stored in a table with the following columns:
+
 |Column|Description|
 |-|-|
 |UserId|User Id|
