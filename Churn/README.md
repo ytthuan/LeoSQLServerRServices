@@ -26,4 +26,5 @@ The following is the directory structure for this template:
 * **Data**    This contains the provided sample data.
 * **SQLR**    This contains the Stored SQL procedures from data processing to model deployment. It runs in SQL environment. A Powershell script is provided to invoke the modeling steps end-to-end.  See Readme files in each directory for detailed instructions.
 
- 
+### Deploy to Azure on SQL Server
+[![Deploy to Azure (SQL Server)](https://raw.githubusercontent.com/Azure/Azure-CortanaIntelligence-SolutionAuthoringWorkspace/master/docs/images/DeployToAzure.PNG)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FMicrosoft%2FSQL-Server-R-Services-Samples%2Ftree%2F/master%2FChurn%2F/ArmTemplates%2Fcampaign_arm.json)
