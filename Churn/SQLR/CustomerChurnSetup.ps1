@@ -78,7 +78,7 @@ if ($isAdmin -eq 'True') {
     ("Start time: $startTime")
 
     ##########################################################################
-    # Function wrapper to invoke SQL command
+    # Function wrappers
     ##########################################################################
     function ExecuteSQL
     {
@@ -121,6 +121,8 @@ if ($isAdmin -eq 'True') {
         #Write-Host($bcpCommand)
         Invoke-Expression $bcpCommand
     }
+
+    ## End of function wrappers
 
     Write-Host -Foregroundcolor green ("Performing set up.")
 
@@ -271,20 +273,6 @@ if ($isAdmin -eq 'True') {
         $shortcut.TargetPath = $solutionPath
         $shortcut.Save()
         Write-Host("Shortcuts made on Desktop")
-
-
-
-
-
-
-
-    ##########################################################################
-    # Script level variables
-    ##########################################################################
-    #$scriptPath = Get-Location
-    #$filePath = $scriptPath.Path+ "\"
-    #$parentPath = Split-Path -parent $scriptPath
-    
 
     ##########################################################################
     # Update the churning related parameters 
