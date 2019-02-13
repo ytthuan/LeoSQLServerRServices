@@ -147,14 +147,14 @@ if ($isAdmin -eq 'True') {
     ##########################################################################
     #Clone Data from GIT
     ##########################################################################
-        $clone = "git clone https://github.com/Microsoft/$SolutionFullName $solutionTemplatePath"
+        $clone = "clone https://github.com/Microsoft/$SolutionFullName $solutionTemplatePath"
         if (Test-Path $SolutionPath) {
             Write-Host "Solution has already been cloned"
         }
         else {
             Write-Host "Cloning solution"
             #Invoke-Expression "git "+$clone
-            Start-Process "C:\Program Files\Git\bin" -ArgumentList $clone -Wait -NoNewWindow
+            Start-Process "C:\Program Files\Git\bin\git.exe" -ArgumentList $clone -Wait -NoNewWindow
         }
 
 
