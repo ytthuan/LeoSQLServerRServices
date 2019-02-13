@@ -83,27 +83,29 @@ if ($isAdmin -eq 'True') {
     function ExecuteSQL
     {
         param(
-        [String]
-        $query
+        [String]$query,
+        [Parameter(Mandatory=$false)]
+        [String]$dbName = $DatabaseName
         )
         if($IsMixedMode -eq "Yes") {
-            Invoke-Sqlcmd -ServerInstance $serverName -Database $DatabaseName -Username $username -Password $password -Query $query
+            Invoke-Sqlcmd -ServerInstance $serverName -Database $dbName -Username $username -Password $password -Query $query
         }
         else {
-            Invoke-Sqlcmd -ServerInstance $serverName -Database $DatabaseName -Query $query
+            Invoke-Sqlcmd -ServerInstance $serverName -Database $dbName -Query $query
         }
     }
     function ExecuteSQLScript
     {
         param(
-        [String]
-        $scriptfile
+        [String]$scriptfile,
+        [Parameter(Mandatory=$false)]
+        [String]$dbName = $DatabaseName
         )
         if($IsMixedMode -eq "Yes") {
-            Invoke-Sqlcmd -ServerInstance $serverName -Database $DatabaseName -Username $username -Password $password -InputFile $scriptfile
+            Invoke-Sqlcmd -ServerInstance $serverName -Database $dbName -Username $username -Password $password -InputFile $scriptfile
         }
         else {
-            Invoke-Sqlcmd -ServerInstance $serverName -Database $DatabaseName -InputFile $scriptfile
+            Invoke-Sqlcmd -ServerInstance $serverName -Database $dbName -InputFile $scriptfile
         }
     }
     function ExecuteBCP
