@@ -152,7 +152,9 @@ if ($isAdmin -eq 'True') {
             Write-Host "Solution has already been cloned"
         }
         else {
-            Invoke-Expression $clone
+            Write-Host "Cloning solution"
+            #Invoke-Expression "git "+$clone
+            Start-Process git -ArgumentList $clone -Wait -NoNewWindow
         }
 
 
