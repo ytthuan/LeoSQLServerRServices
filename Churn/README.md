@@ -8,6 +8,7 @@ In this template, we demonstrate how to develop and deploy end-to-end customer c
 
 
 This template demonstrates customer churn modeling in a retail store scenario, using customer demographic data and shopping activity data:
+
 |File|Description|
 |-|-|
 |.\Data\Users.csv|Customer demographic data|
