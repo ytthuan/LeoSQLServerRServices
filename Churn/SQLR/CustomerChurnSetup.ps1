@@ -213,18 +213,18 @@ if ($isAdmin -eq 'True') {
             Invoke-Sqlcmd -Query "EXEC xp_instance_regwrite N'HKEY_LOCAL_MACHINE', N'Software\Microsoft\MSSQLServer\MSSQLServer', N'LoginMode', REG_DWORD, 2;" -ServerInstance "LocalHost" 
             Write-Host("Creating login for user $username")
             $Query = "CREATE LOGIN $username WITH PASSWORD=N'$password', DEFAULT_DATABASE=[master], CHECK_EXPIRATION=OFF, CHECK_POLICY=OFF"
-            ExecuteSQL($Query)
+            ExecuteSQL -query $Query -dbName "master"
             Write-Host("Adding $username to [sysadmin] role")
             $Query = "ALTER SERVER ROLE [sysadmin] ADD MEMBER $username"
-            ExecuteSQL($Query)
+            ExecuteSQL -query $Query -dbName "master"
             
         }
         Write-Host("Configuring SQL to allow running of External Scripts")
         ### Allow Running of External Scripts , this is to allow R Services to Connect to SQL
-        ExecuteSQL("EXEC sp_configure  'external scripts enabled', 1")
+        ExecuteSQL -query "EXEC sp_configure  'external scripts enabled', 1" -dbName "master"
 
         ### Force Change in SQL Policy on External Scripts 
-        ExecuteSQL("RECONFIGURE WITH OVERRIDE")
+        ExecuteSQL -query "RECONFIGURE WITH OVERRIDE" -dbName "master"
         Write-Host("SQL Server Configured to allow running of External Scripts")
 
         ### Enable FileStreamDB if Required by Solution 
@@ -238,8 +238,8 @@ if ($isAdmin -eq 'True') {
  
             Set-ExecutionPolicy Unrestricted
             #Import-Module "sqlps" -DisableNameChecking
-            ExecuteSQL("EXEC sp_configure filestream_access_level, 2")
-            ExecuteSQL("RECONFIGURE WITH OVERRIDE")
+            ExecuteSQL -query "EXEC sp_configure filestream_access_level, 2" -dbName "master"
+            ExecuteSQL -query "RECONFIGURE WITH OVERRIDE" -dbName "master"
             Stop-Service "MSSQ*"
             Start-Service "MSSQ*"
         }
@@ -304,7 +304,7 @@ if ($isAdmin -eq 'True') {
     ##########################################################################
     $query = "IF NOT EXISTS(SELECT * FROM sys.databases WHERE NAME = '$DatabaseName') CREATE DATABASE $DatabaseName"
     #Invoke-Sqlcmd -ServerInstance $serverName -Username $username -Password $password -Query $query -ErrorAction SilentlyContinue
-    ExecuteSQL($query)
+    ExecuteSQL -query $query -dbName "master"
     if ($? -eq $false)
     {
         Write-Host -ForegroundColor Red "Failed the test to connect to SQL server: $serverName database: $DatabaseName !"
@@ -313,7 +313,7 @@ if ($isAdmin -eq 'True') {
         exit
     }
     $query = "USE $DatabaseName;"
-    ExecuteSQL($query)
+    ExecuteSQL -query $query -dbName "master"
     Write-Host("Using database $DatabaseName")
     
 
