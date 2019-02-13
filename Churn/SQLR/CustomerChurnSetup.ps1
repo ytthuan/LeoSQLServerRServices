@@ -154,7 +154,7 @@ if ($isAdmin -eq 'True') {
         else {
             Write-Host "Cloning solution"
             #Invoke-Expression "git "+$clone
-            Start-Process git -ArgumentList $clone -Wait -NoNewWindow
+            Start-Process "C:\Program Files\Git\bin" -ArgumentList $clone -Wait -NoNewWindow
         }
 
 
