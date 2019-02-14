@@ -4,7 +4,7 @@ Script to train and test thecustomer churn template with SQL + MLS
 
 .DESCRIPTION
 This script will show the E2E work flow of customer churn machine learning
-templates with Microsoft SQL 2016 or later and Microsoft ML services. 
+template with Microsoft SQL 2016 or later and Microsoft ML services. 
 
 Switch parameter ResetParmOnly allows you to reset the SQL database name.
 
@@ -71,13 +71,6 @@ if ($isAdmin -eq 'True') {
     $installerFunctionsURL = "https://raw.githubusercontent.com/Microsoft/ML-Server/master/$installerFunctionsFileName"
     $installerFunctionsFile = "$PSScriptRoot\$installerFunctionsFileName"
     
-    WriteInstallStartMessage -SolutionName $SolutionName
-    
-    Start-Transcript -Path $setupLog
-    $startTime = Get-Date
-    Write-Host 
-    ("Start time: $startTime")
-
     ##########################################################################
     # Including function wrapper library
     ##########################################################################
@@ -94,6 +87,13 @@ if ($isAdmin -eq 'True') {
         EXIT
     }
 
+    WriteInstallStartMessage -SolutionName $SolutionName
+
+    Start-Transcript -Path $setupLog
+    $startTime = Get-Date
+    Write-Host 
+    ("Start time: $startTime")
+    
     Write-Host -Foregroundcolor green ("Performing set up.")
 
     ##################################################################
