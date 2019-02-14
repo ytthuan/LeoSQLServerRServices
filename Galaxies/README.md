@@ -4,12 +4,12 @@ It provides the supporting SQL and R scripts for the blog post [How six lines of
 
 **Data**: [Galaxy Zoo](https://www.galaxyzoo.org/) project was used as source of labeled training data.
 
-**Scripts**: The following scripts are provided
+**Scripts**: The following scripts are provided in the `SQLR` folder:
 
-- createTables.sql: create tables for trained models and scored data.
-- train_NN_model.sql: stored procedure for training NN model with Microsoft ML
-- predict_NN_model.sql: stored procedure for scoring
-- trigger_predict_model.sql: script to invoke scoring.
+- `createTables.sql`: create tables for trained models and scored data.
+- `train_NN_model.sql`: stored procedure for training NN model with Microsoft ML
+- `predict_NN_model.sql`: stored procedure for scoring
+- `trigger_predict_model.sql`: script to invoke scoring. This uses a trigger to run the scoring when a row is inserted into the `GalaxiesToScore` table.
 
 For end-to-end training and prediction the images could be downloaded from public storage.
 See this links for more info:
