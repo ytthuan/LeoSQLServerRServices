@@ -3,6 +3,10 @@ Accurately forecasting spikes in demand for products and services can give a com
 
 This solution template focuses on demand forecasting within the energy sector. Storing energy is not cost-effective, so utilities and power generators need to forecast future power consumption so that they can efficiently balance the supply with the demand. During peak hours, short supply can result in power outages. Conversely, too much supply can result in waste of resources. Advanced demand forecasting techniques detail hourly demand and peak hours for a particular day, allowing an energy provider to optimize the power generation process. 
 
+### Deploy to Azure on SQL Server
+[![Deploy to Azure (SQL Server)](https://raw.githubusercontent.com/Azure/Azure-CortanaIntelligence-SolutionAuthoringWorkspace/master/docs/images/DeployToAzure.PNG)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FMicrosoft%2FSQL-Server-R-Services-Samples%2Fmaster%2FEnergyDemandForecasting%2FArmTemplates%2Fenergydemandforecasting_arm.json)
+
+
 This template demonstrates how to use [SQL Server ML Services](https://docs.microsoft.com/en-us/sql/advanced-analytics/what-is-sql-server-machine-learning) to build an end-to-end, on-prem solution for electricity demand forecasting. The solution template includes a real time data simulator, feature engineering, model retraining, forecasting, and visualization.  
 In this template with SQL Server ML Services, we show two versions of implementation:
  
