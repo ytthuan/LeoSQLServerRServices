@@ -1,0 +1,12 @@
+Find source data
+Find sample app
+Create setup.ps1:
+
+-create db (Galaxies_R)
+-run createTables.SQL
+-run train_NN_model.SQL
+-run predict_NN_model.SQL
+-run exec_predict_model.SQL
+-copy data folder to C:\Galaxies\data
+-run TrainGalaxiesNN SP
+-run PredictGalaxiesNN SP

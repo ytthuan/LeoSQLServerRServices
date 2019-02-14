@@ -1,4 +1,4 @@
-#Predictive Maintenance Template with SQL Server ML Services 
+# Predictive Maintenance Template with SQL Server ML Services 
 ------------------
    
  * **Introduction**
@@ -11,7 +11,7 @@
  * **Step 3C: Train/test Multi-class Classification Models**
  * **Step 4: Production Scoring**
  
-##INTRODUCTION
+## INTRODUCTION
 ------------
 
 This template demonstrates how to build and deploy predictive maintenance models to predict asset failures using [SQL Server ML Services]https://docs.microsoft.com/en-us/sql/advanced-analytics/what-is-sql-server-machine-learning). 
@@ -34,7 +34,7 @@ The template is divided into three separate steps, and each step is implemented 
 
 The SQL procedures can be executed in SQL Server environment (such as **SQL Server Management Studio**) and invoked by any applications. We demonstrated the end-to-end execution using a **PowerShell** script.
 
-###SYSTEM REQUIREMENTS
+### SYSTEM REQUIREMENTS
 ------------
 
 To run the scripts, you must prepare the following environment:
@@ -43,9 +43,8 @@ To run the scripts, you must prepare the following environment:
  * A SQL login and password. The SQL login must have permissions to execute R scripts
  * A database on the instance in which the login has been granted the permission to create and execute stored procedures
  * The "plyr" and "zoo" R packages are needed. To install packages into the ML Services environment please read here: https://docs.microsoft.com/en-us/sql/advanced-analytics/r/install-additional-r-packages-on-sql-server
- * For more information about SQL Server ML Services, please visit: https://docs.microsoft.com/en-us/sql/advanced-analytics/what-s-new-in-sql-server-machine-learning-services
 
-###WORKFLOW AUTOMATION
+### WORKFLOW AUTOMATION
 -------------------
 
 The following graph shows the overall work flow. The blue block represents each step of the PM template. Each step will interact with SQL server, either perform SQL table operations or invoking R through stored procedures.
@@ -68,7 +67,7 @@ The following chart shows the workflow. In the chart, the blue parallelogram rep
 
 ![Work flow][2]
    
-##STEP 1: DATA PREPARATION
+## STEP 1: DATA PREPARATION
 ------------------------
 
 The first step is to create the tables in the specified database that are used for the training data, testing data, and trained models. The training data, testing data, and "ground truth" dataset provided as .CSV files in the current working directory. The corresponding tables in SQL Server are populated by using the ***bcp*** utility to bulk load the data from the files.  
@@ -117,7 +116,7 @@ The files used in this step are:
 * Labeled\_train\_data: Train data table with labels added
 * Labeled\_test\_data: Test data table with labels added
 
-##STEP 2: FEATURE ENGINEERING
+## STEP 2: FEATURE ENGINEERING
 ---------------------------
 
 This step focuses on data processing and feature engineering. The following tasks are performed in this step:
@@ -144,7 +143,7 @@ The files related to this step are:
 * train\_Features\_Normalized: Normalized training data table with added features
 * test\_Features\_Normalized: Normalized testing data table with added features
  
-##STEP 3A: TRAIN AND EVALUATE REGRESSION MODELS
+## STEP 3A: TRAIN AND EVALUATE REGRESSION MODELS
 -------------------------------------
 In this step, features are selected based on correlation, regression models are trained and evaluated, and the trained models are saved in the database. Scores and performance metrics that result from evaluating the model against the test data are also saved in the database. The regression models are created using these machine learning methods:
 
@@ -180,7 +179,7 @@ The files related to this step are:
 * Regression\_prediction: Predictions for test data for each model
 * Regression\_metrics: Metrics measured for each model 
 
-##STEP 3B: TRAIN AND EVALUATE BINARY CLASSIFICATION MODELS
+## STEP 3B: TRAIN AND EVALUATE BINARY CLASSIFICATION MODELS
 -------------------------------------
 
 In this step, features are selected based on correlation, multiple binary classification models are trained and evaluated. The models are saved in the database after training. The scores and performance metrics from evaluating the trained models on test data are saved in the database as well. Models are trained using these four machine learning methods:
@@ -217,7 +216,7 @@ The files related to this step are:
 * Binaryclass\_prediction: Predictions for test data for each model
 * Binaryclass\_metrics: Metrics measured for each model
 
-##STEP 3C: TRAIN/TEST MULTI-CLASS CLASSIFICATION MODELS
+## STEP 3C: TRAIN/TEST MULTI-CLASS CLASSIFICATION MODELS
 -------------------------------------
 In this step, features are selected based on correlation, multiple multi-class classification models are trained and evaluated. The models are saved in the database after training. The scores and performance metrics from evaluating the trained models on test data are saved in the database as well.
 
@@ -258,7 +257,7 @@ The files related to this step are:
 * Multiclass\_prediction: Predictions for test data for each model
 * Multiclass\_metrics: Metrics measured for each model
  
-##STEP 4: Production Scoring
+## STEP 4: Production Scoring
 
 In this step, we show how we call the stored procedures to make predictions on new data. For demo purpose, the data used for scoring is taken from testing dataset with engine id as 2 and 3.
  
