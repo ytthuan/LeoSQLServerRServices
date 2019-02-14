@@ -9,7 +9,7 @@ In this template with SQL Server ML Services, we show two versions of implementa
 - **Model Development with Microsoft ML Server in R IDE**. Run the code in R IDE (e.g., RStudio, R Tools for Visual Studio) with data in SQL Server, and execute the computation in SQL Server.
 
 - **Model Operationalization In SQL**. Deploy the modeling steps to SQL Stored Procedures, which can be run within SQL environment (such as SQL Server Management Studio) or called by applications to make predictions. A powershell script is provided to deploy the template automatically.
-- **You can also deploy the solution to Azure on SQL Server using the `Deploy to Azure` button above.**
+**You can also deploy the solution to Azure on SQL Server using the `Deploy to Azure` button above.**
 
 Below is the directory structure for this template:
 
