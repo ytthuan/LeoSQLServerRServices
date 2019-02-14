@@ -67,6 +67,9 @@ if ($isAdmin -eq 'True') {
     $SolutionData = $SolutionPath + "\Data\"
     $moreSolutionsURL = "https://github.com/Microsoft/ML-Server/"
     $setupLog = "c:\tmp\"+$SolutionName+"_setup_log.txt"
+    $installerFunctionsFileName = "installer_functions.ps1"
+    $installerFunctionsURL = "https://raw.githubusercontent.com/Microsoft/ML-Server/master/$installerFunctionsFileName"
+    $installerFunctionsFile = "$PSScriptRoot\$installerFunctionsFileName"
     
     Write-Host -ForegroundColor 'green' ("###################################################################################################")
     Write-Host -ForeGroundColor 'green' ("This script will install ML Server sample solution $SolutionName")
