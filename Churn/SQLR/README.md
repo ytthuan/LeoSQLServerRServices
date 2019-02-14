@@ -3,6 +3,7 @@ CUSTOMER CHURN TEMPLATE on MICROSOFT SQL SERVER ML SERVICES
 
 This template demonstrates how to build and deploy a customer churn prediction model in a retail scenario using [SQL Server ML Services](https://docs.microsoft.com/en-us/sql/advanced-analytics/r/sql-server-r-services). Predicting customer churn is an important problem for banking, telecommunications, retail and many others customer related industries. Microsoft is providing this template to help retail companies predict customer churns. This template focuses on binary churn prediction, i.e. classifying the users as churners or non-churners.
 
+For more information about SQL Server ML Services, please visit: https://docs.microsoft.com/en-us/sql/advanced-analytics/what-s-new-in-sql-server-machine-learning-services
 
 REQUIREMENTS
 ------------
@@ -12,10 +13,6 @@ To run the scripts, you must prepare the following environment:
  * An instance of SQL Server 2016 CTP 3 or later, with SQL Server ML Services installed and configured
  * A SQL Server user and password. The SQL Server user must have permissions to execute R scripts
  * A database on the instance in which the user has been granted the permission to create and execute stored procedures
- 
- * For more information about SQL Server ML Services, please visit:
-   https://docs.microsoft.com/en-us/sql/advanced-analytics/what-s-new-in-sql-server-machine-learning-services
- 
  
 WORKFLOW
 -------------------
