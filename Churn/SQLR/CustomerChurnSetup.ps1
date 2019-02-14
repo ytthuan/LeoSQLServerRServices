@@ -71,10 +71,7 @@ if ($isAdmin -eq 'True') {
     $installerFunctionsURL = "https://raw.githubusercontent.com/Microsoft/ML-Server/master/$installerFunctionsFileName"
     $installerFunctionsFile = "$PSScriptRoot\$installerFunctionsFileName"
     
-    Write-Host -ForegroundColor 'green' ("###################################################################################################")
-    Write-Host -ForeGroundColor 'green' ("This script will install ML Server sample solution $SolutionName")
-    Write-Host -ForegroundColor 'green' ("###################################################################################################")
-
+    WriteInstallStartMessage -SolutionName $SolutionName
     Start-Transcript -Path $setupLog
     $startTime = Get-Date
     Write-Host 
