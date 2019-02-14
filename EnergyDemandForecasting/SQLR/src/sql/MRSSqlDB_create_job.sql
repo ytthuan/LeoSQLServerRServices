@@ -2,13 +2,12 @@ USE $(DBName)
 GO
 print '$(DBName)'
 
-print "Deleting job"
+print 'Deleting job'
 exec usp_delete_job '$(DBName)'
 GO
-print "Deleted job"
-
-print "$(ServerName)"
-print "$(Port)"
+print 'Deleted job'
+print '$(ServerName)'
+print '$(Port)'
 declare @server varchar(100)
 
 if (rtrim(ltrim('$(Port)')) <> 'NA')
