@@ -78,87 +78,32 @@ if ($isAdmin -eq 'True') {
     ("Start time: $startTime")
 
     ##########################################################################
-    # Function wrappers
+    # Including function wrapper library
     ##########################################################################
-    function ExecuteSQL
-    {
-        param(
-        [String]$query,
-        [Parameter(Mandatory=$false)]
-        [String]$dbName = $DatabaseName
-        )
-        if($IsMixedMode -eq "Yes") {
-            Invoke-Sqlcmd -ServerInstance $serverName -Database $dbName -Username $username -Password $password -Query $query
+    try {
+        if (Test-Path $installerFunctionsFile) {
+            Remove-Item $installerFunctionsFile
         }
-        else {
-            Invoke-Sqlcmd -ServerInstance $serverName -Database $dbName -Query $query
-        }
+        Invoke-WebRequest -uri $installerFunctionsURL -OutFile $installerFunctionsFile
+        .($installerFunctionsFile)
     }
-    function ExecuteSQLScript
-    {
-        param(
-        [String]$scriptfile,
-        [Parameter(Mandatory=$false)]
-        [String]$dbName = $DatabaseName
-        )
-        if($IsMixedMode -eq "Yes") {
-            Invoke-Sqlcmd -ServerInstance $serverName -Database $dbName -Username $username -Password $password -InputFile $scriptfile
-        }
-        else {
-            Invoke-Sqlcmd -ServerInstance $serverName -Database $dbName -InputFile $scriptfile
-        }
+    catch {
+        Write-Host -ForegroundColor Red "Error while loading supporting PowerShell Scripts."
+        Write-Host -ForegroundColor Red $_Exception
+        EXIT
     }
-    function ExecuteBCP
-    {
-        param(
-        [String]
-        $bcpcmd
-        )
-        if($IsMixedMode -eq "Yes") {
-            $bcpCommand = "$bcpcmd  -U $username -S $serverName -P $password"
-        }
-        else {
-            $bcpCommand = "$bcpcmd -T -S $serverName"
-        }
-        #Write-Host($bcpCommand)
-        Invoke-Expression $bcpCommand
-    }
-
-    ## End of function wrappers
 
     Write-Host -Foregroundcolor green ("Performing set up.")
 
     ##################################################################
     ##DSVM Does not have SQLServer Powershell Module Install or Update 
     ##################################################################
-        if (Get-Module -ListAvailable -Name SQLServer) 
-        {
-        Write-Host 
-        ("Updating SQLServer Power Shell Module")    
-        Update-Module -Name "SQLServer" -MaximumVersion 21.0.17199
-        Import-Module -Name SqlServer -MaximumVersion 21.0.17199 -Force
-        }
-        Else 
-        {
-        Write-Host 
-        ("Installing SQLServer Power Shell Module")  
-        Install-Module -Name SqlServer -RequiredVersion 21.0.17199 -Scope AllUsers -AllowClobber -Force
-        Import-Module -Name SqlServer -MaximumVersion 21.0.17199 -Force
-        }
+        InstallOrUpdateSQLServerPowerShellModule
 
     ##########################################################################
-    #Clone Data from GIT
+    ##Clone Data from GIT
     ##########################################################################
-        $clone = "clone https://github.com/Microsoft/$SolutionFullName $solutionTemplatePath"
-        if (Test-Path $SolutionPath) {
-            Write-Host "Solution has already been cloned"
-        }
-        else {
-            Write-Host "Cloning solution"
-            #Invoke-Expression "git "+$clone
-            Start-Process "C:\Program Files\Git\bin\git.exe" -ArgumentList $clone -Wait -NoNewWindow
-        }
-
+        CloneFromGit -SolutionFullName $SolutionFullName -solutionTemplatePath $solutionTemplatePath -SolutionPath $SolutionPath
 
     ##########################################################################
     #Install R packages if required
@@ -253,17 +198,7 @@ if ($isAdmin -eq 'True') {
     ##########################################################################
     # Install Power BI
     ##########################################################################
-        Write-Host("Installing latest Power BI")
-        #Download PowerBI Desktop installer
-        Start-BitsTransfer -Source "https://go.microsoft.com/fwlink/?LinkId=521662&clcid=0x409" -Destination powerbi-desktop.msi
-        ##Silently install PowerBI Desktop
-        msiexec.exe /i powerbi-desktop.msi /qn /norestart  ACCEPT_EULA=1
-
-        if (!$?) 
-        {
-        Write-Host -ForeGroundColor Red " Error installing Power BI Desktop. Please install latest Power BI manually."
-        }
-
+    InstallPowerBI
 
     ##########################################################################
     # Create Shortcuts
