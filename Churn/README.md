@@ -15,6 +15,7 @@ This template demonstrates customer churn modeling in a retail store scenario, u
 |.\Data\Activities.csv|User shopping activity data|
 
 This templates demonstrate how to use SQL stored procedures to do model development and operationalization. The data processing and feature engineering steps are implemented using pure SQL, while the model training, evaluation, and prediction scoring are done using SQL procedures calling R (Microsoft ML Server) code, the capability provided by SQL Server ML Services. These procedures can be run within SQL environment (such as SQL Server Management Studio) or called by applications to make predictions. A powershell script is provided to run the steps end-to-end. 
+**You can also deploy the solution to Azure on SQL Server using the `Deploy to Azure` button above.**
 
 The following is the directory structure for this template:
 
