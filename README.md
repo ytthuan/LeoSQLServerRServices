@@ -9,7 +9,9 @@ Samples in Python are available in [the ML Server Python Samples repository](htt
 
 **Develop models in R IDE**. SQL Server ML services allows Data Scientists to develop solutions in an R IDE (such as RStudio, Visual Studio R Tools) with Open Source R / Python or Microsoft ML Server, using data residing in SQL Server, and computing done in-database. 
 
-**Operationalize models in SQL**. Once the model development is completed, the model (data processing, feature engineering, training, saved models, and production scoring) can be deployed to SQL Server using T-SQL Stored Procedures, which can be run within SQL environment (such as SQL Server Management Studio) or called by applications to make predictions. 
+**Operationalize models in SQL**. Once the model development is completed, the model (data processing, feature engineering, training, saved models, and production scoring) can be deployed to SQL Server using T-SQL Stored Procedures, which can be run within SQL environment (such as SQL Server Management Studio) or called by applications to make predictions.
+
+**Templates can be easily deployed to Azure using the `Deploy to Azure` button on the templates' readme pages.**
 
 ## Available Templates
 
