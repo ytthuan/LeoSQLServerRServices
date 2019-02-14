@@ -2,8 +2,10 @@ USE $(DBName)
 GO
 print '$(DBName)'
 
+print "Deleting job"
 exec usp_delete_job '$(DBName)'
 GO
+print "Deleted job"
 
 print "$(ServerName)"
 print "$(Port)"

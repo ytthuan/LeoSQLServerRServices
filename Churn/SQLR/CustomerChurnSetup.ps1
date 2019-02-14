@@ -103,7 +103,7 @@ if ($isAdmin -eq 'True') {
     ##########################################################################
     ##Clone Data from GIT
     ##########################################################################
-        CloneFromGit -SolutionFullName $SolutionFullName -solutionTemplatePath $solutionTemplatePath -SolutionPath $SolutionPath
+        CloneFromGIT -SolutionFullName $SolutionFullName, -solutionTemplatePath $solutionTemplatePath -SolutionPath $SolutionPath
 
     ##########################################################################
     #Install R packages if required
@@ -424,15 +424,7 @@ if ($isAdmin -eq 'True') {
         ExecuteSQLScript $script
     }
 
-    Write-Host("")
-    Write-Host -ForegroundColor 'green' ("###################################################################################################")
-    Write-Host -ForeGroundColor 'green' ("Deployment completed succesfully! Please note the following important information:")
-    Write-Host -ForeGroundColor 'green' ("Solution Name: $SolutionName")
-    Write-Host -ForeGroundColor 'green' ("Links to solution directory and help page are on the Desktop")
-    Write-Host -ForeGroundColor 'green' ("SQL Server: $serverName")
-    Write-Host -ForeGroundColor 'green' ("Database: $databaseName")
-    Write-Host -ForeGroundColor 'green' ("Thanks for installing this solution. Find more solutions at: $moreSolutionsURL")
-    Write-Host -ForegroundColor 'green' ("###################################################################################################")
+    WriteThanksMessage
 }
 else {
     Write-Host ("To install this Solution you need to run Powershell as an Administrator. This program will close automatically in 20 seconds")
