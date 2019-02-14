@@ -72,6 +72,7 @@ if ($isAdmin -eq 'True') {
     $installerFunctionsFile = "$PSScriptRoot\$installerFunctionsFileName"
     
     WriteInstallStartMessage -SolutionName $SolutionName
+    
     Start-Transcript -Path $setupLog
     $startTime = Get-Date
     Write-Host 
