@@ -1,21 +1,21 @@
 # SQL ML Services: Predictive Maintenance Modeling Guide
 Predicting machine failures before they happen - an important scenario for manufacturing. This template is comparable to the other [Predictive Maintenance template](https://github.com/Microsoft/SQL-Server-R-Services-Samples/blob/master/PredictiveMaintenance). The problem is approached differently.
 
-##In this template:
-* There are 5 data sources namely: telemetry, errors, maintenance, machines, failures
+## In this template:
+* There are five data sources namely: telemetry, errors, maintenance, machines, failures
 
 * Data ingestion, feature engineering and data preparation is done using SQL code
 
 * Data visualization and multi-class classification model is done via R code running on SQL Server
 
-##Implementation prerequisites: 
+## Implementation prerequisites: 
 * SQL Server with ML Services: https://docs.microsoft.com/en-us/sql/advanced-analytics/install/sql-r-services-windows-install
 
 * R IDE such as R Studio or R Tools for Visual Studio to access the data from the server: https://docs.microsoft.com/en-us/machine-learning-server/r-client/what-is-microsoft-r-client
 
 * Git Large File Storage: this is needed to download the large CSV files from Github: https://github.com/github/git-lfs, https://github.com/github/git-lfs/wiki/Installation
 
-###The directory structure for this template is as follows:
+### The directory structure for this template is as follows:
 * Data: Sample CSV files for telemetry, errors, maintenence, machines, failures can be accessed via the Data folder or through Azure Blob. 
 	- telemetry: https://pdmmodelingguide.blob.core.windows.net/pdmdata/telemetry.csv 
 	- errors: https://pdmmodelingguide.blob.core.windows.net/pdmdata/errors.csv
@@ -32,11 +32,11 @@ Predicting machine failures before they happen - an important scenario for manuf
 	- R code that runs on the SQL Server to build the models: 
 		- pdm_modeling.R 
 
-##Implementation setup overview: 
+## Implementation setup overview: 
 
 ![1]
 
-##Input data overview: 
+## Input data overview: 
 * Telemetry.csv: The telemetry time-series data consists of voltage, rotation, pressure and vibration measurements.
 
 * Errors.csv: The error logs contain non-breaking errors thrown while the machine is still operational and do not qualify as failures. The error date and times are rounded to the closest hour since the telemetry data is collected at an hourly rate.
@@ -47,7 +47,7 @@ Predicting machine failures before they happen - an important scenario for manuf
 
 * Failures.csv: These are the records of component replacements due to failures. Each record has a date and time, machine ID and failed component type associated with it.
 
-##Feature engineering overview:
+## Feature engineering overview:
 The first step in predictive maintenance applications is feature engineering which combines the different data sources to create features that best describe a machines’ health condition at a given point in time. 
 
 * Lag Features from Telemetry: Telemetry data almost always comes with time-stamps which makes it suitable for calculating lagging features. In the following template, rolling mean and standard deviation of the telemetry data over the last 3-hour lag window is calculated for every 3 hours.
@@ -58,13 +58,13 @@ The first step in predictive maintenance applications is feature engineering whi
 
 * Machine Features: The machine features are used directly since they hold descriptive information about the type of the machines and their age which is defined as the years in service.
 
-##Label Construction:
+## Label Construction:
 The prediction problem for this example scenario is to compute the probability that a machine will fail in the next 24 hours due to a certain component failure (component 1,2,3 or 4). The rest of the records are labeled as "none" indicating there is no failure within the next 24 hours.
 
-##Modeling: Training, Validation and Evaluation
+## Modeling: Training, Validation and Evaluation
 For predictive maintenance problems, a time-dependent splitting strategy is used to estimate performance which is done by validating and testing on examples that are later in time than the training examples. For a time-dependent split, a point in time is picked and model is trained on examples up to that point in time, and validated on the examples after that point assuming that the future data after the splitting point is not known. 
 
-##Implementation process: 
+## Implementation process: 
 * Create your SQL Server, then enable [ML services](https://docs.microsoft.com/en-us/sql/advanced-analytics/install/sql-r-services-windows-install).
 
 * Install any R IDE with [Microsoft R client](https://docs.microsoft.com/en-us/machine-learning-server/r-client/what-is-microsoft-r-client). Ensure to check your R code can access your SQL Server DB with the credentials.   
