@@ -37,15 +37,15 @@ Predicting machine failures before they happen - an important scenario for manuf
 ![1]
 
 ## Input data overview: 
-* Telemetry.csv: The telemetry time-series data consists of voltage, rotation, pressure and vibration measurements.
+* `Telemetry.csv`: The telemetry time-series data consists of voltage, rotation, pressure and vibration measurements.
 
-* Errors.csv: The error logs contain non-breaking errors thrown while the machine is still operational and do not qualify as failures. The error date and times are rounded to the closest hour since the telemetry data is collected at an hourly rate.
+* `Errors.csv`: The error logs contain non-breaking errors thrown while the machine is still operational and do not qualify as failures. The error date and times are rounded to the closest hour since the telemetry data is collected at an hourly rate.
 
-* Maint.csv: The scheduled and unscheduled maintenance records which correspond to both regular inspection of components as well as failures. A record is generated if a component is replaced during the scheduled inspection or replaced due to a break down. 
+* `Maint.csv`: The scheduled and unscheduled maintenance records which correspond to both regular inspection of components as well as failures. A record is generated if a component is replaced during the scheduled inspection or replaced due to a break down. 
 
-* Machines.csv: This data set includes machine model and age in years in service.
+* `Machines.csv`: This data set includes machine model and age in years in service.
 
-* Failures.csv: These are the records of component replacements due to failures. Each record has a date and time, machine ID and failed component type associated with it.
+* `Failures.csv`: These are the records of component replacements due to failures. Each record has a date and time, machine ID and failed component type associated with it.
 
 ## Feature engineering overview:
 The first step in predictive maintenance applications is feature engineering which combines the different data sources to create features that best describe a machines’ health condition at a given point in time. 
