@@ -16,10 +16,10 @@ Predicting machine failures before they happen - an important scenario for manuf
 * Git Large File Storage: this is needed to download the large CSV files from Github: https://github.com/github/git-lfs, https://github.com/github/git-lfs/wiki/Installation
 
 ### The directory structure for this template is as follows:
-* Data: Sample CSV files for telemetry, errors, maintenence, machines, failures can be accessed via the Data folder or through Azure Blob. 
+* Data: Sample CSV files for telemetry, errors, maintenence, machines, failures can be accessed via [the Data folder in this repository](Data) or through Azure Blob. 
 	- telemetry: https://pdmmodelingguide.blob.core.windows.net/pdmdata/telemetry.csv 
 	- errors: https://pdmmodelingguide.blob.core.windows.net/pdmdata/errors.csv
-	- maintenence:https://pdmmodelingguide.blob.core.windows.net/pdmdata/maint.csv 
+	- maintenance: https://pdmmodelingguide.blob.core.windows.net/pdmdata/maint.csv 
 	- machines: https://pdmmodelingguide.blob.core.windows.net/pdmdata/machines.csv 
 	- failures: https://pdmmodelingguide.blob.core.windows.net/pdmdata/failures.csv
 * Codes: 
