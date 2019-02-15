@@ -32,14 +32,8 @@ $serverName = "",
 
 [parameter(Mandatory=$false, Position=4)]
 [ValidateNotNullOrEmpty()] 
-[string]$Prompt,
+[string]$Prompt
 
-# ??
-# Switch to preventive maintenance scoring 
-[parameter(Mandatory=$false,ParameterSetName = "Train_test")]
-[ValidateNotNullOrEmpty()]
-[Switch]
-$Score
 )
 
 ###Check to see if user is Admin
@@ -243,81 +237,6 @@ if ($isAdmin -eq 'True')
         ExecuteSQL -query $query -dbName "master"
         Write-Host("Using database $DatabaseName")
     
-    #### SCORING!!
-    ##########################################################################
-    # Score the maintenance data which is in SQL table PM_score
-    ##########################################################################
-    if($score -eq $true)
-    {
-        Write-Host -ForeGroundColor 'green'("Scoring maintenance data...")
-        Read-Host "Press any key to continue..."
-        try
-        {
-		    # create score table
-            Write-Host -ForeGroundColor 'green' ("Create SQL tables: PM_Score:")
-            $script = $filePath + "DataProcessing\create_table_score.sql"
-            ExecuteSQL $script
-    
-            # upload data to be scored to SQL table
-            Write-Host -ForeGroundColor 'green' ("Populate SQL tables: PM_Score")
-            $dataFile = "PM_Score"
-            $destination = $parentPath + "/data/" + $dataFile + ".csv"
-            Write-Host -ForeGroundColor 'magenta'("    Populate SQL table: {0}..." -f $dataFile)
-            $tableName = $DBName + ".dbo." + $dataFile
-            $tableSchema = $parentPath + "/data/" + $dataFile + ".xml"
-            bcp $tableName format nul -c -x -f $tableSchema  -U $username -S $ServerName -P $password  -t ','
-            Write-Host -ForeGroundColor 'magenta'("    Loading {0} to SQL table..." -f $dataFile)
-            bcp $tableName in $destination -t ',' -S $ServerName -f $tableSchema -F 1 -C "RAW" -b 20000 -U $username -P $password
-		
-            # execute the feature engineering for data to be scored
-            Write-Host -ForeGroundColor 'magenta'("    Execute feature engineering for score dataset...")
-		    Read-Host "Press any key to continue..."
-            #$script = $filePath + "FeatureEngineering/execute_feature_engineering_scoring.sql"
-            $datasetType = 'score'
-            $query = "EXEC feature_engineering $datasetType, '$connectionString'"
-            ExecuteSQLQuery $query
-
-            # score the regression model and collect results
-            Write-Host -ForeGroundColor 'magenta'("    Create and execute scoring with selected regression model...")
-		    Read-Host "Press any key to continue..."
-            $script = $filePath + "Regression/score_regression_model.sql"
-            ExecuteSQL $script
-            #$script = $filePath + "Regression/execute_score_reg_model.sql"
-            $model = 'regression_btree'
-            $query = "EXEC score_regression_model $model, '$connectionString'"
-            ExecuteSQLQuery $query
-
-            # score the binary classification model and collect results
-            Write-Host -ForeGroundColor 'magenta'("    Create and execute scoring with selected binary classification model...")
-		    Read-Host "Press any key to continue..."
-            $script = $filePath + "BinaryClassification/score_binaryclass_model.sql"
-            ExecuteSQL $script
-            #$script = $filePath + "BinaryClassification/execute_score_bclass_model.sql"
-            $model = 'binaryclass_btree'
-            $query = "EXEC score_binaryclass_model $model, '$connectionString'"
-            ExecuteSQLQuery $query
-
-            # score the multi-class classification model and collect results
-            Write-Host -ForeGroundColor 'magenta'("    Create and execute scoring with selected multi-class classification model...")
-		    Read-Host "Press any key to continue..."
-            $script = $filePath + "MultiClassification/score_multiclass_model.sql"
-            ExecuteSQL $script
-            #$script = $filePath + "MultiClassification/execute_score_mclass_model.sql"
-            $model = 'multiclass_btree'
-            $query = "EXEC score_multiclass_model $model, '$connectionString'"
-            ExecuteSQLQuery $query
-
-            Write-Host -ForeGroundColor 'green'("Scoring finished successfully!")
-            return
-        }
-        catch
-        {
-            Write-Host -ForegroundColor DarkYellow "Exception in scoring maintenance data:"
-            Write-Host -ForegroundColor Red $Error[0].Exception 
-        }
-    }
-
-
     ##########################################################################
     # Create tables for train and test and populate with data from csv files.
     ##########################################################################
@@ -579,6 +498,71 @@ if ($isAdmin -eq 'True')
             Write-Host -ForegroundColor Red $Error[0].Exception 
         }
     }
+    
+    ##########################################################################
+    # Score the maintenance data which is in SQL table PM_score
+    ##########################################################################
+        Write-Host -ForeGroundColor 'green'("Scoring maintenance data...")
+        try
+        {
+		    # create score table
+            Write-Host -ForeGroundColor 'green' ("Create SQL tables: PM_Score:")
+            $script = $scriptPath + "DataProcessing\create_table_score.sql"
+            ExecuteSQLScript $script
+    
+            # upload data to be scored to SQL table
+            Write-Host -ForeGroundColor 'green' ("Populate SQL tables: PM_Score")
+            $dataFile = "PM_Score"
+            $destination = $SolutionData + $dataFile + ".csv"
+            Write-Host -ForeGroundColor 'magenta'("    Populate SQL table: {0}..." -f $dataFile)
+            $tableName = $DatabaseName + ".dbo." + $dataFile
+            $tableSchema = $SolutionData + $dataFile + ".xml"
+            ExecuteBCP("bcp $tableName format nul -c -x -f $tableSchema -t ','")
+            
+            Write-Host -ForeGroundColor 'magenta'("    Loading {0} to SQL table..." -f $dataFile)
+            ExecuteBCP("bcp $tableName in $destination -F 2 -t ',' -f $tableSchema -C 'RAW' -b 20000")
+		
+            # execute the feature engineering for data to be scored
+            Write-Host -ForeGroundColor 'magenta'("    Execute feature engineering for score dataset...")
+		    #$script = $filePath + "FeatureEngineering/execute_feature_engineering_scoring.sql"
+            $datasetType = 'score'
+            $query = "EXEC feature_engineering $datasetType, '$connectionString'"
+            ExecuteSQL $query
+
+            # score the regression model and collect results
+            Write-Host -ForeGroundColor 'magenta'("    Create and execute scoring with selected regression model...")
+		    $script = $scriptPath + "Regression/score_regression_model.sql"
+            ExecuteSQLScript $script
+            #$script = $filePath + "Regression/execute_score_reg_model.sql"
+            $model = 'regression_btree'
+            $query = "EXEC score_regression_model $model, '$connectionString'"
+            ExecuteSQL $query
+
+            # score the binary classification model and collect results
+            Write-Host -ForeGroundColor 'magenta'("    Create and execute scoring with selected binary classification model...")
+		    $script = $scriptPath + "BinaryClassification/score_binaryclass_model.sql"
+            ExecuteSQLScript $script
+            #$script = $filePath + "BinaryClassification/execute_score_bclass_model.sql"
+            $model = 'binaryclass_btree'
+            $query = "EXEC score_binaryclass_model $model, '$connectionString'"
+            ExecuteSQL $query
+
+            # score the multi-class classification model and collect results
+            Write-Host -ForeGroundColor 'magenta'("    Create and execute scoring with selected multi-class classification model...")
+		    $script = $scriptPath + "MultiClassification/score_multiclass_model.sql"
+            ExecuteSQLScript $script
+            #$script = $filePath + "MultiClassification/execute_score_mclass_model.sql"
+            $model = 'multiclass_btree'
+            $query = "EXEC score_multiclass_model $model, '$connectionString'"
+            ExecuteSQL $query
+
+            Write-Host -ForeGroundColor 'green'("Scoring finished successfully!")
+        }
+        catch
+        {
+            Write-Host -ForegroundColor DarkYellow "Exception in scoring maintenance data:"
+            Write-Host -ForegroundColor Red $Error[0].Exception 
+        }
 
     WriteThanksMessage
 
