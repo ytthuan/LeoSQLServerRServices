@@ -24,10 +24,10 @@ It consists of the following files:
   </tr>
   <tr>
     <td>02b-binary-classification-modeling</td>
-    <td>Train and evaluate multiple binary classfication models /td>
+    <td>Train and evaluate multiple binary classfication models</td>
   </tr>
   <tr>
     <td>02b-binary-classification-modeling</td>
-    <td>Train and evaluate multiple multiclass classfication models /td>
+    <td>Train and evaluate multiple multiclass classfication models</td>
   </tr>
 </table> 
