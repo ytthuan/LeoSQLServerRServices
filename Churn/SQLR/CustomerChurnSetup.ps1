@@ -158,13 +158,14 @@ if ($isAdmin -eq 'True') {
             Write-Host("Configuring SQL to used Mixed Authentication mode")
             Invoke-Sqlcmd -Query "EXEC xp_instance_regwrite N'HKEY_LOCAL_MACHINE', N'Software\Microsoft\MSSQLServer\MSSQLServer', N'LoginMode', REG_DWORD, 2;" -ServerInstance "LocalHost" 
             Write-Host("Creating login for user $username")
-            $Query = "CREATE LOGIN $username WITH PASSWORD=N'$password', DEFAULT_DATABASE=[master], CHECK_EXPIRATION=OFF, CHECK_POLICY=OFF"
-            ExecuteSQL -query $Query -dbName "master"
+            $Query = "IF NOT EXISTS (SELECT loginname from master.dbo.syslogins where name='$username') BEGIN CREATE LOGIN [$username] WITH PASSWORD=N'$password', DEFAULT_DATABASE=[master], CHECK_EXPIRATION=OFF, CHECK_POLICY=OFF END"
+            Invoke-Sqlcmd -ServerInstance $serverName -Database "master" -Query $Query -QueryTimeout 200000
+                        
             Write-Host("Adding $username to [sysadmin] role")
             $Query = "ALTER SERVER ROLE [sysadmin] ADD MEMBER $username"
-            ExecuteSQL -query $Query -dbName "master"
-            
+            Invoke-Sqlcmd -ServerInstance $serverName -Database "master" -Query $Query -QueryTimeout 200000
         }
+
         Write-Host("Configuring SQL to allow running of External Scripts")
         ### Allow Running of External Scripts , this is to allow R Services to Connect to SQL
         ExecuteSQL -query "EXEC sp_configure  'external scripts enabled', 1" -dbName "master"
