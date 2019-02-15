@@ -1,3 +1,4 @@
+--Create table script designed to be called from PredictiveMaintenanceModelingGuideSetup.ps1
 --Create telemetry
 DROP TABLE IF EXISTS telemetry
 GO
