@@ -2,6 +2,10 @@
 
 In this template, we demonstrate how to develop and deploy end-to-end Predictive Maintenance solutions with [SQL Server ML Services](https://docs.microsoft.com/en-us/sql/advanced-analytics/what-is-sql-server-machine-learning). Predict machine failures before they happen, to minimize down time, reduce costs and increase productivity. This is an important scenario for manufacturing. This template is comparable to the other [Predictive Maintenance template](https://github.com/Microsoft/SQL-Server-R-Services-Samples/blob/master/PredictiveMaintenanceModelingGuide). The problem is approached differently.
 
+### Deploy to Azure on SQL Server
+[![Deploy to Azure (SQL Server)](https://raw.githubusercontent.com/Azure/Azure-CortanaIntelligence-SolutionAuthoringWorkspace/master/docs/images/DeployToAzure.PNG)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FMicrosoft%2FSQL-Server-R-Services-Samples%2Fmaster%2FPredictiveMaintenance%2FArmTemplates%2Fpredictivemaintenance_arm.json)
+
+
 In this template, we solve the following three problems:
 
 - Predict the Remaining Useful Life (RUL) of an asset, or Time to Failure (TTF). This is formulated as a **regression** problem.  

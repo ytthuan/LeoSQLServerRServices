@@ -1,6 +1,6 @@
 <#
 .SYNOPSIS
-Script to trainn and test the preventive maintenance template with SQL + MLS
+Script to train and test the preventive maintenance template with SQL + MLS
 
 .DESCRIPTION
 This script will show the E2E work flow of Preventive Maintenance machine learning
