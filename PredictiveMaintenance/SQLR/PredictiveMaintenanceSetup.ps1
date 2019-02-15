@@ -579,9 +579,7 @@ if ($isAdmin -eq 'True')
                 ExecuteSQL $query
                 Write-Host -ForeGroundColor 'magenta'("    Training Multi classification model: $modelName...Done!")
             }
-
-            Read-Host "Press any key to continue..."
-
+            
             # test the multiclass models and collect results and metrics
             Write-Host -ForeGroundColor 'magenta'("    Testing Multi-classificaiton models...")
             $models = "'multiclass_rf', 'multiclass_btree', 'multiclass_nn', 'multiclass_mn'"
