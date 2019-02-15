@@ -564,7 +564,7 @@ if ($isAdmin -eq 'True')
             Write-Host -ForegroundColor Red $Error[0].Exception 
         }
 
-    WriteThanksMessage
+        WriteThanksMessage -SolutionName $SolutionName -servername $serverName -databaseName $DatabaseName -moreSolutionsURL $moreSolutionsURL
 
 }
 else {

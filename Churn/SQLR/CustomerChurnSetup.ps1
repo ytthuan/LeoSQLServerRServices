@@ -411,7 +411,7 @@ if ($isAdmin -eq 'True') {
         ExecuteSQLScript $script
     }
 
-    WriteThanksMessage
+    WriteThanksMessage -SolutionName $SolutionName -servername $serverName -databaseName $DatabaseName -moreSolutionsURL $moreSolutionsURL
 }
 else {
     Write-Host ("To install this Solution you need to run Powershell as an Administrator. This program will close automatically in 20 seconds")

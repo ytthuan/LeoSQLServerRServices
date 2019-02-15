@@ -290,7 +290,7 @@ if ($isAdmin -eq 'True') {
     ##########################################################################  
     Get-Service -computer $serverName SQLSERVERAGENT | Restart-Service
     
-    WriteThanksMessage
+    WriteThanksMessage -SolutionName $SolutionName -servername $serverName -databaseName $DatabaseName -moreSolutionsURL $moreSolutionsURL
 
 }
 else {
