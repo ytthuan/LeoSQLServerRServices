@@ -31,7 +31,7 @@ order by rt.machineID, rt.datetime
 
 select top 10 * from telemetrymean order by machineID, datetime
 
---select top 10 * from telemetrymean where machineID=2 order by machineID, datetime
+select top 10 * from telemetrymean where machineID=2 order by machineID, datetime
 
 
 DROP TABLE IF EXISTS telemetrysd
