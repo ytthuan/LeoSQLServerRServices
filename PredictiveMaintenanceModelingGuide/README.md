@@ -1,6 +1,10 @@
 # SQL ML Services: Predictive Maintenance Modeling Guide
 Predicting machine failures before they happen - an important scenario for manufacturing. This template is comparable to the other [Predictive Maintenance template](https://github.com/Microsoft/SQL-Server-R-Services-Samples/blob/master/PredictiveMaintenance). The problem is approached differently.
 
+### Deploy to Azure on SQL Server
+[![Deploy to Azure (SQL Server)](https://raw.githubusercontent.com/Azure/Azure-CortanaIntelligence-SolutionAuthoringWorkspace/master/docs/images/DeployToAzure.PNG)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FMicrosoft%2FSQL-Server-R-Services-Samples%2Fmaster%2FPredictiveMaintenanceModelingGuide%2FArmTemplates%2Fpredictivemaintenancemodelingguide_arm.json)
+
+
 ## In this template:
 * There are five data sources namely: telemetry, errors, maintenance, machines, failures
 
