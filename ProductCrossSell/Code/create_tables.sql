@@ -1,4 +1,6 @@
 /****** Object:  Table [dbo].[ProductXSL]    Script Date: 2/19/2019 6:20:24 PM ******/
+DROP TABLE IF EXISTS ProductXSL
+GO
 SET ANSI_NULLS ON
 GO
 
