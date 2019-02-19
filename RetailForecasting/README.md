@@ -28,5 +28,3 @@ The following is the directory structure for this template:
 * **Data**    This contains the provided sample data.
 * **R**	      This contains the R development code (Microsoft ML Server). It runs in R IDE, with computation being done in-database (by setting compute context to SQL Server). 
 * **SQLR**    This contains the Stored SQL procedures from data processing to model deployment. It runs in SQL environment. A Powershell script is provided to invoke the modeling steps end-to-end.  See Readme files in each directory for detailed instructions.
-
-[1]: input_data_schema.png 
