@@ -133,6 +133,7 @@ rxDataStep(inData = ndf, outFile = reco, overwrite = TRUE )
 '
 ,@input_data_1 = N'select * from dbo.ProductXSL'
 ,@input_data_1_name = N'xs'
+,@params = N'@connection_string varchar(300)'
 ,@connection_string = @connectionString ;
 END
 
