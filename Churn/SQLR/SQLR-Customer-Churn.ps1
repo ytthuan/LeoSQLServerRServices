@@ -11,7 +11,7 @@ For the detailed description, please read README.md.
 [CmdletBinding()]
 param(
 # SQL server address
-[parameter(Mandatory=$true,ParameterSetName = "Train_test")]
+[parameter(Mandatory=$false,ParameterSetName = "Train_test")]
 [ValidateNotNullOrEmpty()] 
 [String]    
 $ServerName = "",
