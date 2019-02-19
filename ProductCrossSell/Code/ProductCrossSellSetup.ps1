@@ -316,7 +316,7 @@ if ($isAdmin -eq 'True')
         }
     }
 
-    WriteThanksMessage
+    WriteThanksMessage -SolutionName $SolutionName -servername $serverName -databaseName $DatabaseName -moreSolutionsURL $moreSolutionsURL
 
 }
 else {
