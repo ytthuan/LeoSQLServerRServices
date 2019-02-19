@@ -37,7 +37,7 @@
         "autoUpgradeMinorVersion": false,
         "settings": {
           "fileUris": [
-            "https://raw.githubusercontent.com/Microsoft/SQL-Server-R-Services-Samples/master/RetailForecasting/Code/RetailForecastingSetup.ps1"
+            "https://raw.githubusercontent.com/Microsoft/SQL-Server-R-Services-Samples/master/RetailForecasting/SQLR/RetailForecastingSetup.ps1"
           ],
           "commandToExecute": "[concat('powershell.exe -ExecutionPolicy Unrestricted -File RetailForecastingSetup.ps1 -serverName ',  parameters('vmName') ,' -username ',parameters('adminUsername'),' -password ',parameters('adminPassword'))]"
         }
