@@ -9,8 +9,8 @@ GO
 DROP PROCEDURE IF EXISTS create_recommendations 
 GO
 
---sqlConnString: "Driver=SQL Server;Server=XXXXX;Database=ProductCrossSell_R;Trusted_Connection=TRUE"
-CREATE PROCEDURE [create_recommendations] @sqlConnString varchar(300)
+--connection_string: "Driver=SQL Server;Server=XXXXX;Database=ProductCrossSell_R;Trusted_Connection=TRUE"
+CREATE PROCEDURE [create_recommendations] @connection_string varchar(300)
 AS
 BEGIN
   DECLARE @inquery NVARCHAR(max) = N'SELECT 1 as Col'
@@ -63,7 +63,7 @@ rm(xs)
 ###
 ###########################################################
 
-scdo <- RxSqlServerData(connectionString = sqlConnString, table = "ProductXSL")
+scdo <- RxSqlServerData(connectionString = connection_string, table = "ProductXSL")
 sc <- rxImport(scdo)
 
 pred <- data.frame(cust_ID = sc$cust_ID)
@@ -122,10 +122,10 @@ colnames(ndf) <- pn
 ###########################################################
 
 reco <- RxSqlServerData(table = "Recommendations", 
-                    connectionString = sqlConnString)
+                    connectionString = connection_string)
 
-if (rxSqlServerTableExists("Recommendations",  connectionString = sqlConnString))  
-  rxSqlServerDropTable("Recommendations",  connectionString = sqlConnString)
+if (rxSqlServerTableExists("Recommendations",  connectionString = connection_string))  
+  rxSqlServerDropTable("Recommendations",  connectionString = connection_string)
 
 rxDataStep(inData = ndf, outFile = reco, overwrite = TRUE )
 
