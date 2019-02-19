@@ -10,8 +10,10 @@ This template demonstrates customer cross-sell modeling in a retail scenario, us
 
 This template demonstrates how to use SQL to do model development and operationalization. The data processing, model training, and prediction scoring are done using SQL calling R (Microsoft Machine Learning Server) code, the capability provided by SQL Server Machine Learning Services. These procedures can be run within a SQL environment (such as SQL Server Management Studio) or called by applications to make predictions. This capability could easily be automated/scheduled for production deployment.
 
+**This package requires the `reshape` package**.
+
 ### Deploy to Azure on SQL Server
-[![Deploy to Azure (SQL Server)](https://raw.githubusercontent.com/Azure/Azure-CortanaIntelligence-SolutionAuthoringWorkspace/master/docs/images/DeployToAzure.PNG)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FMicrosoft%2FSQL-Server-R-Services-Samples%2Fmaster%2FProductCrossSell%2FArmTemplates%2Fproductcrossssell_arm.json)
+[![Deploy to Azure (SQL Server)](https://raw.githubusercontent.com/Azure/Azure-CortanaIntelligence-SolutionAuthoringWorkspace/master/docs/images/DeployToAzure.PNG)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FMicrosoft%2FSQL-Server-R-Services-Samples%2Fmaster%2FProductCrossSell%2FArmTemplates%2Fproductcrosssell_arm.json%0A)
 
 
 The following is the directory structure for this template:
