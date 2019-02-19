@@ -9,8 +9,8 @@ GO
 DROP PROCEDURE IF EXISTS create_recommendations 
 GO
 
---connection_string: "Driver=SQL Server;Server=XXXXX;Database=ProductCrossSell_R;Trusted_Connection=TRUE"
-CREATE PROCEDURE [create_recommendations] @connection_string varchar(300)
+--connectionString: "Driver=SQL Server;Server=XXXXX;Database=ProductCrossSell_R;Trusted_Connection=TRUE"
+CREATE PROCEDURE [create_recommendations] @connectionString varchar(300)
 AS
 BEGIN
   DECLARE @inquery NVARCHAR(max) = N'SELECT 1 as Col'
@@ -130,9 +130,10 @@ if (rxSqlServerTableExists("Recommendations",  connectionString = connection_str
 rxDataStep(inData = ndf, outFile = reco, overwrite = TRUE )
 
 ############################ end ################################
-',
-@input_data_1 = N'select * from dbo.ProductXSL',
-@input_data_1_name = N'xs';                   
+'
+,@input_data_1 = N'select * from dbo.ProductXSL'
+,@input_data_1_name = N'xs'
+,@connection_string = @connectionString ;
 END
 
 ;
