@@ -9,7 +9,7 @@ GO
 DROP PROCEDURE IF EXISTS create_recommendations 
 GO
 
---connectionString: "Driver=SQL Server;Server=XXXXX;Database=ProductCrossSell_R;Trusted_Connection=TRUE"
+--connectionString: "Driver=SQL Server;Server=XXXXX;Database=ProductCrossSell_R;UID=XXX;PWD=XXX"
 CREATE PROCEDURE [create_recommendations] @connectionString varchar(300)
 AS
 BEGIN
