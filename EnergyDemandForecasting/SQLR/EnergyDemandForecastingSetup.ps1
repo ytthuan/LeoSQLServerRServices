@@ -6,8 +6,6 @@ Script to train and test the energy demand forecasting template with SQL + MLS
 This script will show the E2E work flow of energy demand forecasting machine learning
 template with Microsoft SQL 2016 or later and Microsoft ML services. 
 
-Switch parameter ResetParmOnly allows you to reset the SQL database name.
-
 For the detailed description, please read README.md.
 #>
 [CmdletBinding()]
