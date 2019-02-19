@@ -1,4 +1,4 @@
-use CustomerDB;
+use ProductCrossSell_R;
 
 EXEC sp_execute_external_script
 @language = N'R',
@@ -16,7 +16,7 @@ library(reshape)
 ### fetch data ###
 
 sqlConnString <- "Driver=SQL Server;Server=XXXXX; 
-                  Database=CustomerDB;Trusted_Connection=TRUE"
+                  Database=ProductCrossSell_R;Trusted_Connection=TRUE"
 
 # remove all but product variables
 # product variables are binary, but could qty or $$ values

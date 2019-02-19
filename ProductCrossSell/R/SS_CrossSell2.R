@@ -11,7 +11,7 @@ library(reshape)
 ### fetch data ###
 
 sqlConnString <- "Driver=SQL Server;Server=XXXXXX; 
-                  Database=CustomerDB;Trusted_Connection=TRUE"
+                  Database=ProductCrossSell_R;Trusted_Connection=TRUE"
 
 xsdo <- RxSqlServerData(connectionString = sqlConnString, table = "ProductXSL")
 xs <- rxImport(xsdo)
