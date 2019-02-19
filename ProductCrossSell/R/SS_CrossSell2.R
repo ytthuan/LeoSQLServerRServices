@@ -10,7 +10,7 @@ library(reshape)
 
 ### fetch data ###
 
-sqlConnString <- "Driver=SQL Server;Server=MININT-03A5LFB; 
+sqlConnString <- "Driver=SQL Server;Server=XXXXXX; 
                   Database=CustomerDB;Trusted_Connection=TRUE"
 
 xsdo <- RxSqlServerData(connectionString = sqlConnString, table = "ProductXSL")

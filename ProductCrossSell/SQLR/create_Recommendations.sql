@@ -15,7 +15,7 @@ library(reshape)
 
 ### fetch data ###
 
-sqlConnString <- "Driver=SQL Server;Server=MININT-03A5LFB; 
+sqlConnString <- "Driver=SQL Server;Server=XXXXX; 
                   Database=CustomerDB;Trusted_Connection=TRUE"
 
 # remove all but product variables
