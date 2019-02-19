@@ -12,6 +12,8 @@ The input data schema is as following:
 |time|Observation time|
 |value|Time series value, ex. Sales quantity|
 
+**This template requires the `forecast` package**.
+
 In this template with SQL Server ML Services, we show two version of implementation:
  
 - **Model Development with Microsoft ML Server in R IDE**. Run the code in R IDE (e.g., RStudio, R Tools for Visual Studio) with data in SQL Server, and execute the computation in SQL Server.
