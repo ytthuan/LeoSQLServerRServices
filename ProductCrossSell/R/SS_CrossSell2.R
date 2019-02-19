@@ -10,8 +10,8 @@ library(reshape)
 
 ### fetch data ###
 
-sqlConnString <- "Driver=SQL Server;Server=XXXXXX; 
-                  Database=ProductCrossSell_R;Trusted_Connection=TRUE"
+sqlConnString <- "Driver=SQL Server;Server=XXX; 
+Database=ProductCrossSell_R;UID=XXX;PWD=XXX"
 
 xsdo <- RxSqlServerData(connectionString = sqlConnString, table = "ProductXSL")
 xs <- rxImport(xsdo)
@@ -32,6 +32,7 @@ rxGetInfo(data=xs, getVarInfo=TRUE,numRows=3)
 ###########################################################
 
 v <- colnames(xs)
+print(v)
 l <- length(v)
 algo = "rxLogisticRegression"
 
@@ -62,14 +63,14 @@ sc <- rxImport(scdo)
 pred <- data.frame(cust_ID = sc$cust_ID)
 
 ### the score field varies by algorithm
-### change temp$Probability.1 if using another algorithm
+### change temp$Probability if using another algorithm
 
 foreach(i = 1:l) %do% {
   # do prediction against test set
   cat("\n\nGenerating scores for model ", v[i] , "\n")
   temp <- rxPredict(modelObject = modelList[[i]], data = sc,
                     extraVarsToWrite = "cust_ID")
-  pred[i+1] <- temp$Probability.1
+  pred[i+1] <- temp$Probability
 }
 names(pred)[2:20] <- v
 
@@ -133,7 +134,7 @@ rxSummary(~., data=ndf)
 #system.time(sqlSave(ch, ndf, tablename = "Recommendations", rownames = FALSE))
 
 reco <- RxSqlServerData(table = "Recommendations", 
-                    connectionString = sqlConnString)
+                        connectionString = sqlConnString)
 
 if (rxSqlServerTableExists("Recommendations",  connectionString = sqlConnString))  
   rxSqlServerDropTable("Recommendations",  connectionString = sqlConnString)

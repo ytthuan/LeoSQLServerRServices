@@ -23,7 +23,6 @@ BEGIN
 # Uses reshape package
 #
 ###########################################################
-
 #install.packages("reshape")
 library(reshape)
 
@@ -37,7 +36,6 @@ xs <- xs[2:20]
 ##### build models
 ###
 ###########################################################
-
 v <- colnames(xs)
 l <- length(v)
 algo = "rxLogisticRegression"
@@ -62,21 +60,20 @@ rm(xs)
 ##### score customers with list of product models
 ###
 ###########################################################
-
 scdo <- RxSqlServerData(connectionString = connection_string, table = "ProductXSL")
 sc <- rxImport(scdo)
 
 pred <- data.frame(cust_ID = sc$cust_ID)
 
 ### the score field varies by algorithm
-### change temp$Probability.1 if using another algorithm
+### change temp$Probability if using another algorithm
 
 foreach(i = 1:l) %do% {
   # do prediction against test set
   cat("\n\nGenerating scores for model ", v[i] , "\n")
   temp <- rxPredict(modelObject = modelList[[i]], data = sc,
                     extraVarsToWrite = "cust_ID")
-  pred[i+1] <- temp$Probability.1
+  pred[i+1] <- temp$Probability
 }
 names(pred)[2:20] <- v
 
@@ -89,7 +86,6 @@ rm(sc)
 ##### create a ranked order listing of products for each customer
 ###
 ###########################################################
-
 md <- melt(pred, id=(c("cust_ID")))
 
 # order by customer and descending scores
@@ -106,7 +102,6 @@ sz <- nrow(rs2)
 ##### for each customer
 ###
 ###########################################################
-
 rs2$prodnum <- rep(1:l,len=sz)
 
 ndf <- reshape(rs2, idvar = "cust_ID", timevar = "prodnum", direction = "wide")
@@ -120,7 +115,6 @@ colnames(ndf) <- pn
 ##### insert product df into DB
 ###
 ###########################################################
-
 reco <- RxSqlServerData(table = "Recommendations", 
                     connectionString = connection_string)
 
