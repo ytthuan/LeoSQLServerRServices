@@ -41,7 +41,7 @@ The available templates are listed below.
 |[Predictive Maintenance (1)](PredictiveMaintenance)|[Repository](PredictiveMaintenace)|
 |[Predictive Maintenance (2)](PredictiveMaintenanceModelingGuide)|[Repository](PredictiveMaintenanceModelingGuide)|
 |[Product Cross Sell](ProductCrossSell)|[Repository](ProductCrossSell)|
-|[Resume Matching](SQLOptimizationTips)|[Repository](SQLOptimizationTips)|
+|[Resume Matching](SQLOptimizationTips-Resume-Matching)|[Repository](SQLOptimizationTips-Resume-Matching)|
 |[Retail Forecasting](RetailForecasting)|[Repository](RetailForecasting)|
 |[Text Classification](https://github.com/Microsoft/ml-server-text-classification)|[Website](https://microsoft.github.io/ml-server-text-classification/)|
 
