@@ -5,8 +5,12 @@ In this template, we demonstrate how to develop and deploy end-to-end Retail For
 Accurate and timely forecast in retail business drives success. It is an essential enabler of supply and inventory planning, product pricing, promotion, and placement. This template will demonstrate how to build a retail forecasting solution with SQL and Microsoft ML services using the sales data from the retail industry. The sample data has been anonymized and transformed before being used in this sample. 
 
 The input data schema is as following:
-
-![Input Data Schema][1] 
+|Data Field|Description|
+|-|-|
+|ID1|Time series ID 1, ex. Store ID|
+|ID2|Time series ID 2, ex. product / SKU ID|
+|time|Observation time|
+|value|Time series value, ex. Sales quantity|
 
 In this template with SQL Server ML Services, we show two version of implementation:
  
