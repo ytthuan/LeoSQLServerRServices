@@ -99,12 +99,7 @@ if ($isAdmin -eq 'True') {
     ##########################################################################
     #Install R packages if required
     ##########################################################################
-        If ($InstallR -eq 'Yes') {
-            Write-Host("Installing R Packages")
-            Set-Location "$SolutionPath\Resources\"
-            # install R Packages
-            Rscript packages.R 
-        }
+        InstallRPackages -SolutionPath $SolutionPath
 
     ##########################################################################
     #Enable FileStream if required
