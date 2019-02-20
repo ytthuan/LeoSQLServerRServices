@@ -1,0 +1,71 @@
+{
+    "contentVersion": "1.0.0.0",
+    "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "parameters": {
+      "adminUsername": {
+        "type": "string",
+        "metadata": {
+          "description": "Username for the Virtual Machine."
+        }
+      },
+      "adminPassword": {
+        "type": "securestring",
+        "metadata": {
+          "description": "Password for the Virtual Machine. The password must be 8 or more characters long. It must contain 1+ uppercase character(s), 1+ lowercase character(s),  1+ number(s), and 1+ special character(s) from ~!@#$%^&()-_+=|<>\/;:,."
+        }
+      },
+      "vmSize": {
+          "type": "string",
+          "defaultValue": "Standard_DS15_v2",
+          "allowedValues": [  "Standard_DS15_v2"],
+          "metadata": {
+              "description": "Select a SKU for the virtual machine. Recommended SKU is 'Standard_DS15_v2'"
+          }
+      }
+    },
+    "variables": {
+      "location": "[resourceGroup().location]",
+      "vmName": "[toLower(concat('co', uniqueString(resourceGroup().id)))]"
+    },
+    "resources": [
+          {
+          "apiVersion": "2017-05-10",
+          "name": "dsvmTemplate",
+          "type": "Microsoft.Resources/deployments",      
+          "properties": {
+          "mode": "incremental",
+          "templateLink": {
+              "uri":"https://raw.githubusercontent.com/Microsoft/SQL-Server-R-Services-Samples/master/SQLOptimizationTips-Resume-Matching/ArmTemplates/sql_arm.json",
+              "contentVersion":"1.0.0.0"
+                  },
+          "parameters": {
+              "adminUsername": { "value": "[parameters('adminUsername')]" },
+              "adminPassword": { "value": "[parameters('adminPassword')]" },
+              "vmName": { "value": "[variables('vmName')]" },
+              "vmSize": { "value": "[parameters('vmSize')]" }
+                  }
+              }
+          },
+          {
+          "apiVersion": "2017-05-10",
+          "name": "configureTemplate",
+          "type": "Microsoft.Resources/deployments",
+          "dependsOn": [
+              "dsvmTemplate"
+            ],        
+          "properties": {
+          "mode": "incremental",
+          "templateLink": {
+              "uri":"https://raw.githubusercontent.com/Microsoft/SQL-Server-R-Services-Samples/master/SQLOptimizationTips-Resume-Matching/ArmTemplates/configure_arm.json",
+              "contentVersion":"1.0.0.0"
+                  },
+          "parameters": {
+              "adminUsername": { "value": "[parameters('adminUsername')]" },
+              "adminPassword": { "value": "[parameters('adminPassword')]" },
+              "vmName": { "value": "[variables('vmName')]" }
+                  }
+              }
+          }
+    ]
+  }
+  
