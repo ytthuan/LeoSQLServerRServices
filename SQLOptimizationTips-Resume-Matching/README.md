@@ -4,6 +4,9 @@
 This template focuses on optimizing the performance of machine learning solutions integrated with SQL Server by demonstrating how we can find the best candidates for a job opening among millions of resumes within a few seconds. 
 In SQL Server 2016, a new function, which what was called R services, has been added. Later it was renamed to ML Services. SQL Server ML Services provides a platform for operationalize R and Python scripts using T-SQL to develop and deploy intelligent applications. This Markdown file will describe the design and key optimization techniques for this scenario.
 
+### Deploy to Azure on SQL Server
+[![Deploy to Azure (SQL Server)](https://raw.githubusercontent.com/Azure/Azure-CortanaIntelligence-SolutionAuthoringWorkspace/master/docs/images/DeployToAzure.PNG)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FMicrosoft%2FSQL-Server-R-Services-Samples%2Fmaster%2FSQLOptimizationTips-Resume-Matching%2FArmTemplates%2Fresumematching_arm.json%0A)
+
 ## Use Case
 
 Finding the best candidate for a job opening has long been an art that is labor intensive and requires manual efforts from search agents. With the advent of social media and big data, recruiting has entered a new era where methods are changing and strategies are evolving. How to find candidates with certain technical or specialized qualities from massive information that collected from devising sources has become a new big challenge.
