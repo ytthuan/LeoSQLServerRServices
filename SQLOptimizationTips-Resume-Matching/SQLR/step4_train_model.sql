@@ -1,6 +1,3 @@
-USE ResumeMatching
-GO 
-
 DROP PROCEDURE IF EXISTS train_model_for_matching;
 GO
 

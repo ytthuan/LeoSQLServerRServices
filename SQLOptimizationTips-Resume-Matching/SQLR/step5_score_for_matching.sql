@@ -1,6 +1,3 @@
-USE ResumeMatching
-GO
-
 DROP PROCEDURE IF EXISTS score_for_matching_batch;
 GO
 

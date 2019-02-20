@@ -1,6 +1,3 @@
-USE ResumeMatching
-GO 
-
 DROP PROCEDURE IF EXISTS train_model_for_matching_2600_MML2;
 GO
 
