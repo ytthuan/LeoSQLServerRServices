@@ -1,4 +1,4 @@
-# Machine Learning Templates with SQL Server ML Services (written in R)
+# Microsoft Machine Learning R Templates with SQL Server ML Services
 
 > Discover more examples at [Microsoft Machine Learning Server](https://github.com/Microsoft/ML-Server)
 
