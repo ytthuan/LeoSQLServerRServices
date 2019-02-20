@@ -121,12 +121,7 @@ if ($isAdmin -eq 'True')
     ##########################################################################
     #Install R packages if required
     ##########################################################################
-        If ($InstallR -eq 'Yes') {
-            Write-Host("Installing R Packages")
-            Set-Location "$SolutionPath\Resources\"
-            # install R Packages
-            Start-Process "C:\Program Files\Microsoft\ML Server\R_SERVER\bin\x64\Rscript.exe" -ArgumentList "packages.R " -Wait
-        }
+        InstallRPackages -SolutionPath $SolutionPath
 
     ##########################################################################
     #Enabled FileStream if required
