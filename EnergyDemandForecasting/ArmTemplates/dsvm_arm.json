@@ -32,7 +32,7 @@
         "location": "[resourceGroup().location]",
         "imagePublisher": "microsoft-dsvm",
         "imageOffer": "dsvm-windows",
-        "sku": "server-2019",
+        "sku": "server-2016",
         "version": "03.25.19",
         "OSDiskName": "osdiskforwindowssimple",
         "nicName": "[parameters('vmName')]",
