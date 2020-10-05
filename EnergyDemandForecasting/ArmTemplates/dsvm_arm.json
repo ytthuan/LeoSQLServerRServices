@@ -32,7 +32,7 @@
         "location": "[resourceGroup().location]",
         "imagePublisher": "microsoft-ads",
         "imageOffer": "windows-data-science-vm",
-        "sku": "windows2016",
+        "sku": "windows2016byol",
         "version": "03.25.19",
         "OSDiskName": "osdiskforwindowssimple",
         "nicName": "[parameters('vmName')]",
