@@ -30,9 +30,9 @@
     "variables": {
         "apiVersion": "2015-10-01",
         "location": "[resourceGroup().location]",
-        "imagePublisher": "microsoft",
-        "imageOffer": "dsvm-windows",
-        "sku": "server-2016",
+        "imagePublisher": "microsoft-ads",
+        "imageOffer": "windows-data-science-vm",
+        "sku": "windows2016",
         "version": "03.25.19",
         "OSDiskName": "osdiskforwindowssimple",
         "nicName": "[parameters('vmName')]",
