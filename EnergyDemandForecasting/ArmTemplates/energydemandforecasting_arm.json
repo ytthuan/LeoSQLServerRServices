@@ -65,7 +65,7 @@
         "properties": {
         "mode": "incremental",
         "templateLink": {
-            "uri":"https://raw.githubusercontent.com/Microsoft/SQL-Server-R-Services-Samples/master/EnergyDemandForecasting/ArmTemplates/dsvm_arm.json",
+            "uri":"https://github.com/ytthuan/LeoSQLServerRServices/edit/master/EnergyDemandForecasting/ArmTemplates/dsvm_arm.json",
             "contentVersion":"1.0.0.0"
                 },
         "parameters": {
